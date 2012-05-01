@@ -21,13 +21,14 @@ module PhonyNumber
 
   # This method requires a country_code attribute (eg. NL) and phone_number to be set.
   # Options:
-  #   :country_code => Some code that can be used as default.
+  #   :country_code => The country code we should use.
+  #   :default_country_code => Some fallback code (eg. 'NL') that can be used as default (comes from phony_normalize_numbers method).
   def self.normalize_number(number, options = {})
     return if number.blank?
     number = Phony.normalize(number) # TODO: Catch errors
     if country_number = COUNTRY_NUMBER[options[:country_code] || options[:default_country_code]]
       # Add country_number if missing
-      number = "#{country_number}#{number}" not number =~ /^(00|\+)?#{country_number}/
+      number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
     end
     number = Phony.normalize(number)
   rescue
@@ -65,7 +66,7 @@ module PhonyNumber
       # It checks your model object for a a country_code attribute (eg. 'NL') to do the normalizing so make sure
       # you've geocoded before calling this method!
       def phony_normalize_numbers(*attributes)
-        options = attributes.last.is_a?(Hash) ? attributes.last : {}
+        options = attributes.last.is_a?(Hash) ? attributes.last : {} 
         attributes.each do |attribute|
           # Add before validation that saves a normalized version of the phone number
           self.before_validation do 
