@@ -4,8 +4,8 @@ require File.expand_path('../lib/phony_number/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Joost Hietbrink"]
   gem.email         = ["joost@joopp.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{This Gem adds useful methods to your Rails app to validate, display and save phone numbers.}
+  gem.summary       = %q{This Gem adds useful methods to your Rails app to validate, display and save phone numbers.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
