@@ -21,19 +21,17 @@ Or install it yourself as:
 
 In your model add:
 
-  class SomeModel < 
-
-    phony_normalize_numbers :phone_number, :default_country_code => 'US'
-
-  end
+    class SomeModel < ActiveRecord::Base
+      phony_normalize_numbers :phone_number, :default_country_code => 'US'
+    end
 
 Use the Phony.plausible method to validate an attribute:
 
-  validate :phone_number, :phony_number => true
+    validate :phone_number, :phony_number => true
 
 In your views use:
 
-  <%= "some number string variable".phony_formatted(:format => :international, :spaces => '-') %>
+    <%= "some number string variable".phony_formatted(:format => :international, :spaces => '-') %>
 
 ## Contributing
 
