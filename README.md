@@ -28,6 +28,8 @@ In your model add:
       phony_normalized_method :fax_number # Creates method normalized_fax_number that returns the normalized version of fax_number
     end
 
+The :default_country_code options is used to specify a country_code when normalizing. PhonyRails will also check your model for a country_code method to use when normalizing the number. So '070-12341234' with country_code 'NL' will get normalized to '317012341234'.
+
 Use the Phony.plausible method to validate an attribute:
 
     validate :phone_number, :phony_number => true
