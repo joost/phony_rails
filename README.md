@@ -1,4 +1,6 @@
-# PhonyNumber
+# PhonyRails
+
+(In its early days :) called PhonyNumber)
 
 This Gem adds useful methods to your Rails app to validate, display and save phone numbers.
 It uses the super awesome Phony gem (https://github.com/floere/phony).
