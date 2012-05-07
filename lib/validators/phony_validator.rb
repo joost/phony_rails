@@ -1,7 +1,7 @@
 # Uses the Phony.plausible method to validate an attribute.
 # Usage:
-#   validate :phone_number, :phony_number => true
-class PhonyNumberValidator < ActiveModel::EachValidator
+#   validate :phone_number, :phony => true
+class PhonyValidator < ActiveModel::EachValidator
 
   # Validates a String using Phony.plausible? method.
   def validate_each(record, attribute, value)

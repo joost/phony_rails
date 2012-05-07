@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/phony_number/version', __FILE__)
+require File.expand_path('../lib/phony_rails/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Joost Hietbrink"]
@@ -11,9 +11,9 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "phony_number"
+  gem.name          = "phony_rails"
   gem.require_paths = ["lib"]
-  gem.version       = PhonyNumber::VERSION
+  gem.version       = PhonyRails::VERSION
 
   gem.add_dependency "phony", "~> 1.6.7"
   gem.add_dependency "activerecord", "~> 3.0"

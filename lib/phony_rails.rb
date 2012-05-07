@@ -1,8 +1,8 @@
 require 'phony'
-require "phony_number/string_extensions"
-require "phony_number/version"
+require "phony_rails/string_extensions"
+require "phony_rails/version"
 
-module PhonyNumber
+module PhonyRails
 
   # Quick fix to get country_phone_number (phone number) for all relevant countries.
   # TODO: Replace with some gem or something.
@@ -52,7 +52,7 @@ module PhonyNumber
       def set_phony_normalized_numbers(attributes, options = {})
         options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
         attributes.each do |attribute|
-          write_attribute(attribute, PhonyNumber.normalize_number(read_attribute(attribute), options))
+          write_attribute(attribute, PhonyRails.normalize_number(read_attribute(attribute), options))
         end
       end
 
@@ -61,16 +61,32 @@ module PhonyNumber
     module ClassMethods
 
       # Use this method on the class level like:
-      #   phony_normalize_numbers :phone_number, :fax_number, :default_country_code => 'NL'
+      #   phony_normalize :phone_number, :fax_number, :default_country_code => 'NL'
       #
       # It checks your model object for a a country_code attribute (eg. 'NL') to do the normalizing so make sure
       # you've geocoded before calling this method!
-      def phony_normalize_numbers(*attributes)
-        options = attributes.last.is_a?(Hash) ? attributes.last : {} 
+      def phony_normalize(*attributes)
+        options = attributes.last.is_a?(Hash) ? attributes.pop : {} 
+        options.assert_valid_keys :country_code, :default_country_code
         attributes.each do |attribute|
           # Add before validation that saves a normalized version of the phone number
           self.before_validation do 
             set_phony_normalized_numbers(attributes, options)
+          end
+        end
+      end
+
+      # Usage:
+      #   phony_normalized_method :fax_number, :default_country_code => 'US'
+      # Creates a normalized_fax_number method.
+      def phony_normalized_method(*attributes)
+        options = attributes.last.is_a?(Hash) ? attributes.pop : {} 
+        options.assert_valid_keys :country_code, :default_country_code
+        attributes.each do |attribute|
+          raise ArgumentError, "Attribute #{attribute} was not found on #{self.name} (PhonyRails)" unless self.attribute_method?(attribute)
+          define_method :"normalized_#{attribute}" do
+            options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
+            PhonyRails.normalize_number(self[attribute], options)
           end
         end
       end
@@ -80,4 +96,4 @@ module PhonyNumber
   end
 
 end
-ActiveRecord::Base.extend PhonyNumber::ActiveRecordExtension
+ActiveRecord::Base.extend PhonyRails::ActiveRecordExtension

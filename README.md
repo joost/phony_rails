@@ -22,7 +22,8 @@ Or install it yourself as:
 In your model add:
 
     class SomeModel < ActiveRecord::Base
-      phony_normalize_numbers :phone_number, :default_country_code => 'US'
+      phony_normalize :phone_number, :default_country_code => 'US' # Normalizes the attribute itself
+      phony_normalized_method :fax_number # Creates method normalized_fax_number that returns the normalized version of fax_number
     end
 
 Use the Phony.plausible method to validate an attribute:
