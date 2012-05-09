@@ -9,7 +9,7 @@ It uses the super awesome Phony gem (https://github.com/floere/phony).
 
 Add this line to your application's Gemfile:
 
-    gem 'phony_number'
+    gem 'phony_rails'
 
 And then execute:
 
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install phony_number
+    $ gem install phony_rails
 
 ## Usage
 
