@@ -40,6 +40,11 @@ In your views use:
 
     <%= "some number string variable".phony_formatted(:format => :international, :spaces => '-') %>
 
+## Changelog
+
+0.0.6
+* Fixed problem with '070-4157134'
+
 ## Contributing
 
 1. Fork it

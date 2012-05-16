@@ -23,9 +23,11 @@ module PhonyRails
   # Options:
   #   :country_code => The country code we should use.
   #   :default_country_code => Some fallback code (eg. 'NL') that can be used as default (comes from phony_normalize_numbers method).
+  # This idea came from:
+  #   http://www.redguava.com.au/2011/06/rails-convert-phone-numbers-to-international-format-for-sms/
   def self.normalize_number(number, options = {})
     return if number.blank?
-    number = Phony.normalize(number) # TODO: Catch errors
+    number = Phony::CountryCodes.instance.clean(number) # Strips weird stuff from the number
     if country_number = COUNTRY_NUMBER[options[:country_code] || options[:default_country_code]]
       # Add country_number if missing
       number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
