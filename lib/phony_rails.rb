@@ -26,13 +26,16 @@ module PhonyRails
   # This idea came from:
   #   http://www.redguava.com.au/2011/06/rails-convert-phone-numbers-to-international-format-for-sms/
   def self.normalize_number(number, options = {})
-    return if number.blank?
+    return if number.nil?
+    number = number.clone # Just to be sure, we don't want to change the original.
     number = Phony::CountryCodes.instance.clean(number) # Strips weird stuff from the number
+    return if number.blank?
     if country_number = COUNTRY_NUMBER[options[:country_code] || options[:default_country_code]]
       # Add country_number if missing
       number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
     end
     number = Phony.normalize(number)
+    return number.to_s
   rescue
     number # If all goes wrong .. we still return the original input.
   end
