@@ -42,8 +42,11 @@ In your views use:
 
 ## Changelog
 
+0.0.7
+* Fixed problem with '+' number
+
 0.0.6
-* Fixed problem with '070-4157134'
+* Fixed problem with '070-4157134' being parsed as US number
 
 ## Contributing
 
