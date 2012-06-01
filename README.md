@@ -42,6 +42,9 @@ In your views use:
 
 ## Changelog
 
+0.0.8
+* Improved number cleaning not to remove '+' and leading 0's. Now works with national numbers starting with 0 followed by country_code. Eg. 032 in BE.
+
 0.0.7
 * Fixed problem with '+' number
 

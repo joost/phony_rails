@@ -28,7 +28,7 @@ module PhonyRails
   def self.normalize_number(number, options = {})
     return if number.nil?
     number = number.clone # Just to be sure, we don't want to change the original.
-    number = Phony::CountryCodes.instance.clean(number) # Strips weird stuff from the number
+    number.gsub!(/[^\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
     if country_number = COUNTRY_NUMBER[options[:country_code] || options[:default_country_code]]
       # Add country_number if missing
