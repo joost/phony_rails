@@ -55,6 +55,7 @@ module PhonyRails
       # This methods sets the attribute to the normalized version.
       # It also adds the country_code (number), eg. 31 for NL numbers.
       def set_phony_normalized_numbers(attributes, options = {})
+        options = options.clone
         options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
         attributes.each do |attribute|
           write_attribute(attribute, PhonyRails.normalize_number(read_attribute(attribute), options))

@@ -42,6 +42,9 @@ In your views use:
 
 ## Changelog
 
+0.0.9
+* Fix for using same options Hash for all models.
+
 0.0.8
 * Improved number cleaning not to remove '+' and leading 0's. Now works with national numbers starting with 0 followed by country_code. Eg. 032 in BE.
 
