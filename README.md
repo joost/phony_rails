@@ -42,6 +42,9 @@ In your views use:
 
 ## Changelog
 
+0.0.10
+* Same fix as 0.0.9 but for phony_formatted method.
+
 0.0.9
 * Fix for using same options Hash for all models.
 
