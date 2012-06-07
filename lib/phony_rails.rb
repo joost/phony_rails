@@ -16,7 +16,10 @@ module PhonyRails
     'IT' => '39',
     'US' => '1',
     'AU' => '61',
-    'LU' => '352'
+    'LU' => '352',
+    'AT' => '43',
+    'CH' => '41',
+    'PL' => '48'
   }
 
   # This method requires a country_code attribute (eg. NL) and phone_number to be set.
@@ -86,13 +89,14 @@ module PhonyRails
       #   phony_normalized_method :fax_number, :default_country_code => 'US'
       # Creates a normalized_fax_number method.
       def phony_normalized_method(*attributes)
-        options = attributes.last.is_a?(Hash) ? attributes.pop : {} 
-        options.assert_valid_keys :country_code, :default_country_code
+        main_options = attributes.last.is_a?(Hash) ? attributes.pop : {} 
+        main_options.assert_valid_keys :country_code, :default_country_code
         attributes.each do |attribute|
-          raise ArgumentError, "Attribute #{attribute} was not found on #{self.name} (PhonyRails)" unless self.attribute_method?(attribute)
-          define_method :"normalized_#{attribute}" do
+          raise StandardError, "Instance method normalized_#{attribute} already exists on #{self.name} (PhonyRails)" if self.instance_methods.include?(:"normalized_#{attribute}")
+          define_method :"normalized_#{attribute}" do |options = {}|
+            raise ArgumentError, "No attribute/method #{attribute} found on #{self.class.name} (PhonyRails)" if not self.respond_to?(attribute)
             options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
-            PhonyRails.normalize_number(self[attribute], options)
+            PhonyRails.normalize_number(self.send(attribute), main_options.merge(options))
           end
         end
       end

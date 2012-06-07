@@ -24,7 +24,7 @@ Or install it yourself as:
 In your model add:
 
     class SomeModel < ActiveRecord::Base
-      phony_normalize :phone_number, :default_country_code => 'US' # Normalizes the attribute itself
+      phony_normalize :phone_number, :default_country_code => 'US' # Normalizes the attribute itself on validation
       phony_normalized_method :fax_number # Creates method normalized_fax_number that returns the normalized version of fax_number
     end
 
@@ -41,6 +41,9 @@ In your views use:
     <%= "some number string variable".phony_formatted(:format => :international, :spaces => '-') %>
 
 ## Changelog
+
+0.1.0
+* Added specs.
 
 0.0.10
 * Same fix as 0.0.9 but for phony_formatted method.
