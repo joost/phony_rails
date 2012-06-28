@@ -1,26 +1,14 @@
 require 'phony'
-require "phony_rails/string_extensions"
-require "phony_rails/version"
+require 'countries'
+require 'phony_rails/string_extensions'
+require 'validators/phony_validator'
+require 'phony_rails/version'
 
 module PhonyRails
 
-  # Quick fix to get country_phone_number (phone number) for all relevant countries.
-  # TODO: Replace with some gem or something.
-  COUNTRY_NUMBER = {
-    'NL' => '31',
-    'BE' => '32',
-    'DE' => '49',
-    'GB' => '44',
-    'FR' => '33',
-    'ES' => '34',
-    'IT' => '39',
-    'US' => '1',
-    'AU' => '61',
-    'LU' => '352',
-    'AT' => '43',
-    'CH' => '41',
-    'PL' => '48'
-  }
+  def self.country_number_for(country_code)
+    ISO3166::Country::Data[country_code].try(:[], 'country_code')
+  end
 
   # This method requires a country_code attribute (eg. NL) and phone_number to be set.
   # Options:
@@ -33,14 +21,14 @@ module PhonyRails
     number = number.clone # Just to be sure, we don't want to change the original.
     number.gsub!(/[^\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
-    if country_number = COUNTRY_NUMBER[options[:country_code] || options[:default_country_code]]
+    if country_number = country_number_for(options[:country_code] || options[:default_country_code])
       # Add country_number if missing
       number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
     end
     number = Phony.normalize(number)
     return number.to_s
-  rescue
-    number # If all goes wrong .. we still return the original input.
+  # rescue
+  #   number # If all goes wrong .. we still return the original input.
   end
 
   # This module is added to AR.

@@ -34,13 +34,17 @@ PhonyRails will also check your model for a country_code method to use when norm
 
 Use the Phony.plausible method to validate an attribute:
 
-    validate :phone_number, :phony_plausible => true
+    validates :phone_number, :phony_plausible => true
 
 In your views use:
 
     <%= "some number string variable".phony_formatted(:format => :international, :spaces => '-') %>
 
 ## Changelog
+
+0.1.2
+* Using countries gem as suggested by brutuscat.
+* Fixes bugs mentioned by ddidier.
 
 0.1.0
 * Added specs.
