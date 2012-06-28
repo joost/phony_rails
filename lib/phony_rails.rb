@@ -27,8 +27,8 @@ module PhonyRails
     end
     number = Phony.normalize(number)
     return number.to_s
-  # rescue
-  #   number # If all goes wrong .. we still return the original input.
+  rescue
+    number # If all goes wrong .. we still return the original input.
   end
 
   # This module is added to AR.
