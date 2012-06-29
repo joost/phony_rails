@@ -42,6 +42,9 @@ In your views use:
 
 ## Changelog
 
+0.1.5
+* some tests and a helper method by ddidier.
+
 0.1.2
 * Using countries gem as suggested by brutuscat.
 * Fixes bugs mentioned by ddidier.
