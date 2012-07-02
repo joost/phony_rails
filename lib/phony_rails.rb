@@ -49,7 +49,8 @@ module PhonyRails
         options = options.clone
         options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
         attributes.each do |attribute|
-          write_attribute(attribute, PhonyRails.normalize_number(read_attribute(attribute), options))
+          attribute_name = options[:as] || attribute
+          write_attribute(attribute_name, PhonyRails.normalize_number(read_attribute(attribute), options))
         end
       end
 
@@ -63,9 +64,11 @@ module PhonyRails
       # It checks your model object for a a country_code attribute (eg. 'NL') to do the normalizing so make sure
       # you've geocoded before calling this method!
       def phony_normalize(*attributes)
-        options = attributes.last.is_a?(Hash) ? attributes.pop : {} 
-        options.assert_valid_keys :country_code, :default_country_code
+        options = attributes.last.is_a?(Hash) ? attributes.pop : {}
+        options.assert_valid_keys :country_code, :default_country_code, :as
+        raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if !options[:as].blank? && attributes.size > 1
         attributes.each do |attribute|
+          raise ArgumentError, "No attribute #{attribute} found on #{self.class.name} (PhonyRails)" if not self.attribute_method?(attribute)
           # Add before validation that saves a normalized version of the phone number
           self.before_validation do 
             set_phony_normalized_numbers(attributes, options)

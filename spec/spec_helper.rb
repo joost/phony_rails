@@ -14,6 +14,7 @@ ActiveRecord::Schema.define do
 create_table :homes do |table|
   table.column :phone_attribute, :string
   table.column :phone_number, :string
+  table.column :phone_number_as_normalized, :string
 end
 end
 

@@ -55,6 +55,26 @@ describe PhonyRails do
     end
   end
 
+  describe 'defining ActiveRecord#phony_normalize' do
+    it "should not accept :as option with multiple attribute names" do
+      lambda {
+        Home.phony_normalize(:phone_number, :phone1_method, :as => 'non_existing_attribute')
+      }.should raise_error(ArgumentError)
+    end
+
+    it "should not accept :as option with unexiting attribute name" do
+      lambda {
+        Home.phony_normalize(:non_existing_attribute, :as => 'non_existing_attribute')
+      }.should raise_error(ArgumentError)
+    end
+
+    it "should accept :as option with single attribute name" do
+      lambda {
+        Home.phony_normalize(:phone_number, :as => 'something_else')
+      }.should_not raise_error(ArgumentError)
+    end
+  end
+
   describe 'using ActiveRecord#phony_normalized_method' do
   # Following examples have complete number (with country code!)
     it "should return a normalized version of an attribute" do
@@ -119,8 +139,15 @@ describe PhonyRails do
   describe 'using ActiveRecord#phony_normalize' do
     it "should set a normalized version of an attribute" do
       home = Home.new(:phone_number => "+31-(0)10-1234123")
-      home.valid?
+      home.valid?.should be_true
       home.phone_number.should eql('31101234123')
     end
+
+    it "should set a normalized version of an attribute using :as option" do
+      Home.phony_normalize :phone_number, :as => :phone_number_as_normalized
+      home = Home.new(:phone_number => "+31-(0)10-1234123")
+      home.valid?.should be_true
+      home.phone_number_as_normalized.should eql('31101234123')
+    end    
   end
 end

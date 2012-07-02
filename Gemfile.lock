@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phony_rails (0.1.2)
+    phony_rails (0.1.5)
       activerecord (~> 3.0)
       countries (~> 0.8.2)
       phony (~> 1.7.4)
