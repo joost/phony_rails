@@ -21,6 +21,18 @@ ActiveRecord::Schema.define do
   create_table :optional_helpful_homes do |table|
     table.column :phone_number, :string
   end
+
+  create_table :formatted_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
+
+  create_table :not_formatted_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
+
+  create_table :big_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
 end
 
 #--------------------
@@ -45,6 +57,24 @@ end
 class OptionalHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
   validates_plausible_phone :phone_number, :presence => false
+end
+
+#--------------------
+class FormattedHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :with => /^\+\d+/
+end
+
+#--------------------
+class NotFormattedHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :without => /^\+\d+/
+end
+
+#--------------------
+class BigHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/
 end
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -113,7 +143,7 @@ describe ActiveModel::Validations::HelperMethods do
     end
 
     #--------------------
-    context 'when a number is required (presence = true)' do
+    context 'when a number is required (:presence = true)' do
 
       before(:each) do
         @home = RequiredHelpfulHome.new
@@ -138,7 +168,7 @@ describe ActiveModel::Validations::HelperMethods do
     end
 
     #--------------------
-    context 'when a number is not required (presence = false)' do
+    context 'when a number is not required (!presence = false)' do
 
       before(:each) do
         @home = OptionalHelpfulHome.new
@@ -157,6 +187,55 @@ describe ActiveModel::Validations::HelperMethods do
         @home.phone_number = INVALID_NUMBER
         @home.should_not be_valid
         @home.errors.messages.should include(:phone_number => ["is an invalid number"])
+      end
+
+    end
+
+    #--------------------
+    context 'when a number must be formatted (:with)' do
+
+      before(:each) do
+        @home = FormattedHelpfulHome.new
+      end
+
+      it "should invalidate an empty number" do
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is invalid"])
+      end
+
+      it "should validate a well formatted valid number" do
+        @home.phone_number = "+33 #{VALID_NUMBER}"
+        @home.should be_valid
+      end
+
+      it "should invalidate a bad formatted valid number" do
+        @home.phone_number = VALID_NUMBER
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is invalid"])
+      end
+
+    end
+
+    #--------------------
+    context 'when a number must not be formatted (:without)' do
+
+      before(:each) do
+        @home = NotFormattedHelpfulHome.new
+      end
+
+      it "should validate an empty number" do
+        @home.should be_valid
+      end
+
+      it "should validate a well formatted valid number" do
+        @home.phone_number = VALID_NUMBER
+        @home.should be_valid
+      end
+
+      it "should invalidate a bad formatted valid number" do
+        @home.phone_number =  "+33 #{VALID_NUMBER}"
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is invalid"])
       end
 
     end

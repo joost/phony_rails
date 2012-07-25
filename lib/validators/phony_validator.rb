@@ -16,14 +16,12 @@ module ActiveModel
     module HelperMethods
 
       def validates_plausible_phone(*attr_names)
-        # extracted options are frozen somewhere,
-        # so we are merging for each validator
-
+        # merged attributes are modified somewhere, so we are cloning them for each validator
         merged_attributes = _merge_attributes(attr_names)
-        validates_with PresenceValidator, merged_attributes if merged_attributes[:presence]
 
-        merged_attributes = _merge_attributes(attr_names)
-        validates_with PhonyPlausibleValidator, merged_attributes
+        validates_with PresenceValidator, merged_attributes.clone if merged_attributes[:presence]
+        validates_with FormatValidator, merged_attributes.clone if (merged_attributes[:with] or merged_attributes[:without])
+        validates_with PhonyPlausibleValidator, merged_attributes.clone
       end
 
     end
