@@ -16,7 +16,14 @@ module ActiveModel
     module HelperMethods
 
       def validates_plausible_phone(*attr_names)
-        validates_with PhonyPlausibleValidator, _merge_attributes(attr_names)
+        # extracted options are frozen somewhere,
+        # so we are merging for each validator
+
+        merged_attributes = _merge_attributes(attr_names)
+        validates_with PresenceValidator, merged_attributes if merged_attributes[:presence]
+
+        merged_attributes = _merge_attributes(attr_names)
+        validates_with PhonyPlausibleValidator, merged_attributes
       end
 
     end
