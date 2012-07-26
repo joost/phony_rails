@@ -21,7 +21,7 @@ Or install it yourself as:
 
 ## Usage
 
-### ActiveRecord Extensions
+### Normalization / ActiveRecord Extension
 
 In your model add:
 
@@ -41,13 +41,28 @@ The `:default_country_code` options is used to specify a country_code when norma
 
 PhonyRails will also check your model for a country_code method to use when normalizing the number. So `'070-12341234'` with `country_code` 'NL' will get normalized to `'317012341234'`.
 
-### Validations
+### Validation
 
-Use the Phony.plausible method to validate an attribute:
+In your model use the Phony.plausible method to validate an attribute:
 
     validates :phone_number, :phony_plausible => true
 
-### Views
+or the helper method:
+
+    validates_plausible_phone :phone_number
+
+this method use other validators under the hood to provide:
+* presence validation using `ActiveModel::Validations::PresenceValidator`
+* format validation using `ActiveModel::Validations::FormatValidator`
+
+so we can use:
+
+    validates_plausible_phone :phone_number, :presence => true
+    validates_plausible_phone :phone_number, :with => /^\+\d+/
+    validates_plausible_phone :phone_number, :without => /^\+\d+/
+    validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/
+
+### Display / Views
 
 In your views use:
 

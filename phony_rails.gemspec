@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = PhonyRails::VERSION
 
-  gem.add_dependency "phony", "~> 1.7.4"
+  gem.add_dependency "phony", "~> 1.7.7"
   gem.add_dependency "countries", "~> 0.8.2"
   gem.add_dependency "activerecord", "~> 3.0"
 end
