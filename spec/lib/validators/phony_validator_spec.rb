@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -81,6 +82,7 @@ end
 # Tests
 #-----------------------------------------------------------------------------------------------------------------------
 
+I18n.locale = :en
 VALID_NUMBER = '123456789'
 INVALID_NUMBER = '123456789 123456789 123456789 123456789'
 
@@ -107,6 +109,22 @@ describe PhonyPlausibleValidator do
       @home.phone_number = INVALID_NUMBER
       @home.should_not be_valid
       @home.errors.messages.should include(:phone_number => ["is an invalid number"])
+    end
+
+    it "should translate the error message in english" do
+      I18n.with_locale(:en) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        @home.errors.messages.should include(:phone_number => ["is an invalid number"])
+      end
+    end
+
+    it "should translate the error message in french" do
+      I18n.with_locale(:fr) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        @home.errors.messages.should include(:phone_number => ["est un numéro invalide"])
+      end
     end
 
   end

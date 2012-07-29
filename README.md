@@ -55,6 +55,8 @@ so we can use:
     validates_plausible_phone :phone_number, :without => /^\+\d+/
     validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/
 
+the i18n key is `:improbable_phone`
+
 ### Display
 
 In your views use:

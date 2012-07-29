@@ -40,8 +40,8 @@ module PhonyRails
     end
 
     module InstanceMethods
-  
-    private
+
+      private
 
       # This methods sets the attribute to the normalized version.
       # It also adds the country_code (number), eg. 31 for NL numbers.
@@ -63,11 +63,11 @@ module PhonyRails
       # It checks your model object for a a country_code attribute (eg. 'NL') to do the normalizing so make sure
       # you've geocoded before calling this method!
       def phony_normalize(*attributes)
-        options = attributes.last.is_a?(Hash) ? attributes.pop : {} 
+        options = attributes.last.is_a?(Hash) ? attributes.pop : {}
         options.assert_valid_keys :country_code, :default_country_code
         attributes.each do |attribute|
           # Add before validation that saves a normalized version of the phone number
-          self.before_validation do 
+          self.before_validation do
             set_phony_normalized_numbers(attributes, options)
           end
         end
@@ -77,7 +77,7 @@ module PhonyRails
       #   phony_normalized_method :fax_number, :default_country_code => 'US'
       # Creates a normalized_fax_number method.
       def phony_normalized_method(*attributes)
-        main_options = attributes.last.is_a?(Hash) ? attributes.pop : {} 
+        main_options = attributes.last.is_a?(Hash) ? attributes.pop : {}
         main_options.assert_valid_keys :country_code, :default_country_code
         attributes.each do |attribute|
           raise StandardError, "Instance method normalized_#{attribute} already exists on #{self.name} (PhonyRails)" if self.instance_methods.include?(:"normalized_#{attribute}")
@@ -94,4 +94,9 @@ module PhonyRails
   end
 
 end
+
 ActiveRecord::Base.extend PhonyRails::ActiveRecordExtension
+
+Dir["#{File.dirname(__FILE__)}/phony_rails/locales/*.yml"].each do |file|
+  I18n.load_path << file
+end
