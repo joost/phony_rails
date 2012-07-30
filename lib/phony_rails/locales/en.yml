@@ -1,0 +1,6 @@
+
+en:
+  activerecord:
+    errors:
+      messages:
+        improbable_phone: "is an invalid number"

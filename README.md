@@ -62,6 +62,8 @@ so we can use:
     validates_plausible_phone :phone_number, :without => /^\+\d+/
     validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/
 
+the i18n key is `:improbable_phone`
+
 ### Display / Views
 
 In your views use:
@@ -75,6 +77,9 @@ Say you want to find a record by a phone number. Best is to normalize user input
     Home.find_by_normalized_phone_number(PhonyRails.normalize_number(params[:phone_number]))
 
 ## Changelog
+
+0.1.8
+* Improved validation methods by ddidier.
 
 0.1.6
 * Added :as option to phony_normalize.
