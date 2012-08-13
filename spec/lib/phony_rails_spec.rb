@@ -68,9 +68,15 @@ describe PhonyRails do
       }.should raise_error(ArgumentError)
     end
 
-    it "should accept :as option with single attribute name" do
+    it "should not accept :as option with single non existing attribute name" do
       lambda {
         Home.phony_normalize(:phone_number, :as => 'something_else')
+      }.should raise_error(ArgumentError)
+    end
+
+    it "should accept :as option with single existing attribute name" do
+      lambda {
+        Home.phony_normalize(:phone_number, :as => 'phone_number_as_normalized')
       }.should_not raise_error(ArgumentError)
     end
   end
