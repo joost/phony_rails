@@ -78,6 +78,10 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## Changelog
 
+0.1.10
+* Changes from henning-koch.
+* Some pending fixes.
+
 0.1.8
 * Improved validation methods by ddidier.
 
@@ -122,3 +126,5 @@ Say you want to find a record by a phone number. Best is to normalize user input
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+Thanks to all contributors: ddidier, brutuscat, henning-koch.
