@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/phony_rails/version', __FILE__)
+require 'phony_rails/version'
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Joost Hietbrink"]
