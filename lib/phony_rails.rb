@@ -86,8 +86,9 @@ module PhonyRails
         main_options = attributes.last.is_a?(Hash) ? attributes.pop : {}
         main_options.assert_valid_keys :country_code, :default_country_code
         attributes.each do |attribute|
-          raise StandardError, "Instance method normalized_#{attribute} already exists on #{self.name} (PhonyRails)" if self.instance_methods.include?(:"normalized_#{attribute}")
-          define_method :"normalized_#{attribute}" do |options = {}|
+          raise StandardError, "Instance method normalized_#{attribute} already exists on #{self.name} (PhonyRails)" if method_defined?(:"normalized_#{attribute}")
+          define_method :"normalized_#{attribute}" do |*args|
+            options = args.first || {}
             raise ArgumentError, "No attribute/method #{attribute} found on #{self.class.name} (PhonyRails)" if not self.respond_to?(attribute)
             options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
             PhonyRails.normalize_number(self.send(attribute), main_options.merge(options))
