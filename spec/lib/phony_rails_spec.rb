@@ -62,7 +62,7 @@ describe PhonyRails do
       }.should raise_error(ArgumentError)
     end
 
-    it "should not accept :as option with unexiting attribute name" do
+    it "should not accept :as option with unexisting attribute name" do
       lambda {
         Home.phony_normalize(:non_existing_attribute, :as => 'non_existing_attribute')
       }.should raise_error(ArgumentError)
