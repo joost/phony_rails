@@ -27,8 +27,8 @@ In your model add:
 
     class SomeModel < ActiveRecord::Base
 
-      # Normalizes the attribute itself before 
-      phony_normalize :phone_number, :default_country_code => 'US'validation
+      # Normalizes the attribute itself before validation 
+      phony_normalize :phone_number, :default_country_code => 'US'
 
       # Normalizes attribute before validation and saves into other attribute
       phony_normalize :phone_number, :as => :phone_number_normalized_version, :default_country_code => 'US' 
