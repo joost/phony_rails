@@ -86,6 +86,9 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## Changelog
 
+0.1.12
+* Further loosened gemspec dependencies.
+
 0.1.11
 * Better gemspec dependency versions by rjhaveri.
 
