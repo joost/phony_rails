@@ -41,6 +41,14 @@ The `:default_country_code` options is used to specify a country_code when norma
 
 PhonyRails will also check your model for a country_code method to use when normalizing the number. So `'070-12341234'` with `country_code` 'NL' will get normalized to `'317012341234'`.
 
+You can also do-it-yourself and call:
+
+    # Options:
+    #   :country_code => The country code we should use.
+    #   :default_country_code => Some fallback code (eg. 'NL') that can be used as default (comes from phony_normalize_numbers method).
+
+    PhonyRails.normalize_number('some number', :country_code => 'NL')
+
 ### Validation
 
 In your model use the Phony.plausible method to validate an attribute:
@@ -77,6 +85,9 @@ Say you want to find a record by a phone number. Best is to normalize user input
     Home.find_by_normalized_phone_number(PhonyRails.normalize_number(params[:phone_number]))
 
 ## Changelog
+
+0.1.11
+* Better gemspec dependency versions by rjhaveri.
 
 0.1.10
 * Changes from henning-koch.
