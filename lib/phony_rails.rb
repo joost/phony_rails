@@ -1,5 +1,5 @@
 require 'phony'
-require 'countries'
+require 'iso3166'
 require 'phony_rails/string_extensions'
 require 'validators/phony_validator'
 require 'phony_rails/version'

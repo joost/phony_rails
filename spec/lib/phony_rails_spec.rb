@@ -1,6 +1,10 @@
 require 'spec_helper'
 describe PhonyRails do
 
+  it "should not pollute the global namespace with a Country class" do
+    should_not be_const_defined "Country"
+  end
+
   describe 'String extensions' do
     it "should phony_format a String" do
       "31101234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-1234123')
@@ -124,14 +128,14 @@ describe PhonyRails do
       home.normalized_phone1_method(:country_code => 'NL').should eql('31308612906')
     end
 
-    it "should use last passed options" do 
+    it "should use last passed options" do
       home = Home.new(:phone1_method => "(030) 8 61 29 06")
       home.normalized_phone1_method(:country_code => 'NL').should eql('31308612906')
       home.normalized_phone1_method(:country_code => 'DE').should eql('49308612906')
       home.normalized_phone1_method(:country_code => nil).should eql('49308612906')
     end
 
-    it "should use last object method" do 
+    it "should use last object method" do
       home = Home.new(:phone1_method => "(030) 8 61 29 06")
       home.country_code = 'NL'
       home.normalized_phone1_method.should eql('31308612906')
@@ -154,6 +158,6 @@ describe PhonyRails do
       home = Home.new(:phone_number => "+31-(0)10-1234123")
       home.valid?.should be_true
       home.phone_number_as_normalized.should eql('31101234123')
-    end    
+    end
   end
 end
