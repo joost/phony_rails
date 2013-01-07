@@ -31,8 +31,7 @@ module PhonyRails
     number # If all goes wrong .. we still return the original input.
   end
 
-  # This module is added to AR.
-  module ActiveRecordExtension
+  module Extension
 
     def self.extended(base)
       base.send :include, InstanceMethods
@@ -102,7 +101,13 @@ module PhonyRails
 
 end
 
-ActiveRecord::Base.extend PhonyRails::ActiveRecordExtension
+# check whether it is ActiveRecord or Mongoid being used
+ActiveRecord::Base.send :extend, PhonyRails::Extension if defined?(ActiveRecord)
+Mongoid::Document.module_eval do
+  def self.included(base)
+    base.extend PhonyRails::Extension
+  end
+end if defined?(Mongoid)
 
 Dir["#{File.dirname(__FILE__)}/phony_rails/locales/*.yml"].each do |file|
   I18n.load_path << file

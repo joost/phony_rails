@@ -4,6 +4,7 @@ gemspec # Specify your gem's dependencies in phony_number.gemspec
 # For testing
 gem 'sqlite3'
 
+gem 'rake'
 gem 'rspec',          '~> 2.11.0'
 gem 'guard',          '~> 1.2.0'
 gem 'guard-bundler',  '~> 1.0.0'
