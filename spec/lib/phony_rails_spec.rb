@@ -34,6 +34,10 @@ describe PhonyRails do
       PhonyRails.normalize_number('+31-70-4157134', :country_code => 'NL').should eql('31704157134')
       PhonyRails.normalize_number('0323-2269497', :country_code => 'BE').should eql('323232269497')
     end
+
+    it "should not normalize an implausible number" do
+      PhonyRails.normalize_number('01').should eql('01')
+    end
   end
 
   describe 'defining ActiveRecord#phony_normalized_method' do
