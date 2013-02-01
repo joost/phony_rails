@@ -25,7 +25,7 @@ module PhonyRails
       # Add country_number if missing
       number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
     end
-    number = Phony.normalize(number)
+    number = Phony.normalize(number) if Phony.plausible?(number)
     return number.to_s
   rescue
     number # If all goes wrong .. we still return the original input.
