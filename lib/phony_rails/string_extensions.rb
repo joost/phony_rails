@@ -5,7 +5,9 @@
     #   "31612341234".phony_formatted # => '06 12341234'
     #   "31612341234".phony_formatted(:spaces => '-') # => '06-12341234'
     def phony_formatted(options = {})
-      Phony.formatted(self, options.reverse_merge(:format => :national))
+      if Phony.plausible?(self)
+        Phony.formatted(self.gsub(/[^0-9]/,''), options.reverse_merge(:format => :national))
+      end
     end
 
   end

@@ -9,6 +9,22 @@ describe PhonyRails do
     it "should phony_format a String" do
       "31101234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-1234123')
     end
+
+    it "should accept strings with non-digits in it" do
+      "+31-10-1234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-1234123')
+    end
+
+    it "returns nil if implausible phone" do
+      "this is not a phone".phony_formatted.should be_nil
+    end
+
+    it "returns nil on blank string" do
+      "".phony_formatted.should be_nil
+    end
+
+    it "works on national phones" do
+      "31101234123".phony_formatted(:format => :national, :spaces => '').should eql("0101234123".phony_formatted(:format => :national, :spaces => ''))
+    end
   end
 
   describe 'PhonyRails#normalize_number' do
