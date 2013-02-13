@@ -76,7 +76,19 @@ the i18n key is `:improbable_phone`
 
 In your views use:
 
-    <%= "some number string variable".phony_formatted(:format => :international, :spaces => '-') %>
+    <%= "311012341234".phony_formatted(:format => :international, :spaces => '-') %>
+    <%= "+31-10-12341234".phony_formatted(:format => :international, :spaces => '-') %>
+    <%= "+31(0)1012341234".phony_formatted(:format => :international, :spaces => '-') %>    
+
+To first normalize the String to a certain country use:
+
+    <%= "010-12341234".phony_formatted(normalize => :NL, :format => :international, :spaces => '-') %>    
+
+You can also use the bang method (phony_formatted!):
+
+    number = "010-12341234"
+    number.phony_formatted!(normalize => :NL, :format => :international)
+    number # => "+31 10 12341234"
 
 ### Find by normalized number
 

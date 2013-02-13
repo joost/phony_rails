@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phony_rails (0.1.12)
+    phony_rails (0.1.13)
       activerecord (>= 3.0)
       countries (>= 0.8.2)
       phony (>= 1.7.7)
@@ -9,15 +9,15 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.2.10)
-      activesupport (= 3.2.10)
+    activemodel (3.2.12)
+      activesupport (= 3.2.12)
       builder (~> 3.0.0)
-    activerecord (3.2.10)
-      activemodel (= 3.2.10)
-      activesupport (= 3.2.10)
+    activerecord (3.2.12)
+      activemodel (= 3.2.12)
+      activesupport (= 3.2.12)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activesupport (3.2.10)
+    activesupport (3.2.12)
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
@@ -41,8 +41,8 @@ GEM
       rb-fchange (~> 0.0.5)
       rb-fsevent (~> 0.9.1)
       rb-inotify (~> 0.8.8)
-    multi_json (1.5.0)
-    phony (1.8.4)
+    multi_json (1.6.0)
+    phony (1.8.6)
     rake (10.0.3)
     rb-fchange (0.0.5)
       ffi
@@ -65,6 +65,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  countries
   growl
   guard (~> 1.2.0)
   guard-bundler (~> 1.0.0)

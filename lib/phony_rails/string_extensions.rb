@@ -4,11 +4,18 @@
     # This enables:
     #   "31612341234".phony_formatted # => '06 12341234'
     #   "31612341234".phony_formatted(:spaces => '-') # => '06-12341234'
+    # To first normalize a String use:
+    #   "010-12341234".phony_formatted(:normalize => :NL)
     def phony_formatted(options = {})
-      normalized = PhonyRails.normalize_number(self)
-      if normalized
-        Phony.formatted(normalized, options.reverse_merge(:format => :national))
-      end
+      normalize_country_code = options.delete(:normalize)
+      s = (normalize_country_code ? PhonyRails.normalize_number(self, :country_code => normalize_country_code.to_s) : self.gsub(/\D/, ''))
+      return if s.blank?
+      Phony.formatted(s, options.reverse_merge(:format => :national))
+    end
+
+    # The bang method
+    def phony_formatted!(options = {})
+      replace(self.phony_formatted(options))
     end
 
   end
