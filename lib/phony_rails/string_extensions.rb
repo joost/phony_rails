@@ -5,7 +5,10 @@
     #   "31612341234".phony_formatted # => '06 12341234'
     #   "31612341234".phony_formatted(:spaces => '-') # => '06-12341234'
     def phony_formatted(options = {})
-      Phony.formatted(self, options.reverse_merge(:format => :national))
+      normalized = PhonyRails.normalize_number(self)
+      if normalized
+        Phony.formatted(normalized, options.reverse_merge(:format => :national))
+      end
     end
 
   end
