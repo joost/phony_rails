@@ -21,6 +21,10 @@ describe PhonyRails do
     it "returns nil on blank string" do
       "".phony_formatted.should be_nil
     end
+
+    it "works on national phones" do
+      "31101234123".phony_formatted(:format => :national, :spaces => '').should eql("0101234123".phony_formatted(:format => :national, :spaces => ''))
+    end
   end
 
   describe 'PhonyRails#normalize_number' do
