@@ -14,7 +14,7 @@ describe PhonyRails do
         s.phony_formatted!(:normalize => :NL, :format => :international).should eql('+31 10 1234123')
         s.should eql("+31 10 1234123")
       end
-      
+
     end
 
     describe 'with normalize option' do
@@ -143,6 +143,12 @@ describe PhonyRails do
         Home.phony_normalize(:phone_number, :as => 'phone_number_as_normalized')
       }.should_not raise_error(ArgumentError)
     end
+
+    it "should accept a non existing attribute name" do
+      lambda {
+        Dummy.phony_normalize(:non_existing_attribute)
+      }.should_not raise_error
+    end
   end
 
   describe 'using ActiveRecord#phony_normalized_method' do
@@ -218,6 +224,15 @@ describe PhonyRails do
       home = Home.new(:phone_number => "+31-(0)10-1234123")
       home.valid?.should be_true
       home.phone_number_as_normalized.should eql('31101234123')
+    end
+
+    it "should raise a RuntimeError at validation if the attribute doesn't exist" do
+      Dummy.phony_normalize :non_existing_attribute
+
+      dummy = Dummy.new
+      lambda {
+        dummy.valid?
+      }.should raise_error(RuntimeError)
     end
   end
 end
