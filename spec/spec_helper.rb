@@ -26,6 +26,9 @@ class Home < ActiveRecord::Base
   phony_normalize :phone_number # normalized on validation
 end
 
+class Dummy < Home
+end
+
 RSpec.configure do |config|
-  # some (optional) config here  
+  # some (optional) config here
 end

@@ -49,6 +49,7 @@ module PhonyRails
         options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
+          raise RuntimeError, "No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)" if not self.respond_to?(attribute_name)
           write_attribute(attribute_name, PhonyRails.normalize_number(read_attribute(attribute), options))
         end
       end
@@ -69,12 +70,9 @@ module PhonyRails
           raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if attributes.size > 1
           raise ArgumentError, "'#{options[:as]}' is not an attribute on #{self.name}. You might want to use 'phony_normalized_method :#{attributes.first}' (PhonyRails)" if not self.attribute_method?(options[:as])
         end
-        attributes.each do |attribute|
-          raise ArgumentError, "No attribute #{attribute} found on #{self.name} (PhonyRails)" if not self.attribute_method?(attribute)
-          # Add before validation that saves a normalized version of the phone number
-          self.before_validation do
-            set_phony_normalized_numbers(attributes, options)
-          end
+        # Add before validation that saves a normalized version of the phone number
+        self.before_validation do
+          set_phony_normalized_numbers(attributes, options)
         end
       end
 
