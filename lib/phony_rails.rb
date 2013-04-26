@@ -49,7 +49,7 @@ module PhonyRails
         options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
-          raise RuntimeError, "No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)" if not self.respond_to?(attribute_name)
+          raise RuntimeError, "No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)" if not self.attribute_method?(attribute_name)
           write_attribute(attribute_name, PhonyRails.normalize_number(read_attribute(attribute), options))
         end
       end

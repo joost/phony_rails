@@ -27,11 +27,11 @@ In your model add:
 
     class SomeModel < ActiveRecord::Base
 
-      # Normalizes the attribute itself before validation 
+      # Normalizes the attribute itself before validation
       phony_normalize :phone_number, :default_country_code => 'US'
 
       # Normalizes attribute before validation and saves into other attribute
-      phony_normalize :phone_number, :as => :phone_number_normalized_version, :default_country_code => 'US' 
+      phony_normalize :phone_number, :as => :phone_number_normalized_version, :default_country_code => 'US'
 
       # Creates method normalized_fax_number that returns the normalized version of fax_number
       phony_normalized_method :fax_number
@@ -78,11 +78,11 @@ In your views use:
 
     <%= "311012341234".phony_formatted(:format => :international, :spaces => '-') %>
     <%= "+31-10-12341234".phony_formatted(:format => :international, :spaces => '-') %>
-    <%= "+31(0)1012341234".phony_formatted(:format => :international, :spaces => '-') %>    
+    <%= "+31(0)1012341234".phony_formatted(:format => :international, :spaces => '-') %>
 
 To first normalize the String to a certain country use:
 
-    <%= "010-12341234".phony_formatted(normalize => :NL, :format => :international, :spaces => '-') %>    
+    <%= "010-12341234".phony_formatted(normalize => :NL, :format => :international, :spaces => '-') %>
 
 You can also use the bang method (phony_formatted!):
 
@@ -98,28 +98,31 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## Changelog
 
+0.2.1
+* Better error handling by @k4nar
+
 0.1.12
 * Further loosened gemspec dependencies.
 
 0.1.11
-* Better gemspec dependency versions by rjhaveri.
+* Better gemspec dependency versions by @rjhaveri.
 
 0.1.10
 * Changes from henning-koch.
 * Some pending fixes.
 
 0.1.8
-* Improved validation methods by ddidier.
+* Improved validation methods by @ddidier.
 
 0.1.6
 * Added :as option to phony_normalize.
 
 0.1.5
-* some tests and a helper method by ddidier.
+* some tests and a helper method by @ddidier.
 
 0.1.2
-* Using countries gem as suggested by brutuscat.
-* Fixes bugs mentioned by ddidier.
+* Using countries gem as suggested by @brutuscat.
+* Fixes bugs mentioned by @ddidier.
 
 0.1.0
 * Added specs.
