@@ -68,19 +68,38 @@ describe PhonyRails do
   end
 
   describe 'PhonyRails#normalize_number' do
-    it "should normalize a number with a default_country_code" do
-      PhonyRails.normalize_number('010-1234123', :default_country_code => 'NL').should eql('31101234123')
+    context 'number with a country code' do
+
+      it "should not add default_country_code" do
+        PhonyRails.normalize_number('+4790909090', :default_country_code => 'SE').should eql('4790909090') # SE = +46
+      end
+
+      it "should force add country_code" do
+        PhonyRails.normalize_number('+4790909090', :country_code => 'SE').should eql('464790909090')
+      end
+
     end
 
-    it "should normalize a number with a country_code" do
-      PhonyRails.normalize_number('010-1234123', :country_code => 'NL', :default_country_code => 'DE').should eql('31101234123')
-      PhonyRails.normalize_number('010-1234123', :country_code => 'NL').should eql('31101234123')
-    end
+    context 'number without a country code' do
 
-    it "should handle different countries" do
-      PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE').should eql('49308612906')
-      PhonyRails.normalize_number('+43 664 3830412', :country_code => 'AT').should eql('436643830412')
-      PhonyRails.normalize_number('0203 330 8897', :country_code => 'GB').should eql('442033308897')
+      it "should normalize with a default_country_code" do
+        PhonyRails.normalize_number('010-1234123', :default_country_code => 'NL').should eql('31101234123')
+      end
+
+      it "should normalize with a country_code" do
+        PhonyRails.normalize_number('010-1234123', :country_code => 'NL', :default_country_code => 'DE').should eql('31101234123')
+        PhonyRails.normalize_number('010-1234123', :country_code => 'NL').should eql('31101234123')
+      end
+
+      it "should handle different countries" do
+        PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE').should eql('49308612906')
+        PhonyRails.normalize_number('0203 330 8897', :country_code => 'GB').should eql('442033308897')
+      end
+
+      it "should prefer country_code over default_country_code" do
+        PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE', :default_country_code => 'NL').should eql('49308612906')
+      end
+
     end
 
     it "should handle some edge cases" do

@@ -21,9 +21,12 @@ module PhonyRails
     number = number.clone # Just to be sure, we don't want to change the original.
     number.gsub!(/[^\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
-    if country_number = country_number_for(options[:country_code] || options[:default_country_code])
-      # Add country_number if missing
+    if country_number = country_number_for(options[:country_code])
+      # (Force) add country_number if missing
       number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
+    elsif default_country_number = country_number_for(options[:default_country_code])
+      # Add default_country_number if missing
+      number = "#{default_country_number}#{number}" if not number =~ /^(00|\+)/
     end
     number = Phony.normalize(number) if Phony.plausible?(number)
     return number.to_s
