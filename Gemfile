@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 # Preempt the default loading so that we don't get an unqualified Country class imported.
 gem 'countries', :require => 'iso3166'

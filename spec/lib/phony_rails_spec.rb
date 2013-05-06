@@ -77,6 +77,10 @@ describe PhonyRails do
       PhonyRails.normalize_number('010-1234123', :country_code => 'NL').should eql('31101234123')
     end
 
+    it "should normalize a number with a country_code different than the specified country_code" do
+      PhonyRails.normalize_number('+4790909090', :country_code => 'SE').should eql('4790909090')
+    end
+
     it "should handle different countries" do
       PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE').should eql('49308612906')
       PhonyRails.normalize_number('+43 664 3830412', :country_code => 'AT').should eql('436643830412')
