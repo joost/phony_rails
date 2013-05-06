@@ -44,10 +44,13 @@ PhonyRails will also check your model for a country_code method to use when norm
 You can also do-it-yourself and call:
 
     # Options:
-    #   :country_code => The country code we should use.
+    #   :country_code => The country code we should use (forced).
     #   :default_country_code => Some fallback code (eg. 'NL') that can be used as default (comes from phony_normalize_numbers method).
 
     PhonyRails.normalize_number('some number', :country_code => 'NL')
+
+    PhonyRails.normalize_number('+4790909090', :country_code => 'SE') # => '464790909090' (forced to +46)
+    PhonyRails.normalize_number('+4790909090', :default_country_code => 'SE') # => '4790909090' (still +47 so not changed)
 
 ### Validation
 
@@ -97,6 +100,10 @@ Say you want to find a record by a phone number. Best is to normalize user input
     Home.find_by_normalized_phone_number(PhonyRails.normalize_number(params[:phone_number]))
 
 ## Changelog
+
+0.3.0
+* Now ability to force change a country_code.
+  See: https://github.com/joost/phony_rails/pull/23#issuecomment-17480463
 
 0.2.1
 * Better error handling by @k4nar
