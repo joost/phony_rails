@@ -26,7 +26,7 @@ module PhonyRails
       number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
     elsif default_country_number = country_number_for(options[:default_country_code])
       # Add default_country_number if missing
-      number = "#{default_country_number}#{number}" if not number =~ /^(00|\+)/
+      number = "#{default_country_number}#{number}" if not number =~ /^(00|\+)?#{default_country_number}/
     end
     number = Phony.normalize(number) if Phony.plausible?(number)
     return number.to_s
