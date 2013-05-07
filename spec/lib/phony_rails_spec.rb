@@ -72,10 +72,14 @@ describe PhonyRails do
 
       it "should not add default_country_code" do
         PhonyRails.normalize_number('+4790909090', :default_country_code => 'SE').should eql('4790909090') # SE = +46
+        PhonyRails.normalize_number('004790909090', :default_country_code => 'SE').should eql('4790909090')
+        PhonyRails.normalize_number('4790909090', :default_country_code => 'NO').should eql('4790909090') # NO = +47
       end
 
       it "should force add country_code" do
         PhonyRails.normalize_number('+4790909090', :country_code => 'SE').should eql('464790909090')
+        PhonyRails.normalize_number('004790909090', :country_code => 'SE').should eql('464790909090')
+        PhonyRails.normalize_number('4790909090', :country_code => 'SE').should eql('464790909090')
       end
 
     end

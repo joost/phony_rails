@@ -12,6 +12,8 @@ module PhonyRails
 
   # This method requires a country_code attribute (eg. NL) and phone_number to be set.
   # Options:
+  #   :country_number => The country dial code (eg. 31 for NL).
+  #   :default_country_number => Fallback country code.
   #   :country_code => The country code we should use.
   #   :default_country_code => Some fallback code (eg. 'NL') that can be used as default (comes from phony_normalize_numbers method).
   # This idea came from:
@@ -21,12 +23,12 @@ module PhonyRails
     number = number.clone # Just to be sure, we don't want to change the original.
     number.gsub!(/[^\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
-    if country_number = country_number_for(options[:country_code])
+    if country_number = options[:country_number] || country_number_for(options[:country_code])
       # (Force) add country_number if missing
       number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
-    elsif default_country_number = country_number_for(options[:default_country_code])
+    elsif default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
       # Add default_country_number if missing
-      number = "#{default_country_number}#{number}" if not number =~ /^(00|\+)/
+      number = "#{default_country_number}#{number}" if not number =~ /^(00|\+|#{default_country_number})/
     end
     number = Phony.normalize(number) if Phony.plausible?(number)
     return number.to_s
