@@ -8,7 +8,7 @@
     #   "010-12341234".phony_formatted(:normalize => :NL)
     def phony_formatted(options = {})
       normalize_country_code = options.delete(:normalize)
-      s = (normalize_country_code ? PhonyRails.normalize_number(self, :country_code => normalize_country_code.to_s) : self.gsub(/\D/, ''))
+      s = (normalize_country_code ? PhonyRails.normalize_number(self, :default_country_code => normalize_country_code.to_s) : self.gsub(/\D/, ''))
       return if s.blank?
       Phony.formatted(s, options.reverse_merge(:format => :national))
     end

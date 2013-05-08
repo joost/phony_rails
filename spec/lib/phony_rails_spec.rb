@@ -42,6 +42,10 @@ describe PhonyRails do
         "+31-10-1234123".phony_formatted(:normalize => :NL, :format => :international, :spaces => '-').should eql('+31-10-1234123')
       end
 
+      it "should phony_format String with country code different than normalized value" do
+        "+4790909090".phony_formatted(:normalize => :SE, :format => :international).should eql('+47 909 09 090')
+      end
+
     end
 
     it "should not change original String" do
