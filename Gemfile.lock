@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phony_rails (0.3.0)
+    phony_rails (0.3.1)
       activerecord (>= 3.0)
       countries (>= 0.8.2)
       phony (>= 1.7.7)
@@ -41,7 +41,7 @@ GEM
       rb-fchange (~> 0.0.5)
       rb-fsevent (~> 0.9.1)
       rb-inotify (~> 0.8.8)
-    multi_json (1.7.2)
+    multi_json (1.7.3)
     phony (1.9.0)
     rake (10.0.3)
     rb-fchange (0.0.5)
