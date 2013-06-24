@@ -17,5 +17,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "phony", ">= 1.7.7"
   gem.add_dependency "countries", ">= 0.8.2"
-  gem.add_dependency "activerecord", ">= 3.0"
+  gem.add_dependency "activesupport", ">= 3.0"
+  gem.add_development_dependency "activerecord", ">= 3.0"
+  gem.add_development_dependency "mongoid", ">= 3.0"
 end
