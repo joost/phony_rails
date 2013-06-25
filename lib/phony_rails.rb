@@ -37,14 +37,9 @@ module PhonyRails
   end
 
   module Extension
+    extend ActiveSupport::Concern
 
-    def self.extended(base)
-      base.send :include, InstanceMethods
-      base.extend ClassMethods
-    end
-
-    module InstanceMethods
-
+    included do
       private
 
       # This methods sets the attribute to the normalized version.
@@ -58,7 +53,6 @@ module PhonyRails
           write_attribute(attribute_name, PhonyRails.normalize_number(read_attribute(attribute), options))
         end
       end
-
     end
 
     module ClassMethods
@@ -97,20 +91,19 @@ module PhonyRails
           end
         end
       end
-
     end
-
   end
-
 end
 
 # check whether it is ActiveRecord or Mongoid being used
-ActiveRecord::Base.send :extend, PhonyRails::Extension if defined?(ActiveRecord)
-Mongoid::Document.module_eval do
-  def self.included(base)
-    base.extend PhonyRails::Extension
+ActiveRecord::Base.send :include, PhonyRails::Extension if defined?(ActiveRecord)
+
+if defined?(Mongoid)
+  module Mongoid::Phony
+    extend ActiveSupport::Concern
+    include PhonyRails::Extension
   end
-end if defined?(Mongoid)
+end
 
 Dir["#{File.dirname(__FILE__)}/phony_rails/locales/*.yml"].each do |file|
   I18n.load_path << file

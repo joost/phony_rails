@@ -21,9 +21,9 @@ Or install it yourself as:
 
 ## Usage
 
-### Normalization / ActiveRecord Extension
+### Normalization / Model Usage
 
-In your model add:
+For **ActiveRecord**, in your model add:
 
     class SomeModel < ActiveRecord::Base
 
@@ -35,6 +35,15 @@ In your model add:
 
       # Creates method normalized_fax_number that returns the normalized version of fax_number
       phony_normalized_method :fax_number
+    end
+
+For **Mongoid**, in keeping with Mongoid plug-in conventions you must include the `Mongoid::Phony` module:
+
+    class SomeModel
+      include Mongoid::Document
+      include Mongoid::Phony
+
+      # methods are same as ActiveRecord usage
     end
 
 The `:default_country_code` options is used to specify a country_code when normalizing.
