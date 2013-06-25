@@ -110,6 +110,9 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## Changelog
 
+0.4.0
+* Better Mongoid support by @johnnyshields
+
 0.3.0
 * Now ability to force change a country_code.
   See: https://github.com/joost/phony_rails/pull/23#issuecomment-17480463
