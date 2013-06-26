@@ -1,9 +1,4 @@
 en:
-  activerecord:
-    errors:
-      messages:
-        improbable_phone: "is an invalid number"
-  activemodel:
-    errors:
-      messages:
-        improbable_phone: "is an invalid number"
+  errors:
+    messages:
+      improbable_phone: "is an invalid number"

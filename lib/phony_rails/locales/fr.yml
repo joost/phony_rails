@@ -1,5 +1,4 @@
 fr:
-  activerecord:
-    errors:
-      messages:
-        improbable_phone: "est un numéro invalide"
+  errors:
+    messages:
+      improbable_phone: "est un numéro invalide"
