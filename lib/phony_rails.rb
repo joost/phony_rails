@@ -50,7 +50,7 @@ module PhonyRails
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
           raise RuntimeError, "No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)" if not self.class.attribute_method?(attribute_name)
-          write_attribute(attribute_name, PhonyRails.normalize_number(read_attribute(attribute), options))
+          self.send("#{attribute_name}=", PhonyRails.normalize_number(self.send(attribute), options))
         end
       end
     end

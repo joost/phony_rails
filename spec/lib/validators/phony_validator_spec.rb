@@ -111,7 +111,7 @@ describe PhonyPlausibleValidator do
       @home.errors.messages.should include(:phone_number => ["is an invalid number"])
     end
 
-    it "should translate the error message in english" do
+    it "should translate the error message in English" do
       I18n.with_locale(:en) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
@@ -119,7 +119,7 @@ describe PhonyPlausibleValidator do
       end
     end
 
-    it "should translate the error message in french" do
+    it "should translate the error message in French" do
       I18n.with_locale(:fr) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
@@ -127,6 +127,13 @@ describe PhonyPlausibleValidator do
       end
     end
 
+    it "should translate the error message in Japanese" do
+      I18n.with_locale(:ja) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        @home.errors.messages.should include(:phone_number => ["は正し電話番号ではありません"])
+      end
+    end
   end
 end
 
