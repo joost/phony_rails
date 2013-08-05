@@ -94,12 +94,12 @@ In your views use:
 
 To first normalize the String to a certain country use:
 
-    <%= "010-12341234".phony_formatted(normalize => :NL, :format => :international, :spaces => '-') %>
+    <%= "010-12341234".phony_formatted(:normalize => :NL, :format => :international, :spaces => '-') %>
 
 You can also use the bang method (phony_formatted!):
 
     number = "010-12341234"
-    number.phony_formatted!(normalize => :NL, :format => :international)
+    number.phony_formatted!(:normalize => :NL, :format => :international)
     number # => "+31 10 12341234"
 
 ### Find by normalized number
