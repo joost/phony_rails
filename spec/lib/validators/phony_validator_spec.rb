@@ -34,6 +34,10 @@ ActiveRecord::Schema.define do
   create_table :big_helpful_homes do |table|
     table.column :phone_number, :string
   end
+
+  create_table :australian_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
 end
 
 #--------------------
@@ -78,12 +82,20 @@ class BigHelpfulHome < ActiveRecord::Base
   validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/
 end
 
+#--------------------
+class AustralianHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :country_code => "61"
+end
+
 #-----------------------------------------------------------------------------------------------------------------------
 # Tests
 #-----------------------------------------------------------------------------------------------------------------------
 
 I18n.locale = :en
-VALID_NUMBER = '123456789'
+VALID_NUMBER = '1234567890'
+AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '61390133997'
+FRENCH_NUMBER_WITH_COUNTRY_CODE = '330627899541'
 INVALID_NUMBER = '123456789 123456789 123456789 123456789'
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -263,6 +275,35 @@ describe ActiveModel::Validations::HelperMethods do
         @home.errors.messages.should include(:phone_number => ["is invalid"])
       end
 
+    end
+
+    #--------------------
+    context 'when a number must include a specific country code' do
+
+      before(:each) do
+        @home = AustralianHelpfulHome.new
+      end
+
+      it "should validate an empty number" do
+        @home.should be_valid
+      end
+
+      it "should validate a valid number with the right country code" do
+        @home.phone_number = AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE
+        @home.should be_valid
+      end
+
+      it "should invalidate a valid number with the wrong country code" do
+        @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is invalid"])
+      end
+
+      it "should invalidate a valid number without a country code" do
+        @home.phone_number = VALID_NUMBER
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is invalid"])
+      end
     end
 
   end
