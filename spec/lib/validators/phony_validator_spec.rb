@@ -77,15 +77,15 @@ class NotFormattedHelpfulHome < ActiveRecord::Base
 end
 
 #--------------------
-class BigHelpfulHome < ActiveRecord::Base
-  attr_accessor :phone_number
-  validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/
-end
-
-#--------------------
 class AustralianHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
   validates_plausible_phone :phone_number, :country_code => "61"
+end
+
+#--------------------
+class BigHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/, :country_code => "33"
 end
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -95,7 +95,9 @@ end
 I18n.locale = :en
 VALID_NUMBER = '1234567890'
 AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '61390133997'
+FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'
 FRENCH_NUMBER_WITH_COUNTRY_CODE = '330627899541'
+FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 0627899541'
 INVALID_NUMBER = '123456789 123456789 123456789 123456789'
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -296,14 +298,50 @@ describe ActiveModel::Validations::HelperMethods do
       it "should invalidate a valid number with the wrong country code" do
         @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
         @home.should_not be_valid
-        @home.errors.messages.should include(:phone_number => ["is invalid"])
+        @home.errors.messages.should include(:phone_number => ["is an invalid number"])
       end
 
       it "should invalidate a valid number without a country code" do
         @home.phone_number = VALID_NUMBER
         @home.should_not be_valid
-        @home.errors.messages.should include(:phone_number => ["is invalid"])
+        @home.errors.messages.should include(:phone_number => ["is an invalid number"])
       end
+
+    end
+
+    context 'when lots of things are being validated simultaneously' do
+
+      before(:each) do
+        @home = BigHelpfulHome.new
+      end
+
+      it "should invalidate an empty number" do
+        @home.should_not be_valid
+      end
+
+      it "should invalidate an invalid number" do
+        @home.phone_number = INVALID_NUMBER
+        @home.should_not be_valid
+        @home.errors.messages[:phone_number].should include "is an invalid number"
+      end
+
+      it "should invalidate a badly formatted number with the right country code" do
+        @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
+        @home.should_not be_valid
+        @home.errors.messages[:phone_number].should include "is invalid"
+      end
+
+      it "should invalidate a properly formatted number with the wrong country code" do
+        @home.phone_number = FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE
+        @home.should_not be_valid
+        @home.errors.messages[:phone_number].should include "is an invalid number"
+      end
+
+      it "should validate a properly formatted number with the right country code" do
+        @home.phone_number = FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE
+        @home.should be_valid
+      end
+
     end
 
   end
