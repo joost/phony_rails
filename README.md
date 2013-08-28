@@ -2,7 +2,7 @@
 
 (In its early days :) called PhonyNumber)
 
-This Gem adds useful methods to your Rails app to validate, display and save phone numbers.
+This small Gem adds useful methods to your Rails app to validate, display and save phone numbers.
 It uses the super awesome Phony gem (https://github.com/floere/phony).
 
 ## Installation
@@ -114,15 +114,18 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## Changelog
 
+0.4.2
+* Added @fareastside validation for country_code.
+
 0.4.0/0.4.1
-* Better Mongoid support by @johnnyshields
+* Better Mongoid support by @johnnyshields.
 
 0.3.0
 * Now ability to force change a country_code.
   See: https://github.com/joost/phony_rails/pull/23#issuecomment-17480463
 
 0.2.1
-* Better error handling by @k4nar
+* Better error handling by @k4nar.
 
 0.1.12
 * Further loosened gemspec dependencies.
@@ -179,4 +182,4 @@ Say you want to find a record by a phone number. Best is to normalize user input
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-Thanks to all contributors: ddidier, brutuscat, henning-koch.
+Don't forget to add tests and run rspec before creating a pull request :)
