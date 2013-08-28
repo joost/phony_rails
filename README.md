@@ -84,6 +84,10 @@ so we can use:
 
 the i18n key is `:improbable_phone`
 
+You can also validate if a number has the correct country code:
+
+    validates_plausible_phone :phone_number, :country_code => '61'
+
 ### Display / Views
 
 In your views use:
