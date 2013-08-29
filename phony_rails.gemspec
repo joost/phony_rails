@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{This Gem adds useful methods to your Rails app to validate, display and save phone numbers.}
   gem.summary       = %q{This Gem adds useful methods to your Rails app to validate, display and save phone numbers.}
   gem.homepage      = "https://github.com/joost/phony_rails"
+  gem.license = 'MIT'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
