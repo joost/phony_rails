@@ -86,6 +86,10 @@ describe PhonyRails do
         PhonyRails.normalize_number('4790909090', :country_code => 'SE').should eql('464790909090')
       end
 
+      it "should recognize lowercase country codes" do
+        PhonyRails.normalize_number('4790909090', :country_code => 'se').should eql('464790909090')
+      end
+
     end
 
     context 'number without a country code' do
@@ -106,6 +110,10 @@ describe PhonyRails do
 
       it "should prefer country_code over default_country_code" do
         PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE', :default_country_code => 'NL').should eql('49308612906')
+      end
+
+      it "should recognize lowercase country codes" do
+        PhonyRails.normalize_number('010-1234123', :country_code => 'nl').should eql('31101234123')
       end
 
     end
