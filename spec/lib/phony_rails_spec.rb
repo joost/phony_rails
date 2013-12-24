@@ -17,6 +17,22 @@ describe PhonyRails do
 
     end
 
+    describe 'with strict option' do
+
+      it "should return nil with non plausible number" do
+        number = '+319090' # not valid
+        Phony.plausible?(number).should be_false
+        number.phony_formatted(:strict => true).should eql(nil)
+      end
+
+      it "should not return nil with plausible number" do
+        number = '+31101234123' # valid
+        Phony.plausible?(number).should be_true
+        number.phony_formatted(:strict => true).should_not eql(nil)
+      end
+
+    end
+
     describe 'with normalize option' do
 
       it "should phony_format" do

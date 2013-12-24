@@ -100,6 +100,10 @@ To first normalize the String to a certain country use:
 
     <%= "010-12341234".phony_formatted(:normalize => :NL, :format => :international, :spaces => '-') %>
 
+To return nil when a number is not valid:
+
+    "123".phony_formatted(:strict => true) # => nil
+
 You can also use the bang method (phony_formatted!):
 
     number = "010-12341234"
@@ -113,6 +117,9 @@ Say you want to find a record by a phone number. Best is to normalize user input
     Home.find_by_normalized_phone_number(PhonyRails.normalize_number(params[:phone_number]))
 
 ## Changelog
+
+0.5.0
+* Added :strict option to String#phony_formatted.
 
 0.4.2
 * Added @fareastside validation for country_code.
