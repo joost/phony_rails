@@ -26,7 +26,6 @@ Or install it yourself as:
 For **ActiveRecord**, in your model add:
 
     class SomeModel < ActiveRecord::Base
-
       # Normalizes the attribute itself before validation
       phony_normalize :phone_number, :default_country_code => 'US'
 
@@ -177,6 +176,7 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## TODO
 
+* Fix phony v2.x issues.
 * Make this work: Home.find_by_normalized_phone_number(Home.normalize_number(params[:phone_number]))
   So we use Home.normalize_number instead of PhonyRails.normalize_number. This way we can use the same default_country_code.
 * Make country_code method configurable.
