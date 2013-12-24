@@ -64,6 +64,15 @@ describe PhonyRails do
 
     end
 
+    describe "specific tests from issues" do
+
+      # https://github.com/joost/phony_rails/issues/42
+      it "should pass issue Github issue #42" do
+        PhonyRails.normalize_number("0606060606", default_country_code: 'FR').should eq('33606060606')
+      end
+
+    end
+
     it "should not change original String" do
       s = "0101234123"
       s.phony_formatted(:normalize => :NL).should eql('010 1234123')
