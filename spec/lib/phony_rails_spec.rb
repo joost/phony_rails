@@ -106,8 +106,8 @@ describe PhonyRails do
       end
 
       it "should force add country_code" do
-        PhonyRails.normalize_number('+4790909090', :country_code => 'SE').should eql('464790909090')
-        PhonyRails.normalize_number('004790909090', :country_code => 'SE').should eql('464790909090')
+        PhonyRails.normalize_number('+4790909090', :country_code => 'SE').should eql('46+4790909090')
+        PhonyRails.normalize_number('004790909090', :country_code => 'SE').should eql('46004790909090')
         PhonyRails.normalize_number('4790909090', :country_code => 'SE').should eql('464790909090')
       end
 
