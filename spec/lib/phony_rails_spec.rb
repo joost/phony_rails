@@ -11,7 +11,7 @@ describe PhonyRails do
 
       it "should change the String using the bang method" do
         s = "0101234123"
-        s.phony_formatted!(:normalize => :NL, :format => :international).should eql('+31 10 1234 123')
+        s.phony_formatted!(:normalize => :NL, :format => :international).should eql('+31 010 123 4123')
         s.should eql("+31 010 123 4123")
       end
 
@@ -216,12 +216,12 @@ describe PhonyRails do
     # Following examples have complete number (with country code!)
       it "should return a normalized version of an attribute" do
         model = model_klass.new(:phone_attribute => "+31-(0)10-1234123")
-        model.normalized_phone_attribute.should eql('31101234123')
+        model.normalized_phone_attribute.should eql('+310101234123')
       end
 
       it "should return a normalized version of a method" do
         model = model_klass.new(:phone_method => "+31-(0)10-1234123")
-        model.normalized_phone_method.should eql('31101234123')
+        model.normalized_phone_method.should eql('+310101234123')
       end
 
     # Following examples have incomplete number
@@ -277,14 +277,14 @@ describe PhonyRails do
       it "should set a normalized version of an attribute" do
         model = model_klass.new(:phone_number => "+31-(0)10-1234123")
         model.valid?.should be_true
-        model.phone_number.should eql('31101234123')
+        model.phone_number.should eql('+310101234123')
       end
 
       it "should set a normalized version of an attribute using :as option" do
         model_klass.phony_normalize :phone_number, :as => :phone_number_as_normalized
         model = model_klass.new(:phone_number => "+31-(0)10-1234123")
         model.valid?.should be_true
-        model.phone_number_as_normalized.should eql('31101234123')
+        model.phone_number_as_normalized.should eql('+310101234123')
       end
 
       it "should raise a RuntimeError at validation if the attribute doesn't exist" do
