@@ -74,9 +74,9 @@ describe PhonyRails do
     end
 
     it "should not change original String" do
-      s = "0101234123"
+      s = "+31101234123"
       s.phony_formatted(:normalize => :NL).should eql('010 123 4123')
-      s.should eql("0101234123")
+      s.should eql("+31101234123")
     end
 
     it "should phony_format a digits string with spaces String" do
