@@ -36,14 +36,14 @@ describe PhonyRails do
     describe 'with normalize option' do
 
       it "should phony_format" do
-        "0101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
-        "0101234123".phony_formatted(:normalize => :NL, :format => :international).should eql('+31 10 123 4123')
+        "101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
+        "101234123".phony_formatted(:normalize => :NL, :format => :international).should eql('+31 10 123 4123')
       end
 
       it "should not change original String" do
-        s = "0101234123"
+        s = "101234123"
         s.phony_formatted(:normalize => :NL).should eql('010 123 4123')
-        s.should eql("0101234123")
+        s.should eql("101234123")
       end
 
       it "should phony_format String with country code" do
