@@ -225,9 +225,9 @@ describe PhonyRails do
       end
 
     # Following examples have incomplete number
-      it "should return nil if no country_code is known" do
-        model = model_klass.new(:phone_attribute => "(0)10-1234123")
-        model.normalized_phone_attribute.should eql('11234123') # This actually is an incorrect number! (FIXME?)
+      it "should return non-normalized (original) number if no country_code is present and number is not plausible" do
+        model = model_klass.new(:phone_attribute => "101234123")
+        model.normalized_phone_attribute.should eql('101234123')
       end
 
       it "should use country_code option" do
