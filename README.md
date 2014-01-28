@@ -117,6 +117,9 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## Changelog
 
+0.6.0
+* Support for Phony 2.1 by @pjg.
+
 0.5.0
 * Added :strict option to String#phony_formatted.
 
