@@ -107,7 +107,7 @@ You can also use the bang method (phony_formatted!):
 
     number = "010-12341234"
     number.phony_formatted!(:normalize => :NL, :format => :international)
-    number # => "+31 10 12341234"
+    number # => "+31 10 123 41234"
 
 ### Find by normalized number
 

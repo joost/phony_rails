@@ -93,11 +93,11 @@ end
 #-----------------------------------------------------------------------------------------------------------------------
 
 I18n.locale = :en
-VALID_NUMBER = '1234567890'
+VALID_NUMBER = '1 555 555 5555'
 AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '61390133997'
 FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'
-FRENCH_NUMBER_WITH_COUNTRY_CODE = '330627899541'
-FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 0627899541'
+FRENCH_NUMBER_WITH_COUNTRY_CODE = '33627899541'
+FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 627899541'
 INVALID_NUMBER = '123456789 123456789 123456789 123456789'
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ describe ActiveModel::Validations::HelperMethods do
       end
 
       it "should validate a well formatted valid number" do
-        @home.phone_number = "+33 #{VALID_NUMBER}"
+        @home.phone_number = "+#{VALID_NUMBER}"
         @home.should be_valid
       end
 
@@ -272,7 +272,7 @@ describe ActiveModel::Validations::HelperMethods do
       end
 
       it "should invalidate a bad formatted valid number" do
-        @home.phone_number =  "+33 #{VALID_NUMBER}"
+        @home.phone_number =  "+#{VALID_NUMBER}"
         @home.should_not be_valid
         @home.errors.messages.should include(:phone_number => ["is invalid"])
       end

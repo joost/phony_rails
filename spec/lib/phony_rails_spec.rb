@@ -11,8 +11,8 @@ describe PhonyRails do
 
       it "should change the String using the bang method" do
         s = "0101234123"
-        s.phony_formatted!(:normalize => :NL, :format => :international).should eql('+31 10 1234123')
-        s.should eql("+31 10 1234123")
+        s.phony_formatted!(:normalize => :NL, :format => :international).should eql('+31 10 123 4123')
+        s.should eql("+31 10 123 4123")
       end
 
     end
@@ -36,26 +36,26 @@ describe PhonyRails do
     describe 'with normalize option' do
 
       it "should phony_format" do
-        "0101234123".phony_formatted(:normalize => :NL).should eql('010 1234123')
-        "0101234123".phony_formatted(:normalize => :NL, :format => :international).should eql('+31 10 1234123')
+        "101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
+        "101234123".phony_formatted(:normalize => :NL, :format => :international).should eql('+31 10 123 4123')
       end
 
       it "should not change original String" do
         s = "0101234123"
-        s.phony_formatted(:normalize => :NL).should eql('010 1234123')
+        s.phony_formatted(:normalize => :NL).should eql('010 123 4123')
         s.should eql("0101234123")
       end
 
       it "should phony_format String with country code" do
-        "31101234123".phony_formatted(:normalize => :NL).should eql('010 1234123')
+        "31101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
       end
 
       it "should phony_format String with country code" do
-        "31101234123".phony_formatted(:normalize => :NL).should eql('010 1234123')
+        "31101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
       end
 
       it "should accept strings with non-digits in it" do
-        "+31-10-1234123".phony_formatted(:normalize => :NL, :format => :international, :spaces => '-').should eql('+31-10-1234123')
+        "+31-10-1234123".phony_formatted(:normalize => :NL, :format => :international, :spaces => '-').should eql('+31-10-123-4123')
       end
 
       it "should phony_format String with country code different than normalized value" do
@@ -75,16 +75,16 @@ describe PhonyRails do
 
     it "should not change original String" do
       s = "0101234123"
-      s.phony_formatted(:normalize => :NL).should eql('010 1234123')
+      s.phony_formatted(:normalize => :NL).should eql('010 123 4123')
       s.should eql("0101234123")
     end
 
     it "should phony_format a digits string with spaces String" do
-      "31 10 1234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-1234123')
+      "31 10 1234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-123-4123')
     end
 
     it "should phony_format a digits String" do
-      "31101234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-1234123')
+      "31101234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-123-4123')
     end
 
     it "returns nil if implausible phone" do
@@ -148,11 +148,11 @@ describe PhonyRails do
       PhonyRails.normalize_number('070-4157134', :country_code => 'NL').should eql('31704157134')
       PhonyRails.normalize_number('0031-70-4157134', :country_code => 'NL').should eql('31704157134')
       PhonyRails.normalize_number('+31-70-4157134', :country_code => 'NL').should eql('31704157134')
-      PhonyRails.normalize_number('0323-2269497', :country_code => 'BE').should eql('323232269497')
+      PhonyRails.normalize_number('0323-2269497', :country_code => 'BE').should eql('3232269497')
     end
 
-    it "should not normalize an implausible number" do
-      PhonyRails.normalize_number('01').should eql('01')
+    it "should normalize even an implausible number" do
+      PhonyRails.normalize_number('01').should eql('1')
     end
   end
 
@@ -225,9 +225,9 @@ describe PhonyRails do
       end
 
     # Following examples have incomplete number
-      it "should return nil if no country_code is known" do
+      it "should normalize even a unplausible number (no country code)" do
         model = model_klass.new(:phone_attribute => "(0)10-1234123")
-        model.normalized_phone_attribute.should eql('11234123') # This actually is an incorrect number! (FIXME?)
+        model.normalized_phone_attribute.should eql('101234123')
       end
 
       it "should use country_code option" do

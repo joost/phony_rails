@@ -30,8 +30,8 @@ module PhonyRails
       # Add default_country_number if missing
       number = "#{default_country_number}#{number}" if not number =~ /^(00|\+|#{default_country_number})/
     end
-    number = Phony.normalize(number) if Phony.plausible?(number)
-    return number.to_s
+
+    Phony.normalize(number)
   rescue
     number # If all goes wrong .. we still return the original input.
   end

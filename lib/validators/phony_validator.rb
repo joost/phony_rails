@@ -6,7 +6,27 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
   # Validates a String using Phony.plausible? method.
   def validate_each(record, attribute, value)
     return if value.blank?
-    record.errors.add(attribute,  options[:message] || :improbable_phone) if not Phony.plausible?(value, cc: options[:country_code] || record.country_number || record.country_code)
+
+    @record = record
+    @record.errors.add(attribute, error_message) if not Phony.plausible?(value, cc: country_code_or_country_number)
+  end
+
+  private
+
+  def error_message
+    options[:message] || :improbable_phone
+  end
+
+  def country_code_or_country_number
+    options[:country_code] || record_country_number || record_country_code
+  end
+
+  def record_country_number
+    @record.country_number if @record.respond_to?(:country_number)
+  end
+
+  def record_country_code
+    @record.country_code if @record.respond_to?(:country_code)
   end
 
 end
