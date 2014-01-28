@@ -193,3 +193,5 @@ Say you want to find a record by a phone number. Best is to normalize user input
 5. Create new Pull Request
 
 Don't forget to add tests and run rspec before creating a pull request :)
+
+See all contributors on https://github.com/joost/phony_rails/graphs/contributors.
