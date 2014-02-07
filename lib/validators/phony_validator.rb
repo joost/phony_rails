@@ -39,6 +39,7 @@ module ActiveModel
         # merged attributes are modified somewhere, so we are cloning them for each validator
         merged_attributes = _merge_attributes(attr_names)
 
+        validates_with ActiveRecord::Validations::UniquenessValidator, merged_attributes.clone if merged_attributes[:uniqueness]
         validates_with PresenceValidator, merged_attributes.clone if merged_attributes[:presence]
         validates_with FormatValidator, merged_attributes.clone if (merged_attributes[:with] or merged_attributes[:without])
         validates_with PhonyPlausibleValidator, merged_attributes.clone
