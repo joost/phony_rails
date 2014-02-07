@@ -19,6 +19,14 @@ ActiveRecord::Schema.define do
     table.column :phone_number, :string
   end
 
+  create_table :common_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
+
+  create_table :unique_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
+
   create_table :optional_helpful_homes do |table|
     table.column :phone_number, :string
   end
@@ -59,6 +67,18 @@ class RequiredHelpfulHome < ActiveRecord::Base
 end
 
 #--------------------
+class CommonHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :uniqueness => false
+end
+
+#--------------------
+class UniqueHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :uniqueness => true
+end
+
+#--------------------
 class OptionalHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
   validates_plausible_phone :phone_number, :presence => false
@@ -85,7 +105,7 @@ end
 #--------------------
 class BigHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
-  validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/, :country_code => "33"
+  validates_plausible_phone :phone_number, :uniqueness => true, :with => /^\+\d+/, :country_code => "33", :presence => false
 end
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -147,6 +167,66 @@ describe PhonyPlausibleValidator do
         @home.valid?
         @home.errors.messages.should include(:phone_number => ["は正し電話番号ではありません"])
       end
+    end
+  end
+end
+
+#-----------------------------------------------------------------------------------------------------------------------
+describe ActiveRecord::Validations::UniquenessValidator do
+  describe '#validates_plausible_phone' do
+    #--------------------
+    context 'when a number\'s uniqueness is not required (:uniqueness = false)' do
+
+      before(:each) do
+        @home = CommonHelpfulHome.new
+      end
+
+      it "should not invalidate existing numbers" do
+        @home.phone_number = VALID_NUMBER
+        copy_home = CommonHelpfulHome.new
+        copy_home.phone_number = VALID_NUMBER
+        copy_home.should be_valid
+      end
+
+      it "should validate a valid number" do
+        @home.phone_number = VALID_NUMBER
+        @home.should be_valid
+      end
+
+      it "should invalidate an invalid number" do
+        @home.phone_number = INVALID_NUMBER
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is an invalid number"])
+      end
+
+    end
+
+    #--------------------
+    context 'when a number is unique' do
+
+      before(:each) do
+        @home = UniqueHelpfulHome.new
+      end
+
+      it "should validate a unique number" do
+        @home.phone_number = VALID_NUMBER
+        @home.should be_valid
+      end
+
+      it "should invalidate existing numbers" do
+        @home.phone_number = VALID_NUMBER
+        copy_home = UniqueHelpfulHome.new
+        copy_home.phone_number = VALID_NUMBER
+        copy_home.should_not be_valid
+        copy_home.errors.messages.should include(:phone_number => ["has already been taken"])
+      end
+
+      it "should invalidate an invalid number" do
+        @home.phone_number = INVALID_NUMBER
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is an invalid number"])
+      end
+
     end
   end
 end
