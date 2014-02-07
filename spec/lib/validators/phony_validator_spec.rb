@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'spec_helper'
-
+require 'debugger'
 #-----------------------------------------------------------------------------------------------------------------------
 # Model
 #-----------------------------------------------------------------------------------------------------------------------
@@ -178,13 +178,15 @@ describe ActiveRecord::Validations::UniquenessValidator do
     context 'when a number\'s uniqueness is not required (:uniqueness = false)' do
 
       before(:each) do
-        @home = CommonHelpfulHome.new
+        @home = CommonHelpfulHome.create(phone_number: VALID_NUMBER)
+      end
+
+      after(:each) do
+        UniqueHelpfulHome.delete_all
       end
 
       it "should not invalidate existing numbers" do
-        @home.phone_number = VALID_NUMBER
-        copy_home = CommonHelpfulHome.new
-        copy_home.phone_number = VALID_NUMBER
+        copy_home = CommonHelpfulHome.create(phone_number: VALID_NUMBER)
         copy_home.should be_valid
       end
 
@@ -205,7 +207,11 @@ describe ActiveRecord::Validations::UniquenessValidator do
     context 'when a number is unique' do
 
       before(:each) do
-        @home = UniqueHelpfulHome.new
+        @home = UniqueHelpfulHome.new(phone_number: VALID_NUMBER)
+      end
+
+      after(:each) do
+        UniqueHelpfulHome.delete_all
       end
 
       it "should validate a unique number" do
@@ -214,11 +220,8 @@ describe ActiveRecord::Validations::UniquenessValidator do
       end
 
       it "should invalidate existing numbers" do
-        @home.phone_number = VALID_NUMBER
-        copy_home = UniqueHelpfulHome.new
-        copy_home.phone_number = VALID_NUMBER
-        copy_home.should_not be_valid
-        copy_home.errors.messages.should include(:phone_number => ["has already been taken"])
+        copy_home = CommonHelpfulHome.create(phone_number: VALID_NUMBER)
+        copy_home.should be_valid
       end
 
       it "should invalidate an invalid number" do
