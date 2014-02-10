@@ -4,6 +4,8 @@ require 'bundler/setup'
 require 'active_record'
 require 'mongoid'
 require 'phony_rails'
+require 'factory_girl'
+require 'factories'
 
 ActiveRecord::Base.establish_connection(
   :adapter  => "sqlite3",
@@ -50,4 +52,5 @@ end
 
 RSpec.configure do |config|
   # some (optional) config here
+  config.include FactoryGirl::Syntax::Methods
 end
