@@ -9,10 +9,11 @@ gemspec # Specify your gem's dependencies in phony_number.gemspec
 gem 'sqlite3'
 
 gem 'rake'
-gem 'rspec',          '~> 2.11.0'
+gem 'rspec',          '~> 2.12.0'
 gem 'guard',          '~> 1.2.0'
 gem 'guard-bundler',  '~> 1.0.0'
 gem 'guard-rspec',    '~> 1.2.0'
+gem 'debugger',       '~> 1.6.5'
 
 case RbConfig::CONFIG['host_os']
   when /darwin/i
