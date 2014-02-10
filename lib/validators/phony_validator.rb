@@ -54,6 +54,7 @@ module PhonyHelperMethods
 
     #tested
     validates_with ActiveModel::Validations::PresenceValidator, merged_attributes.clone if merged_attributes[:presence]
+    debugger if merged_attributes[:uniqueness]
     validates_with ActiveRecord::Validations::UniquenessValidator, merged_attributes.clone if merged_attributes[:uniqueness]
     validates_with ActiveModel::Validations::FormatValidator, merged_attributes.clone if (merged_attributes[:with] || merged_attributes[:without])
 

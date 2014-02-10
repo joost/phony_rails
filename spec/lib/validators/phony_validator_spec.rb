@@ -136,6 +136,7 @@ describe PhonyPlausibleValidator do
 
     it "should validate a valid number" do
       @home.phone_number = VALID_NUMBER
+      @home.save
       @home.should be_valid
     end
 
@@ -178,20 +179,23 @@ describe ActiveRecord::Validations::UniquenessValidator do
     context 'when a number\'s uniqueness is not required (:uniqueness = false)' do
 
       before(:each) do
-        @home = CommonHelpfulHome.create(phone_number: VALID_NUMBER)
+        @home = CommonHelpfulHome.new
       end
 
       after(:each) do
-        UniqueHelpfulHome.delete_all
+        CommonHelpfulHome.delete_all
       end
 
       it "should not invalidate existing numbers" do
+        @home.save
+        @home.update_column(:phone_number, VALID_NUMBER)
         copy_home = CommonHelpfulHome.create(phone_number: VALID_NUMBER)
         copy_home.should be_valid
       end
 
       it "should validate a valid number" do
-        @home.phone_number = VALID_NUMBER
+        @home.save
+        @home.update_column(:phone_number, VALID_NUMBER)
         @home.should be_valid
       end
 
@@ -207,7 +211,7 @@ describe ActiveRecord::Validations::UniquenessValidator do
     context 'when a number is unique' do
 
       before(:each) do
-        @home = UniqueHelpfulHome.new(phone_number: VALID_NUMBER)
+        @home = UniqueHelpfulHome.new
       end
 
       after(:each) do
@@ -215,13 +219,17 @@ describe ActiveRecord::Validations::UniquenessValidator do
       end
 
       it "should validate a unique number" do
-        @home.phone_number = VALID_NUMBER
+        @home.save
+        @home.update_column(:phone_number, VALID_NUMBER)
         @home.should be_valid
       end
 
       it "should invalidate existing numbers" do
-        copy_home = CommonHelpfulHome.create(phone_number: VALID_NUMBER)
-        copy_home.should be_valid
+        @home.save
+        @home.update_column(:phone_number, VALID_NUMBER)
+        copy_home = UniqueHelpfulHome.create(phone_number: VALID_NUMBER)
+        # debugger
+        copy_home.should_not be_valid
       end
 
       it "should invalidate an invalid number" do
@@ -252,7 +260,8 @@ describe ActiveModel::Validations::HelperMethods do
       end
 
       it "should validate a valid number" do
-        @home.phone_number = VALID_NUMBER
+        @home.save
+        @home.update_column(:phone_number, VALID_NUMBER)
         @home.should be_valid
       end
 
@@ -278,6 +287,7 @@ describe ActiveModel::Validations::HelperMethods do
 
       it "should validate a valid number" do
         @home.phone_number = VALID_NUMBER
+        @home.save
         @home.should be_valid
       end
 
@@ -301,7 +311,8 @@ describe ActiveModel::Validations::HelperMethods do
       end
 
       it "should validate a valid number" do
-        @home.phone_number = VALID_NUMBER
+        @home.save
+        @home.update_column(:phone_number, VALID_NUMBER)
         @home.should be_valid
       end
 
@@ -350,7 +361,8 @@ describe ActiveModel::Validations::HelperMethods do
       end
 
       it "should validate a well formatted valid number" do
-        @home.phone_number = VALID_NUMBER
+        @home.save
+        @home.update_column(:phone_number, VALID_NUMBER)
         @home.should be_valid
       end
 
@@ -385,7 +397,8 @@ describe ActiveModel::Validations::HelperMethods do
       end
 
       it "should invalidate a valid number without a country code" do
-        @home.phone_number = VALID_NUMBER
+        @home = AustralianHelpfulHome.new(phone_number: VALID_NUMBER)
+        @home.save
         @home.should_not be_valid
         @home.errors.messages.should include(:phone_number => ["is an invalid number"])
       end
@@ -398,31 +411,44 @@ describe ActiveModel::Validations::HelperMethods do
         @home = BigHelpfulHome.new
       end
 
+      after(:each) do
+        BigHelpfulHome.delete_all
+      end
+
       it "should invalidate an empty number" do
         @home.should_not be_valid
       end
 
       it "should invalidate an invalid number" do
-        @home.phone_number = INVALID_NUMBER
-        @home.should_not be_valid
-        @home.errors.messages[:phone_number].should include "is an invalid number"
+        invalid_home = BigHelpfulHome.new(phone_number: INVALID_NUMBER)
+        invalid_home.should_not be_valid
+        invalid_home.errors.messages[:phone_number].should include "is an invalid number"
       end
 
       it "should invalidate a badly formatted number with the right country code" do
-        @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
-        @home.should_not be_valid
-        @home.errors.messages[:phone_number].should include "is invalid"
+        home = BigHelpfulHome.new(phone_number: FRENCH_NUMBER_WITH_COUNTRY_CODE)
+        home.should_not be_valid
+        home.errors.messages[:phone_number].should include "is invalid"
       end
 
       it "should invalidate a properly formatted number with the wrong country code" do
-        @home.phone_number = FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE
-        @home.should_not be_valid
-        @home.errors.messages[:phone_number].should include "is an invalid number"
+        home = BigHelpfulHome.create(phone_number: FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE)
+        home.should_not be_valid
+        home.errors.messages[:phone_number].should include "is an invalid number"
       end
 
       it "should validate a properly formatted number with the right country code" do
-        @home.phone_number = FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE
-        @home.should be_valid
+        home = BigHelpfulHome.create(phone_number: FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE)
+        home.should be_valid
+      end
+
+      it "should not create duplicates" do
+        home = BigHelpfulHome.create(phone_number: FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE)
+        home.save
+        home.update_column(:phone_number, FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE)
+        copy_home = BigHelpfulHome.create(phone_number: FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE)
+        # debugger
+        copy_home.should_not be_valid
       end
 
     end
