@@ -108,42 +108,42 @@ describe PhonyPlausibleValidator do
 
     let(:home) { build(:simple_home) }
 
-    it "should validate an empty number" do
-      home.should be_valid
+    it "validates an empty number" do
+      expect(home).to be_valid
     end
 
-    it "should validate a valid number" do
+    it "validates a valid number" do
       home.phone_number = VALID_NUMBER
-      home.should be_valid
+      expect(home).to be_valid
     end
 
-    it "should invalidate an invalid number" do
+    it "invalidates an invalid number" do
       home.phone_number = INVALID_NUMBER
-      home.should_not be_valid
-      home.errors.messages.should include(:phone_number => ["is an invalid number"])
+      expect(home).to_not be_valid
+      expect(home.errors.messages).to include(:phone_number => ["is an invalid number"])
     end
 
-    it "should translate the error message in English" do
+    it "translates the error message in English" do
       I18n.with_locale(:en) do
         home.phone_number = INVALID_NUMBER
         home.valid?
-        home.errors.messages.should include(:phone_number => ["is an invalid number"])
+        expect(home.errors.messages).to include(:phone_number => ["is an invalid number"])
       end
     end
 
-    it "should translate the error message in French" do
+    it "translates the error message in French" do
       I18n.with_locale(:fr) do
         home.phone_number = INVALID_NUMBER
         home.valid?
-        home.errors.messages.should include(:phone_number => ["est un numéro invalide"])
+        expect(home.errors.messages).to include(:phone_number => ["est un numéro invalide"])
       end
     end
 
-    it "should translate the error message in Japanese" do
+    it "translates the error message in Japanese" do
       I18n.with_locale(:ja) do
         home.phone_number = INVALID_NUMBER
         home.valid?
-        home.errors.messages.should include(:phone_number => ["は正し電話番号ではありません"])
+        expect(home.errors.messages).to include(:phone_number => ["は正し電話番号ではありません"])
       end
     end
   end
@@ -160,19 +160,19 @@ describe ActiveModel::Validations::HelperMethods do
 
       let(:home) { build(:helpful_home) }
 
-      it "should validate an empty number" do
-        home.should be_valid
+      it "validates an empty number" do
+        expect(home).to be_valid
       end
 
-      it "should validate a valid number" do
+      it "validates a valid number" do
         home.phone_number = VALID_NUMBER
-        home.should be_valid
+        expect(home).to be_valid
       end
 
-      it "should invalidate an invalid number" do
+      it "invalidates an invalid number" do
         home.phone_number = INVALID_NUMBER
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["is an invalid number"])
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["is an invalid number"])
       end
 
     end
@@ -182,20 +182,20 @@ describe ActiveModel::Validations::HelperMethods do
 
       let(:home) { build(:required_helpful_home) }
 
-      it "should invalidate an empty number" do
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["can't be blank"])
+      it "invalidates an empty number" do
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["can't be blank"])
       end
 
-      it "should validate a valid number" do
+      it "validates a valid number" do
         home.phone_number = VALID_NUMBER
-        home.should be_valid
+        expect(home).to be_valid
       end
 
-      it "should invalidate an invalid number" do
+      it "invalidates an invalid number" do
         home.phone_number = INVALID_NUMBER
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["is an invalid number"])
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["is an invalid number"])
       end
 
     end
@@ -205,19 +205,19 @@ describe ActiveModel::Validations::HelperMethods do
 
       let(:home) { build(:optional_helpful_home) }
 
-      it "should validate an empty number" do
-        home.should be_valid
+      it "validates an empty number" do
+        expect(home).to be_valid
       end
 
-      it "should validate a valid number" do
+      it "validates a valid number" do
         home.phone_number = VALID_NUMBER
-        home.should be_valid
+        expect(home).to be_valid
       end
 
-      it "should invalidate an invalid number" do
+      it "invalidates an invalid number" do
         home.phone_number = INVALID_NUMBER
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["is an invalid number"])
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["is an invalid number"])
       end
 
     end
@@ -227,20 +227,20 @@ describe ActiveModel::Validations::HelperMethods do
 
       let(:home) { build(:formatted_helpful_home) }
 
-      it "should invalidate an empty number" do
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["is invalid"])
+      it "invalidates an empty number" do
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["is invalid"])
       end
 
-      it "should validate a well formatted valid number" do
+      it "validates a well formatted valid number" do
         home.phone_number = "+#{VALID_NUMBER}"
-        home.should be_valid
+        expect(home).to be_valid
       end
 
-      it "should invalidate a bad formatted valid number" do
+      it "invalidates a bad formatted valid number" do
         home.phone_number = VALID_NUMBER
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["is invalid"])
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["is invalid"])
       end
 
     end
@@ -250,19 +250,19 @@ describe ActiveModel::Validations::HelperMethods do
 
       let(:home) { build(:not_formatted_helpful_home) }
 
-      it "should validate an empty number" do
-        home.should be_valid
+      it "validates an empty number" do
+        expect(home).to be_valid
       end
 
-      it "should validate a well formatted valid number" do
+      it "validates a well formatted valid number" do
         home.phone_number = VALID_NUMBER
-        home.should be_valid
+        expect(home).to be_valid
       end
 
-      it "should invalidate a bad formatted valid number" do
+      it "invalidates a bad formatted valid number" do
         home.phone_number =  "+#{VALID_NUMBER}"
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["is invalid"])
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["is invalid"])
       end
 
     end
@@ -272,25 +272,25 @@ describe ActiveModel::Validations::HelperMethods do
 
       let(:home) { build(:australian_helpful_home) }
 
-      it "should validate an empty number" do
-        home.should be_valid
+      it "validates an empty number" do
+        expect(home).to be_valid
       end
 
-      it "should validate a valid number with the right country code" do
+      it "validates a valid number with the right country code" do
         home.phone_number = AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE
-        home.should be_valid
+        expect(home).to be_valid
       end
 
-      it "should invalidate a valid number with the wrong country code" do
+      it "invalidates a valid number with the wrong country code" do
         home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["is an invalid number"])
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["is an invalid number"])
       end
 
-      it "should invalidate a valid number without a country code" do
+      it "invalidates a valid number without a country code" do
         home.phone_number = VALID_NUMBER
-        home.should_not be_valid
-        home.errors.messages.should include(:phone_number => ["is an invalid number"])
+        expect(home).to_not be_valid
+        expect(home.errors.messages).to include(:phone_number => ["is an invalid number"])
       end
 
     end
@@ -299,31 +299,31 @@ describe ActiveModel::Validations::HelperMethods do
 
       let(:home) { build(:big_helpful_home) }
 
-      it "should invalidate an empty number" do
-        home.should_not be_valid
+      it "invalidates an empty number" do
+        expect(home).to_not be_valid
       end
 
-      it "should invalidate an invalid number" do
+      it "invalidates an invalid number" do
         home.phone_number = INVALID_NUMBER
-        home.should_not be_valid
-        home.errors.messages[:phone_number].should include "is an invalid number"
+        expect(home).to_not be_valid
+        expect(home.errors.messages[:phone_number]).to include "is an invalid number"
       end
 
-      it "should invalidate a badly formatted number with the right country code" do
+      it "invalidates a badly formatted number with the right country code" do
         home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
-        home.should_not be_valid
-        home.errors.messages[:phone_number].should include "is invalid"
+        expect(home).to_not be_valid
+        expect(home.errors.messages[:phone_number]).to include "is invalid"
       end
 
-      it "should invalidate a properly formatted number with the wrong country code" do
+      it "invalidates a properly formatted number with the wrong country code" do
         home.phone_number = FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE
-        home.should_not be_valid
-        home.errors.messages[:phone_number].should include "is an invalid number"
+        expect(home).to_not be_valid
+        expect(home.errors.messages[:phone_number]).to include "is an invalid number"
       end
 
-      it "should validate a properly formatted number with the right country code" do
+      it "validates a properly formatted number with the right country code" do
         home.phone_number = FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE
-        home.should be_valid
+        expect(home).to be_valid
       end
 
     end
