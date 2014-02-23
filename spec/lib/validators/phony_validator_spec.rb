@@ -38,6 +38,10 @@ ActiveRecord::Schema.define do
   create_table :australian_helpful_homes do |table|
     table.column :phone_number, :string
   end
+
+  create_table :polish_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
 end
 
 #--------------------
@@ -79,13 +83,19 @@ end
 #--------------------
 class AustralianHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
-  validates_plausible_phone :phone_number, :country_code => "61"
+  validates_plausible_phone :phone_number, :country_number => "61"
+end
+
+#--------------------
+class PolishHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :country_code => "PL"
 end
 
 #--------------------
 class BigHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
-  validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/, :country_code => "33"
+  validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/, :country_number => "33"
 end
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -95,6 +105,7 @@ end
 I18n.locale = :en
 VALID_NUMBER = '1 555 555 5555'
 AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '61390133997'
+POLISH_NUMBER_WITH_COUNTRY_CODE = '48600600600'
 FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'
 FRENCH_NUMBER_WITH_COUNTRY_CODE = '33627899541'
 FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 627899541'
@@ -280,7 +291,7 @@ describe ActiveModel::Validations::HelperMethods do
     end
 
     #--------------------
-    context 'when a number must include a specific country code' do
+    context 'when a number must include a specific country number' do
 
       before(:each) do
         @home = AustralianHelpfulHome.new
@@ -292,6 +303,36 @@ describe ActiveModel::Validations::HelperMethods do
 
       it "should validate a valid number with the right country code" do
         @home.phone_number = AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE
+        @home.should be_valid
+      end
+
+      it "should invalidate a valid number with the wrong country code" do
+        @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is an invalid number"])
+      end
+
+      it "should invalidate a valid number without a country code" do
+        @home.phone_number = VALID_NUMBER
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is an invalid number"])
+      end
+
+    end
+
+    #--------------------
+    context 'when a number must include a specific country code' do
+
+      before(:each) do
+        @home = PolishHelpfulHome.new
+      end
+
+      it "should validate an empty number" do
+        @home.should be_valid
+      end
+
+      it "should validate a valid number with the right country code" do
+        @home.phone_number = POLISH_NUMBER_WITH_COUNTRY_CODE
         @home.should be_valid
       end
 

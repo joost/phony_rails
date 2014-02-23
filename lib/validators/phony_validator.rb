@@ -8,7 +8,7 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
     return if value.blank?
 
     @record = record
-    @record.errors.add(attribute, error_message) if not Phony.plausible?(value, cc: country_code_or_country_number)
+    @record.errors.add(attribute, error_message) if not Phony.plausible?(value, cc: country_number)
   end
 
   private
@@ -17,12 +17,20 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
     options[:message] || :improbable_phone
   end
 
-  def country_code_or_country_number
-    options[:country_code] || record_country_number || record_country_code
+  def country_number
+    options[:country_number] || record_country_number || country_number_from_country_code
   end
 
   def record_country_number
     @record.country_number if @record.respond_to?(:country_number)
+  end
+
+  def country_number_from_country_code
+    PhonyRails.country_number_for(country_code)
+  end
+
+  def country_code
+    options[:country_code] || record_country_code
   end
 
   def record_country_code
