@@ -1,0 +1,4 @@
+tr:
+  errors:
+    messages:
+      improbable_phone: "geçersiz numara"
