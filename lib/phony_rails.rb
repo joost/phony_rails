@@ -46,7 +46,7 @@ module PhonyRails
       # It also adds the country_code (number), eg. 31 for NL numbers.
       def set_phony_normalized_numbers(attributes, options = {})
         options = options.clone
-        options[:country_code] ||= self.country_code if self.respond_to?(:country_code) && !options[:default_country_code].present?
+        options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
           raise RuntimeError, "No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)" if not self.class.attribute_method?(attribute_name)
@@ -86,7 +86,7 @@ module PhonyRails
           define_method :"normalized_#{attribute}" do |*args|
             options = args.first || {}
             raise ArgumentError, "No attribute/method #{attribute} found on #{self.class.name} (PhonyRails)" if not self.respond_to?(attribute)
-            options[:country_code] ||= self.country_code if self.respond_to?(:country_code) && !options[:default_country_code].present?
+            options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
             PhonyRails.normalize_number(self.send(attribute), main_options.merge(options))
           end
         end
