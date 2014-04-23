@@ -91,6 +91,16 @@ or correct country code:
 
     validates_plausible_phone :phone_number, :country_code => 'AU'
 
+#### Allowing records country codes to not match phone number country codes
+
+You may have a record specifying one county (via a `county_code` attribute) but using a phone number from another country.  For example, your record may be from Japan but have a phone number from the Philippines. By default, `phony_rails` will consider your record's `county_code` as part of the validation.  If that country doesn't match the country code in the phone number, validation will fail.  
+
+If you want to allow records from one country to have phone numbers from a different one, there are a couple of options you can use: `ignore_record_country_number` and `ignore_record_country_code`.  Use them like so:
+
+    validates :phone_number, :phony_plausible => { :ignore_record_country_code => true, :ignore_record_country_number => true}
+
+Obviously, you don't have to use both, and you may not need or want to set either.  They only matter if your model `responds_to?` `:country_code` or `:country_number`.
+
 ### Display / Views
 
 In your views use:
