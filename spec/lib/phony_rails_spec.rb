@@ -187,16 +187,16 @@ describe PhonyRails do
         }.should raise_error(ArgumentError)
       end
 
-      it "should not accept :as option with unexisting attribute name" do
+      it "should accept :as option with non existing attribute name" do
         lambda {
-          model_klass.phony_normalize(:non_existing_attribute, :as => 'non_existing_attribute')
-        }.should raise_error(ArgumentError)
+          dummy_klass.phony_normalize(:non_existing_attribute, :as => 'non_existing_attribute')
+        }.should_not raise_error
       end
 
-      it "should not accept :as option with single non existing attribute name" do
+      it "should accept :as option with single non existing attribute name" do
         lambda {
-          model_klass.phony_normalize(:phone_number, :as => 'something_else')
-        }.should raise_error(ArgumentError)
+          dummy_klass.phony_normalize(:phone_number, :as => 'something_else')
+        }.should_not raise_error
       end
 
       it "should accept :as option with single existing attribute name" do
@@ -289,6 +289,14 @@ describe PhonyRails do
 
       it "should raise a RuntimeError at validation if the attribute doesn't exist" do
         dummy_klass.phony_normalize :non_existing_attribute
+        dummy = dummy_klass.new
+        lambda {
+          dummy.valid?
+        }.should raise_error(RuntimeError)
+      end
+
+      it "should raise a RuntimeError at validation if the :as option attribute doesn't exist" do
+        dummy_klass.phony_normalize :phone_number, :as => :non_existing_attribute
         dummy = dummy_klass.new
         lambda {
           dummy.valid?

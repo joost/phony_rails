@@ -67,8 +67,8 @@ module PhonyRails
         options.assert_valid_keys :country_code, :default_country_code, :as
         if options[:as].present?
           raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if attributes.size > 1
-          raise ArgumentError, "'#{options[:as]}' is not an attribute on #{self.name}. You might want to use 'phony_normalized_method :#{attributes.first}' (PhonyRails)" if not self.attribute_method?(options[:as])
         end
+
         # Add before validation that saves a normalized version of the phone number
         self.before_validation do
           set_phony_normalized_numbers(attributes, options)
