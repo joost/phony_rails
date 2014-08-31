@@ -21,4 +21,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency "activesupport", ">= 3.0"
   gem.add_development_dependency "activerecord", ">= 3.0"
   gem.add_development_dependency "mongoid", ">= 3.0"
+  gem.add_development_dependency 'factory_girl'
 end
