@@ -25,12 +25,11 @@ module PhonyRails
     return if number.blank?
     if country_number = options[:country_number] || country_number_for(options[:country_code])
       # (Force) add country_number if missing
-      number = "#{country_number}#{number}" if not number =~ /^(00|\+)?#{country_number}/
+      number = "#{country_number}#{number}" if not number =~ /\A(00|\+)?#{country_number}/
     elsif default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
       # Add default_country_number if missing
-      number = "#{default_country_number}#{number}" if not number =~ /^(00|\+|#{default_country_number})/
+      number = "#{default_country_number}#{number}" if not number =~ /\A(00|\+|#{default_country_number})/
     end
-
     Phony.normalize(number)
   rescue
     number # If all goes wrong .. we still return the original input.
