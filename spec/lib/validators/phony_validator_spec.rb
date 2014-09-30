@@ -71,13 +71,13 @@ end
 #--------------------
 class FormattedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
-  validates_plausible_phone :phone_number, :with => /^\+\d+/
+  validates_plausible_phone :phone_number, :with => /\A\+\d+/
 end
 
 #--------------------
 class NotFormattedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
-  validates_plausible_phone :phone_number, :without => /^\+\d+/
+  validates_plausible_phone :phone_number, :without => /\A\+\d+/
 end
 
 #--------------------
@@ -95,7 +95,7 @@ end
 #--------------------
 class BigHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
-  validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/, :country_number => "33"
+  validates_plausible_phone :phone_number, :presence => true, :with => /\A\+\d+/, :country_number => "33"
 end
 
 #-----------------------------------------------------------------------------------------------------------------------

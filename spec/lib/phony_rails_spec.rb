@@ -148,7 +148,8 @@ describe PhonyRails do
       PhonyRails.normalize_number('070-4157134', :country_code => 'NL').should eql('31704157134')
       PhonyRails.normalize_number('0031-70-4157134', :country_code => 'NL').should eql('31704157134')
       PhonyRails.normalize_number('+31-70-4157134', :country_code => 'NL').should eql('31704157134')
-      PhonyRails.normalize_number('0323-2269497', :country_code => 'BE').should eql('3232269497')
+      PhonyRails.normalize_number('0322-69497', :country_code => 'BE').should eql('3232269497')
+      PhonyRails.normalize_number('+32 3 226 94 97', :country_code => 'BE').should eql('3232269497')
     end
 
     it "should normalize even an implausible number" do
