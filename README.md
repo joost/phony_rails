@@ -121,6 +121,11 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## Changelog
 
+0.7.0
+* Gem update.
+* Pinned Phony to v2.3.0.
+* Fixed regex.
+
 0.6.0
 * Support for Phony 2.1 by @pjg.
 
