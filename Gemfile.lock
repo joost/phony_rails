@@ -4,7 +4,7 @@ PATH
     phony_rails (0.7.0)
       activesupport (>= 3.0)
       countries (>= 0.8.2)
-      phony (~> 2.3.0)
+      phony (~> 2.4.3)
 
 GEM
   remote: https://rubygems.org/
@@ -61,7 +61,7 @@ GEM
       optionable (~> 0.2.0)
     optionable (0.2.0)
     origin (2.1.1)
-    phony (2.3.0)
+    phony (2.4.3)
     rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
