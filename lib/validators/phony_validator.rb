@@ -8,6 +8,8 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
     return if value.blank?
 
     @record = record
+
+    value = PhonyRails.normalize_number value, default_country_code: normalized_country_code if normalized_country_code
     @record.errors.add(attribute, error_message) if not Phony.plausible?(value, cc: country_number)
   end
 
@@ -35,6 +37,10 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
 
   def record_country_code
     @record.country_code if @record.respond_to?(:country_code)
+  end
+
+  def normalized_country_code
+    options[:normalized_country_code]
   end
 
 end
