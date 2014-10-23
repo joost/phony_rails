@@ -31,6 +31,10 @@ ActiveRecord::Schema.define do
     table.column :phone_number, :string
   end
 
+  create_table :normalizable_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
+
   create_table :big_helpful_homes do |table|
     table.column :phone_number, :string
   end
@@ -81,6 +85,12 @@ class NotFormattedHelpfulHome < ActiveRecord::Base
 end
 
 #--------------------
+class NormalizableHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, :normalized_country_code => 'US'
+end
+
+#--------------------
 class AustralianHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
   validates_plausible_phone :phone_number, :country_number => "61"
@@ -104,6 +114,7 @@ end
 
 I18n.locale = :en
 VALID_NUMBER = '1 555 555 5555'
+NORMALIZABLE_NUMBER = '555 555 5555'
 AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '61390133997'
 POLISH_NUMBER_WITH_COUNTRY_CODE = '48600600600'
 FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'
@@ -314,6 +325,35 @@ describe ActiveModel::Validations::HelperMethods do
 
       it "should invalidate a valid number without a country code" do
         @home.phone_number = VALID_NUMBER
+        @home.should_not be_valid
+        @home.errors.messages.should include(:phone_number => ["is an invalid number"])
+      end
+
+    end
+
+    #--------------------
+    context 'when a number must be validated after normalization' do
+
+      before(:each) do
+        @home = NormalizableHelpfulHome.new
+      end
+
+      it "should validate an empty number" do
+        @home.should be_valid
+      end
+
+      it "should validate a valid number" do
+        @home.phone_number = VALID_NUMBER
+        @home.should be_valid
+      end
+
+      it "should validate a normalizable number" do
+        @home.phone_number = NORMALIZABLE_NUMBER
+        @home.should be_valid
+      end
+
+      it "should invalidate an invalid number" do
+        @home.phone_number = INVALID_NUMBER
         @home.should_not be_valid
         @home.errors.messages.should include(:phone_number => ["is an invalid number"])
       end

@@ -91,6 +91,11 @@ or correct country code:
 
     validates_plausible_phone :phone_number, :country_code => 'AU'
 
+You can validate against the normalized input as opposed to the raw input:
+
+    phony_normalize :phone_number, as: :phone_number_normalized, :default_country_code => 'US'
+    validates_plausible_phone :phone_number, :normalized_country_code => 'US'
+
 ### Display / Views
 
 In your views use:
