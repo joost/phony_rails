@@ -9,7 +9,7 @@ It uses the super awesome Phony gem (https://github.com/floere/phony).
 
 Add this line to your application's Gemfile:
 
-    gem 'phony_rails'
+    gem 'phony_rails' # Include phony_rails after mongoid (if you use mongoid, see issue #66 on github).
 
 And then execute:
 
