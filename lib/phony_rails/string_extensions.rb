@@ -13,7 +13,7 @@
       s = (normalize_country_code ? PhonyRails.normalize_number(self, :default_country_code => normalize_country_code.to_s) : self.gsub(/\D/, ''))
       return if s.blank?
       return if options[:strict] && !Phony.plausible?(s)
-      Phony.formatted(s, options.reverse_merge(:format => :national))
+      Phony.format(s, options.reverse_merge(:format => :national))
     end
 
     # The bang method
