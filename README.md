@@ -23,6 +23,8 @@ Or install it yourself as:
 
 ### Normalization / Model Usage
 
+#### ActiveRecord
+
 For **ActiveRecord**, in your model add:
 
     class SomeModel < ActiveRecord::Base
@@ -36,6 +38,8 @@ For **ActiveRecord**, in your model add:
       phony_normalized_method :fax_number
     end
 
+#### Mongoid
+
 For **Mongoid**, in keeping with Mongoid plug-in conventions you must include the `Mongoid::Phony` module:
 
     class SomeModel
@@ -44,6 +48,8 @@ For **Mongoid**, in keeping with Mongoid plug-in conventions you must include th
 
       # methods are same as ActiveRecord usage
     end
+
+#### General info
 
 The `:default_country_code` options is used to specify a country_code when normalizing.
 
@@ -59,6 +65,8 @@ You can also do-it-yourself and call:
 
     PhonyRails.normalize_number('+4790909090', :country_code => 'SE') # => '464790909090' (forced to +46)
     PhonyRails.normalize_number('+4790909090', :default_country_code => 'SE') # => '4790909090' (still +47 so not changed)
+
+The country_code should always be a ISO 3166-1 alpha-2 (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
 
 ### Validation
 
