@@ -203,7 +203,7 @@ describe PhonyRails do
       it "should accept :as option with single existing attribute name" do
         lambda {
           model_klass.phony_normalize(:phone_number, :as => 'phone_number_as_normalized')
-        }.should_not raise_error(ArgumentError)
+        }.should_not raise_error
       end
 
       it "should accept a non existing attribute name" do
