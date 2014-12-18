@@ -7,37 +7,72 @@ describe PhonyRails do
 
   describe 'phony_format String extension' do
 
-    describe 'the bang method phony_formatted!' do
+    describe 'the phony_formatted method' do
 
-      it "should change the String using the bang method" do
-        s = "0101234123"
-        s.phony_formatted!(:normalize => :NL, :format => :international).should eql('+31 10 123 4123')
-        s.should eql("+31 10 123 4123")
+      describe 'with the bang!' do
+
+        it "should change the String using the bang method" do
+          s = "0101234123"
+          s.phony_formatted!(:normalize => :NL, :format => :international).should eql('+31 10 123 4123')
+          s.should eql("+31 10 123 4123")
+        end
+
       end
 
-    end
+      describe 'with strict option' do
 
-    describe 'with strict option' do
+        it "should return nil with non plausible number" do
+          number = '+319090' # not valid
+          Phony.plausible?(number).should be_false
+          number.phony_formatted(:strict => true).should eql(nil)
+        end
 
-      it "should return nil with non plausible number" do
-        number = '+319090' # not valid
-        Phony.plausible?(number).should be_false
-        number.phony_formatted(:strict => true).should eql(nil)
+        it "should not return nil with plausible number" do
+          number = '+31101234123' # valid
+          Phony.plausible?(number).should be_true
+          number.phony_formatted(:strict => true).should_not eql(nil)
+        end
+
       end
 
-      it "should not return nil with plausible number" do
-        number = '+31101234123' # valid
-        Phony.plausible?(number).should be_true
-        number.phony_formatted(:strict => true).should_not eql(nil)
+      describe 'with normalize option' do
+
+        it "should phony_format" do
+          "101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
+          "101234123".phony_formatted(:normalize => :NL, :format => :international).should eql('+31 10 123 4123')
+        end
+
+        it "should not change original String" do
+          s = "0101234123"
+          s.phony_formatted(:normalize => :NL).should eql('010 123 4123')
+          s.should eql("0101234123")
+        end
+
+        it "should phony_format String with country code" do
+          "31101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
+        end
+
+        it "should phony_format String with country code" do
+          "31101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
+        end
+
+        it "should accept strings with non-digits in it" do
+          "+31-10-1234123".phony_formatted(:normalize => :NL, :format => :international, :spaces => '-').should eql('+31-10-123-4123')
+        end
+
+        it "should phony_format String with country code different than normalized value" do
+          "+4790909090".phony_formatted(:normalize => :SE, :format => :international).should eql('+47 909 09 090')
+        end
+
       end
 
-    end
+      describe "specific tests from issues" do
 
-    describe 'with normalize option' do
+        # https://github.com/joost/phony_rails/issues/42
+        it "should pass issue Github issue #42" do
+          PhonyRails.normalize_number("0606060606", default_country_code: 'FR').should eq('33606060606')
+        end
 
-      it "should phony_format" do
-        "101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
-        "101234123".phony_formatted(:normalize => :NL, :format => :international).should eql('+31 10 123 4123')
       end
 
       it "should not change original String" do
@@ -46,54 +81,46 @@ describe PhonyRails do
         s.should eql("0101234123")
       end
 
-      it "should phony_format String with country code" do
-        "31101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
+      it "should phony_format a digits string with spaces String" do
+        "31 10 1234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-123-4123')
       end
 
-      it "should phony_format String with country code" do
-        "31101234123".phony_formatted(:normalize => :NL).should eql('010 123 4123')
+      it "should phony_format a digits String" do
+        "31101234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-123-4123')
       end
 
-      it "should accept strings with non-digits in it" do
-        "+31-10-1234123".phony_formatted(:normalize => :NL, :format => :international, :spaces => '-').should eql('+31-10-123-4123')
+      it "returns nil if implausible phone" do
+        "this is not a phone".phony_formatted.should be_nil
       end
 
-      it "should phony_format String with country code different than normalized value" do
-        "+4790909090".phony_formatted(:normalize => :SE, :format => :international).should eql('+47 909 09 090')
-      end
-
-    end
-
-    describe "specific tests from issues" do
-
-      # https://github.com/joost/phony_rails/issues/42
-      it "should pass issue Github issue #42" do
-        PhonyRails.normalize_number("0606060606", default_country_code: 'FR').should eq('33606060606')
+      it "returns nil on blank string" do
+        "".phony_formatted.should be_nil
       end
 
     end
 
-    it "should not change original String" do
-      s = "0101234123"
-      s.phony_formatted(:normalize => :NL).should eql('010 123 4123')
-      s.should eql("0101234123")
+    describe 'the phony_normalized method' do
+
+      it "returns blank on blank string" do
+        "".phony_normalized.should be_nil
+      end
+
+      context "when String misses a country_code" do
+        it "should normalize with :country_code option" do
+          "010 1231234".phony_normalized(:country_code => :NL).should eql("31101231234")
+        end
+
+        it "should normalize without :country_code option" do
+          "010 1231234".phony_normalized.should eql("101231234")
+        end
+      end
+
+      it "should normalize a String" do
+        "+31 (0)10 1231234".phony_normalized.should eql("31101231234")
+      end
+
     end
 
-    it "should phony_format a digits string with spaces String" do
-      "31 10 1234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-123-4123')
-    end
-
-    it "should phony_format a digits String" do
-      "31101234123".phony_formatted(:format => :international, :spaces => '-').should eql('+31-10-123-4123')
-    end
-
-    it "returns nil if implausible phone" do
-      "this is not a phone".phony_formatted.should be_nil
-    end
-
-    it "returns nil on blank string" do
-      "".phony_formatted.should be_nil
-    end
   end
 
   describe 'PhonyRails#normalize_number' do

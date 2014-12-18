@@ -1,5 +1,14 @@
   class String
 
+    # Usage:
+    #   "+31 (0)30 1234 123".phony_normalized # => '31301234123'
+    #   "(0)30 1234 123".phony_normalized # => '301234123'
+    #   "(0)30 1234 123".phony_normalized(country_code: 'NL') # => '301234123'
+    def phony_normalized(options = {})
+      normalize_country_code = options.delete(:country_code)
+      PhonyRails.normalize_number(self, :default_country_code => normalize_country_code.to_s)
+    end
+
     # Add a method to the String class so we can easily format phone numbers.
     # This enables:
     #   "31612341234".phony_formatted # => '06 12341234'

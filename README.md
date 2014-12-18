@@ -1,7 +1,5 @@
 # PhonyRails
 
-(In its early days :) called PhonyNumber)
-
 This small Gem adds useful methods to your Rails app to validate, display and save phone numbers.
 It uses the super awesome Phony gem (https://github.com/floere/phony).
 
@@ -118,6 +116,12 @@ You can also use the bang method (phony_formatted!):
     number.phony_formatted!(:normalize => :NL, :format => :international)
     number # => "+31 10 123 41234"
 
+You can also easily normalize a phone number String:
+
+    "+31 (0)30 1234 123".phony_normalized # => '31301234123'
+    "(0)30 1234 123".phony_normalized # => '301234123'
+    "(0)30 1234 123".phony_normalized(country_code: 'NL') # => '301234123'
+
 ### Find by normalized number
 
 Say you want to find a record by a phone number. Best is to normalize user input and compare to an attribute stored in the db.
@@ -126,74 +130,11 @@ Say you want to find a record by a phone number. Best is to normalize user input
 
 ## Changelog
 
-0.7.0
-* Gem update.
-* Pinned Phony to v2.3.0.
-* Fixed regex.
-
-0.6.0
-* Support for Phony 2.1 by @pjg.
-
-0.5.0
-* Added :strict option to String#phony_formatted.
-
-0.4.2
-* Added @fareastside validation for country_code.
-
-0.4.0/0.4.1
-* Better Mongoid support by @johnnyshields.
-
-0.3.0
-* Now ability to force change a country_code.
-  See: https://github.com/joost/phony_rails/pull/23#issuecomment-17480463
-
-0.2.1
-* Better error handling by @k4nar.
-
-0.1.12
-* Further loosened gemspec dependencies.
-
-0.1.11
-* Better gemspec dependency versions by @rjhaveri.
-
-0.1.10
-* Changes from henning-koch.
-* Some pending fixes.
-
-0.1.8
-* Improved validation methods by @ddidier.
-
-0.1.6
-* Added :as option to phony_normalize.
-
-0.1.5
-* some tests and a helper method by @ddidier.
-
-0.1.2
-* Using countries gem as suggested by @brutuscat.
-* Fixes bugs mentioned by @ddidier.
-
-0.1.0
-* Added specs.
-
-0.0.10
-* Same fix as 0.0.9 but for phony_formatted method.
-
-0.0.9
-* Fix for using same options Hash for all models.
-
-0.0.8
-* Improved number cleaning not to remove '+' and leading 0's. Now works with national numbers starting with 0 followed by country_code. Eg. 032 in BE.
-
-0.0.7
-* Fixed problem with '+' number
-
-0.0.6
-* Fixed problem with '070-4157134' being parsed as US number
+0.8.2
+* Added String#phony_normalized method
 
 ## TODO
 
-* Fix phony v2.x issues.
 * Make this work: Home.find_by_normalized_phone_number(Home.normalize_number(params[:phone_number]))
   So we use Home.normalize_number instead of PhonyRails.normalize_number. This way we can use the same default_country_code.
 * Make country_code method configurable.
