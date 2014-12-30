@@ -184,6 +184,47 @@ describe PhonyRails do
     end
   end
 
+  describe 'PhonyRails#plausible_number?' do
+    let(:valid_number) { '1 555 555 5555' }
+    let(:invalid_number) { '123456789 123456789 123456789 123456789' }
+    let(:normalizable_number) { '555 555 5555' }
+    let(:formatted_french_number_with_country_code) { '+33 627899541' }
+    let(:empty_number) { '' }
+    let(:nil_number) { nil }
+
+    it "should return true for a valid number" do
+      PhonyRails.plausible_number?(valid_number, country_code: 'US').should be_true
+    end
+
+    it "should return false for an invalid number" do
+      PhonyRails.plausible_number?(invalid_number, country_code: 'US').should be_false
+    end
+
+    it "should return true for a normalizable number" do
+      PhonyRails.plausible_number?(normalizable_number, country_code: 'US').should be_true
+    end
+
+    it "should return false for a valid number with the wrong country code" do
+      PhonyRails.plausible_number?(valid_number, country_code: 'FR').should be_false
+    end
+
+    it "should return true for a well formatted valid number" do
+      PhonyRails.plausible_number?(formatted_french_number_with_country_code, country_code: 'FR').should be_true
+    end
+
+    it "should return false for an empty number" do
+      PhonyRails.plausible_number?(empty_number, country_code: 'US').should be_false
+    end
+
+    it "should return false for a nil number" do
+      PhonyRails.plausible_number?(nil_number, country_code: 'US').should be_false
+    end
+
+    it "should return false when no country code is supplied" do
+      PhonyRails.plausible_number?(normalizable_number).should be_false
+    end
+  end
+
   shared_examples_for 'model with PhonyRails' do
     describe 'defining model#phony_normalized_method' do
       it "should add a normalized_phone_attribute method" do

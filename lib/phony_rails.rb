@@ -35,9 +35,12 @@ module PhonyRails
     number # If all goes wrong .. we still return the original input.
   end
 
+  # Wrapper for Phony.plausible?.  Takes the same options as #normalize_number.
+  # NB: This method calls #normalize_number and passes _options_ directly to that method.
   def self.plausible_number?(number, options = {})
     return false if number.nil? || number.blank?
-    country_number = options[:country_number] || country_number_for(options[:country_code]) ||
+    number = normalize_number(number, options)
+    country_number = options[:country_number] || country_number_for(options[:country_code]) || 
       default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
     Phony.plausible? number, cc: country_number
   rescue
