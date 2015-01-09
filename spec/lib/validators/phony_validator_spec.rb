@@ -170,6 +170,14 @@ describe PhonyPlausibleValidator do
         @home.errors.messages.should include(:phone_number => ["は正し電話番号ではありません"])
       end
     end
+
+    it "should translate the error message in Khmer" do
+      I18n.with_locale(:kh) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        @home.errors.messages.should include(:phone_number => ["គឺជាលេខមិនត្រឹមត្រូវ"])
+      end
+    end
   end
 end
 
