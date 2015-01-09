@@ -87,7 +87,7 @@ so we can use:
     validates_plausible_phone :phone_number, :without => /^\+\d+/
     validates_plausible_phone :phone_number, :presence => true, :with => /^\+\d+/
 
-the i18n key is `:improbable_phone`
+the i18n key is `:improbable_phone`. Languages supported by default: de, en, fr, it, ja, kh and tr.
 
 You can also validate if a number has the correct country number:
 
