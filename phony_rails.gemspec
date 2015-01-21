@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{This Gem adds useful methods to your Rails app to validate, display and save phone numbers.}
   gem.summary       = %q{This Gem adds useful methods to your Rails app to validate, display and save phone numbers.}
   gem.homepage      = "https://github.com/joost/phony_rails"
-  gem.license = 'MIT'
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -15,6 +15,9 @@ Gem::Specification.new do |gem|
   gem.name          = "phony_rails"
   gem.require_paths = ["lib"]
   gem.version       = PhonyRails::VERSION
+
+  gem.post_install_message = "PhonyRails v0.10.0 changes the way numbers are stored!"
+  gem.post_install_message = "It now ads a '+' to the normalized number when it starts with a country number!"
 
   gem.add_dependency "phony", "~> 2.10.1"
   gem.add_dependency "countries", ">= 0.8.2"

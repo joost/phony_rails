@@ -70,15 +70,15 @@ describe PhonyRails do
 
         # https://github.com/joost/phony_rails/issues/42
         it "should pass issue Github issue #42" do
-          PhonyRails.normalize_number("0606060606", default_country_code: 'FR').should eq('33606060606')
+          PhonyRails.normalize_number("0606060606", default_country_code: 'FR').should eq('+33606060606')
         end
 
       end
 
       it "should not change original String" do
-        s = "0101234123"
+        s = '0101234123'
         s.phony_formatted(:normalize => :NL).should eql('010 123 4123')
-        s.should eql("0101234123")
+        s.should eql('0101234123')
       end
 
       it "should phony_format a digits string with spaces String" do
@@ -107,7 +107,7 @@ describe PhonyRails do
 
       context "when String misses a country_code" do
         it "should normalize with :country_code option" do
-          "010 1231234".phony_normalized(:country_code => :NL).should eql("31101231234")
+          "010 1231234".phony_normalized(:country_code => :NL).should eql("+31101231234")
         end
 
         it "should normalize without :country_code option" do
@@ -116,7 +116,7 @@ describe PhonyRails do
       end
 
       it "should normalize a String" do
-        "+31 (0)10 1231234".phony_normalized.should eql("31101231234")
+        "+31 (0)10 1231234".phony_normalized.should eql("+31101231234")
       end
 
     end
@@ -127,19 +127,19 @@ describe PhonyRails do
     context 'number with a country code' do
 
       it "should not add default_country_code" do
-        PhonyRails.normalize_number('+4790909090', :default_country_code => 'SE').should eql('4790909090') # SE = +46
-        PhonyRails.normalize_number('004790909090', :default_country_code => 'SE').should eql('4790909090')
-        PhonyRails.normalize_number('4790909090', :default_country_code => 'NO').should eql('4790909090') # NO = +47
+        PhonyRails.normalize_number('+4790909090', :default_country_code => 'SE').should eql('+4790909090') # SE = +46
+        PhonyRails.normalize_number('004790909090', :default_country_code => 'SE').should eql('+4790909090')
+        PhonyRails.normalize_number('4790909090', :default_country_code => 'NO').should eql('+4790909090') # NO = +47
       end
 
       it "should force add country_code" do
-        PhonyRails.normalize_number('+4790909090', :country_code => 'SE').should eql('464790909090')
-        PhonyRails.normalize_number('004790909090', :country_code => 'SE').should eql('4604790909090') # FIXME: differs due to Phony.normalize in v2.7.1?!
-        PhonyRails.normalize_number('4790909090', :country_code => 'SE').should eql('464790909090')
+        PhonyRails.normalize_number('+4790909090', :country_code => 'SE').should eql('+464790909090')
+        PhonyRails.normalize_number('004790909090', :country_code => 'SE').should eql('+4604790909090') # FIXME: differs due to Phony.normalize in v2.7.1?!
+        PhonyRails.normalize_number('4790909090', :country_code => 'SE').should eql('+464790909090')
       end
 
       it "should recognize lowercase country codes" do
-        PhonyRails.normalize_number('4790909090', :country_code => 'se').should eql('464790909090')
+        PhonyRails.normalize_number('4790909090', :country_code => 'se').should eql('+464790909090')
       end
 
     end
@@ -147,36 +147,47 @@ describe PhonyRails do
     context 'number without a country code' do
 
       it "should normalize with a default_country_code" do
-        PhonyRails.normalize_number('010-1234123', :default_country_code => 'NL').should eql('31101234123')
+        PhonyRails.normalize_number('010-1234123', :default_country_code => 'NL').should eql('+31101234123')
       end
 
       it "should normalize with a country_code" do
-        PhonyRails.normalize_number('010-1234123', :country_code => 'NL', :default_country_code => 'DE').should eql('31101234123')
-        PhonyRails.normalize_number('010-1234123', :country_code => 'NL').should eql('31101234123')
+        PhonyRails.normalize_number('010-1234123', :country_code => 'NL', :default_country_code => 'DE').should eql('+31101234123')
+        PhonyRails.normalize_number('010-1234123', :country_code => 'NL').should eql('+31101234123')
       end
 
       it "should handle different countries" do
-        PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE').should eql('49308612906')
-        PhonyRails.normalize_number('0203 330 8897', :country_code => 'GB').should eql('442033308897')
+        PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE').should eql('+49308612906')
+        PhonyRails.normalize_number('0203 330 8897', :country_code => 'GB').should eql('+442033308897')
       end
 
       it "should prefer country_code over default_country_code" do
-        PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE', :default_country_code => 'NL').should eql('49308612906')
+        PhonyRails.normalize_number('(030) 8 61 29 06', :country_code => 'DE', :default_country_code => 'NL').should eql('+49308612906')
       end
 
       it "should recognize lowercase country codes" do
-        PhonyRails.normalize_number('010-1234123', :country_code => 'nl').should eql('31101234123')
+        PhonyRails.normalize_number('010-1234123', :country_code => 'nl').should eql('+31101234123')
       end
 
     end
 
-    it "should handle some edge cases" do
-      PhonyRails.normalize_number('some nasty stuff in this +31 number 10-1234123 string', :country_code => 'NL').should eql('31101234123')
-      PhonyRails.normalize_number('070-4157134', :country_code => 'NL').should eql('31704157134')
-      PhonyRails.normalize_number('0031-70-4157134', :country_code => 'NL').should eql('31704157134')
-      PhonyRails.normalize_number('+31-70-4157134', :country_code => 'NL').should eql('31704157134')
-      PhonyRails.normalize_number('0322-69497', :country_code => 'BE').should eql('3232269497')
-      PhonyRails.normalize_number('+32 3 226 94 97', :country_code => 'BE').should eql('3232269497')
+    it "should handle some edge cases (with country_code)" do
+      PhonyRails.normalize_number('some nasty stuff in this +31 number 10-1234123 string', :country_code => 'NL').should eql('+31101234123')
+      PhonyRails.normalize_number('070-4157134', :country_code => 'NL').should eql('+31704157134')
+      PhonyRails.normalize_number('0031-70-4157134', :country_code => 'NL').should eql('+31704157134')
+      PhonyRails.normalize_number('+31-70-4157134', :country_code => 'NL').should eql('+31704157134')
+      PhonyRails.normalize_number('0322-69497', :country_code => 'BE').should eql('+3232269497')
+      PhonyRails.normalize_number('+32 3 226 94 97', :country_code => 'BE').should eql('+3232269497')
+      PhonyRails.normalize_number('0450 764 000', :country_code => 'AU').should eql('+61450764000')
+    end
+
+    it "should handle some edge cases (with default_country_code)" do
+      PhonyRails.normalize_number('some nasty stuff in this +31 number 10-1234123 string', :country_code => 'NL').should eql('+31101234123')
+      PhonyRails.normalize_number('070-4157134', :default_country_code => 'NL').should eql('+31704157134')
+      PhonyRails.normalize_number('0031-70-4157134', :default_country_code => 'NL').should eql('+31704157134')
+      PhonyRails.normalize_number('+31-70-4157134', :default_country_code => 'NL').should eql('+31704157134')
+      PhonyRails.normalize_number('0322-69497', :default_country_code => 'BE').should eql('+3232269497')
+      PhonyRails.normalize_number('+32 3 226 94 97', :default_country_code => 'BE').should eql('+3232269497')
+      PhonyRails.normalize_number('0450 764 000', :default_country_code => 'AU').should eql('+61450764000')
     end
 
     it "should normalize even an implausible number" do
@@ -285,12 +296,12 @@ describe PhonyRails do
     # Following examples have complete number (with country code!)
       it "should return a normalized version of an attribute" do
         model = model_klass.new(:phone_attribute => "+31-(0)10-1234123")
-        model.normalized_phone_attribute.should eql('31101234123')
+        model.normalized_phone_attribute.should eql('+31101234123')
       end
 
       it "should return a normalized version of a method" do
         model = model_klass.new(:phone_method => "+31-(0)10-1234123")
-        model.normalized_phone_method.should eql('31101234123')
+        model.normalized_phone_method.should eql('+31101234123')
       end
 
     # Following examples have incomplete number
@@ -301,59 +312,60 @@ describe PhonyRails do
 
       it "should use country_code option" do
         model = model_klass.new(:phone_attribute => "(0)10-1234123")
-        model.normalized_phone_attribute(:country_code => 'NL').should eql('31101234123')
+        model.normalized_phone_attribute(:country_code => 'NL').should eql('+31101234123')
       end
 
       it "should use country_code object method" do
         model = model_klass.new(:phone_attribute => "(0)10-1234123", :country_code => 'NL')
-        model.normalized_phone_attribute.should eql('31101234123')
+        model.normalized_phone_attribute.should eql('+31101234123')
       end
 
       it "should fallback to default_country_code option" do
         model = model_klass.new(:phone1_method => "(030) 8 61 29 06")
-        model.normalized_phone1_method.should eql('49308612906')
+        model.normalized_phone1_method.should eql('+49308612906')
       end
 
       it "should overwrite default_country_code option with object method" do
         model = model_klass.new(:phone1_method => "(030) 8 61 29 06", :country_code => 'NL')
-        model.normalized_phone1_method.should eql('31308612906')
+        model.normalized_phone1_method.should eql('+31308612906')
       end
 
       it "should overwrite default_country_code option with option" do
         model = model_klass.new(:phone1_method => "(030) 8 61 29 06")
-        model.normalized_phone1_method(:country_code => 'NL').should eql('31308612906')
+        model.normalized_phone1_method(:country_code => 'NL').should eql('+31308612906')
       end
 
       it "should use last passed options" do
         model = model_klass.new(:phone1_method => "(030) 8 61 29 06")
-        model.normalized_phone1_method(:country_code => 'NL').should eql('31308612906')
-        model.normalized_phone1_method(:country_code => 'DE').should eql('49308612906')
-        model.normalized_phone1_method(:country_code => nil).should eql('49308612906')
+        model.normalized_phone1_method(:country_code => 'NL').should eql('+31308612906')
+        model.normalized_phone1_method(:country_code => 'DE').should eql('+49308612906')
+        model.normalized_phone1_method(:country_code => nil).should eql('+49308612906')
       end
 
       it "should use last object method" do
         model = model_klass.new(:phone1_method => "(030) 8 61 29 06")
         model.country_code = 'NL'
-        model.normalized_phone1_method.should eql('31308612906')
+        model.normalized_phone1_method.should eql('+31308612906')
         model.country_code = 'DE'
-        model.normalized_phone1_method.should eql('49308612906')
+        model.normalized_phone1_method.should eql('+49308612906')
         model.country_code = nil
-        model.normalized_phone1_method(:country_code => nil).should eql('49308612906')
+        model.normalized_phone1_method(:country_code => nil).should eql('+49308612906')
       end
     end
 
     describe 'using model#phony_normalize' do
-      it "should set a normalized version of an attribute" do
+      it "should not change normalized numbers (see #76)" do
         model = model_klass.new(:phone_number => "+31-(0)10-1234123")
         model.valid?.should be_true
-        model.phone_number.should eql('31101234123')
+        model.phone_number.should eql('+31101234123')
+
       end
 
       it "should set a normalized version of an attribute using :as option" do
         model_klass.phony_normalize :phone_number, :as => :phone_number_as_normalized
         model = model_klass.new(:phone_number => "+31-(0)10-1234123")
         model.valid?.should be_true
-        model.phone_number_as_normalized.should eql('31101234123')
+        model.phone_number_as_normalized.should eql('+31101234123')
       end
 
       it "should raise a RuntimeError at validation if the attribute doesn't exist" do
@@ -378,6 +390,20 @@ describe PhonyRails do
     let(:model_klass){ ActiveRecordModel }
     let(:dummy_klass){ ActiveRecordDummy }
     it_behaves_like 'model with PhonyRails'
+
+    it "should correctly keep a hard set country_code" do
+      model = model_klass.new(:fax_number => '+1 978 555 0000')
+      model.valid?.should be_true
+      model.fax_number.should eql('+19785550000')
+      model.save.should be_true
+      model.save.should be_true # revalidate
+      model.reload
+      model.fax_number.should eql('+19785550000')
+      model.fax_number = '(030) 8 61 29 06'
+      model.save.should be_true # revalidate
+      model.reload
+      model.fax_number.should eql('+61308612906')
+    end
   end
 
   describe 'Mongoid' do

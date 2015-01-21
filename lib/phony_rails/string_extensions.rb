@@ -1,7 +1,7 @@
   class String
 
     # Usage:
-    #   "+31 (0)30 1234 123".phony_normalized # => '31301234123'
+    #   "+31 (0)30 1234 123".phony_normalized # => '+31301234123'
     #   "(0)30 1234 123".phony_normalized # => '301234123'
     #   "(0)30 1234 123".phony_normalized(country_code: 'NL') # => '301234123'
     def phony_normalized(options = {})
@@ -19,7 +19,7 @@
     #   "010-12341234".phony_formatted(strict: true)
     def phony_formatted(options = {})
       normalize_country_code = options.delete(:normalize)
-      s = (normalize_country_code ? PhonyRails.normalize_number(self, :default_country_code => normalize_country_code.to_s) : self.gsub(/\D/, ''))
+      s = (normalize_country_code ? PhonyRails.normalize_number(self, :default_country_code => normalize_country_code.to_s, :add_plus => false) : self.gsub(/\D/, ''))
       return if s.blank?
       return if options[:strict] && !Phony.plausible?(s)
       Phony.format(s, options.reverse_merge(:format => :national))

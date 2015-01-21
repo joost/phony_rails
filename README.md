@@ -51,7 +51,7 @@ For **Mongoid**, in keeping with Mongoid plug-in conventions you must include th
 
 The `:default_country_code` options is used to specify a country_code when normalizing.
 
-PhonyRails will also check your model for a country_code method to use when normalizing the number. So `'070-12341234'` with `country_code` 'NL' will get normalized to `'317012341234'`.
+PhonyRails will also check your model for a country_code method to use when normalizing the number. So `'070-12341234'` with `country_code` 'NL' will get normalized to `'+317012341234'`.
 
 You can also do-it-yourself and call:
 
@@ -61,8 +61,8 @@ You can also do-it-yourself and call:
 
     PhonyRails.normalize_number('some number', :country_code => 'NL')
 
-    PhonyRails.normalize_number('+4790909090', :country_code => 'SE') # => '464790909090' (forced to +46)
-    PhonyRails.normalize_number('+4790909090', :default_country_code => 'SE') # => '4790909090' (still +47 so not changed)
+    PhonyRails.normalize_number('+4790909090', :country_code => 'SE') # => '+464790909090' (forced to +46)
+    PhonyRails.normalize_number('+4790909090', :default_country_code => 'SE') # => '+4790909090' (still +47 so not changed)
 
 The country_code should always be a ISO 3166-1 alpha-2 (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
 
@@ -135,17 +135,6 @@ You can also easily normalize a phone number String:
 Say you want to find a record by a phone number. Best is to normalize user input and compare to an attribute stored in the db.
 
     Home.find_by_normalized_phone_number(PhonyRails.normalize_number(params[:phone_number]))
-
-## Changelog
-
-0.8.2
-* Added String#phony_normalized method
-
-## TODO
-
-* Make this work: Home.find_by_normalized_phone_number(Home.normalize_number(params[:phone_number]))
-  So we use Home.normalize_number instead of PhonyRails.normalize_number. This way we can use the same default_country_code.
-* Make country_code method configurable.
 
 ## Contributing
 

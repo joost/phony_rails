@@ -16,6 +16,7 @@ module PhonyRails
   #   :default_country_number => Fallback country code.
   #   :country_code => The country code we should use.
   #   :default_country_code => Some fallback code (eg. 'NL') that can be used as default (comes from phony_normalize_numbers method).
+  #   :add_plus => Add a '+' in front so we know the country code is added. (default: true)
   # This idea came from:
   #   http://www.redguava.com.au/2011/06/rails-convert-phone-numbers-to-international-format-for-sms/
   def self.normalize_number(number, options = {})
@@ -23,14 +24,18 @@ module PhonyRails
     number = number.clone # Just to be sure, we don't want to change the original.
     number.gsub!(/[^\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
-    if country_number = options[:country_number] || country_number_for(options[:country_code])
+    if _country_number = options[:country_number] || country_number_for(options[:country_code])
+      options[:add_plus] = true if options[:add_plus].nil?
       # (Force) add country_number if missing
-      number = "#{country_number}#{number}" if not number =~ /\A(00|\+)?#{country_number}/
-    elsif default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
+      number = "#{_country_number}#{number}" if not number =~ /\A(00|\+)?#{_country_number}/
+    elsif _default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
+      options[:add_plus] = true if options[:add_plus].nil?
       # Add default_country_number if missing
-      number = "#{default_country_number}#{number}" if not number =~ /\A(00|\+|#{default_country_number})/
+      number = "#{_default_country_number}#{number}" if not number =~ /\A(00|\+|#{_default_country_number})/
     end
-    Phony.normalize(number)
+    normalized_number = Phony.normalize(number)
+    options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
+    options[:add_plus] ? "+#{normalized_number}" : normalized_number
   rescue
     number # If all goes wrong .. we still return the original input.
   end
