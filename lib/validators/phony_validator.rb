@@ -24,7 +24,7 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
   end
 
   def record_country_number
-    @record.country_number if @record.respond_to?(:country_number)
+    @record.country_number if @record.respond_to?(:country_number) && !options[:ignore_record_country_number]
   end
 
   def country_number_from_country_code
@@ -36,7 +36,7 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
   end
 
   def record_country_code
-    @record.country_code if @record.respond_to?(:country_code)
+    @record.country_code if @record.respond_to?(:country_code) && !options[:ignore_record_country_code]
   end
 
   def normalized_country_code

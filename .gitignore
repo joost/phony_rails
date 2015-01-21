@@ -1,2 +1,4 @@
 /.rvmrc
 /.idea/
+.ruby-gemset
+.ruby-version

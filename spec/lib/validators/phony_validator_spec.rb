@@ -46,6 +46,10 @@ ActiveRecord::Schema.define do
   create_table :polish_helpful_homes do |table|
     table.column :phone_number, :string
   end
+
+  create_table :mismatched_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
 end
 
 #--------------------
@@ -108,6 +112,11 @@ class BigHelpfulHome < ActiveRecord::Base
   validates_plausible_phone :phone_number, :presence => true, :with => /\A\+\d+/, :country_number => "33"
 end
 
+#--------------------
+class MismatchedHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number, :country_code
+  validates :phone_number, :phony_plausible => {:ignore_record_country_code => true}
+end
 #-----------------------------------------------------------------------------------------------------------------------
 # Tests
 #-----------------------------------------------------------------------------------------------------------------------
@@ -121,6 +130,7 @@ FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'
 FRENCH_NUMBER_WITH_COUNTRY_CODE = '33627899541'
 FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 627899541'
 INVALID_NUMBER = '123456789 123456789 123456789 123456789'
+JAPAN_COUNTRY = 'jp'
 
 #-----------------------------------------------------------------------------------------------------------------------
 describe PhonyPlausibleValidator do
@@ -431,6 +441,19 @@ describe ActiveModel::Validations::HelperMethods do
         @home.should be_valid
       end
 
+    end
+
+    #--------------------
+    context 'when a phone number does not match the records country' do
+      before(:each) do
+        @home = MismatchedHelpfulHome.new
+        @home.country_code = JAPAN_COUNTRY
+        @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
+      end
+
+      it "should allow this number" do
+        @home.should be_valid
+      end
     end
 
   end
