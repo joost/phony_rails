@@ -66,7 +66,32 @@ describe PhonyRails do
 
       end
 
+      describe 'with raise option' do
+
+        # https://github.com/joost/phony_rails/issues/79
+
+        context 'when raise is true' do
+          it "should raise the error" do
+            lambda {
+              "8887716095".phony_formatted(format: :international, raise: true)
+            }.should raise_error(NoMethodError)
+          end
+        end
+
+        context 'when raise is false (default)' do
+          it "should return original String on exception" do
+            "8887716095".phony_formatted(format: :international).should eq('8887716095')
+          end
+        end
+
+      end
+
       describe "specific tests from issues" do
+
+        # https://github.com/joost/phony_rails/issues/79
+        it "should pass issue Github issue #42" do
+          "8887716095".phony_formatted(format: :international, normalize: 'US', raise: true).should eq('+1 888 771 6095')
+        end
 
         # https://github.com/joost/phony_rails/issues/42
         it "should pass issue Github issue #42" do
