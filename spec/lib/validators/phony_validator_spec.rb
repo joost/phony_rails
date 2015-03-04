@@ -177,7 +177,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:ja) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        @home.errors.messages.should include(:phone_number => ["は正し電話番号ではありません"])
+        @home.errors.messages.should include(:phone_number => ["は正しい電話番号ではありません"])
       end
     end
 
