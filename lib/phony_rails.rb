@@ -80,7 +80,7 @@ module PhonyRails
       # you've geocoded before calling this method!
       def phony_normalize(*attributes)
         options = attributes.last.is_a?(Hash) ? attributes.pop : {}
-        options.assert_valid_keys :country_code, :default_country_code, :as
+        options.assert_valid_keys :country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as
         if options[:as].present?
           raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if attributes.size > 1
         end

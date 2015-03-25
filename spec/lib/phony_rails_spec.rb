@@ -315,6 +315,21 @@ describe PhonyRails do
           dummy_klass.phony_normalize(:non_existing_attribute)
         }.should_not raise_error
       end
+
+      it "should accept supported options" do 
+        options = [:country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as]
+        options.each do |option_sym|
+          lambda {
+            dummy_klass.phony_normalize(:phone_number, option_sym => false)
+          }.should_not raise_error
+        end
+      end
+
+      it "should not accept unsupported options" do 
+        lambda {
+          dummy_klass.phony_normalize(:phone_number, unsupported_option: false)
+        }.should raise_error(ArgumentError)
+      end
     end
 
     describe 'using model#phony_normalized_method' do
