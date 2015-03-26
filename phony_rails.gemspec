@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.post_install_message = "PhonyRails v0.10.0 changes the way numbers are stored!"
   gem.post_install_message = "It now ads a '+' to the normalized number when it starts with a country number!"
 
-  gem.add_dependency "phony", '~> 2.11', '>= 2.11.1'
+  gem.add_dependency "phony", '~> 2.12'
   gem.add_dependency "countries", '~> 0.8', '>= 0.8.2'
   gem.add_dependency "activesupport", ">= 3.0"
   gem.add_development_dependency "activerecord", ">= 3.0"

@@ -316,7 +316,7 @@ describe PhonyRails do
         }.should_not raise_error
       end
 
-      it "should accept supported options" do 
+      it "should accept supported options" do
         options = [:country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as]
         options.each do |option_sym|
           lambda {
@@ -325,7 +325,7 @@ describe PhonyRails do
         end
       end
 
-      it "should not accept unsupported options" do 
+      it "should not accept unsupported options" do
         lambda {
           dummy_klass.phony_normalize(:phone_number, unsupported_option: false)
         }.should raise_error(ArgumentError)
@@ -406,6 +406,13 @@ describe PhonyRails do
         model = model_klass.new(:phone_number => "+31-(0)10-1234123")
         model.valid?.should be_true
         model.phone_number_as_normalized.should eql('+31101234123')
+      end
+
+      it "should not add a + using :add_plus option" do
+        model_klass.phony_normalize :phone_number, :add_plus => false
+        model = model_klass.new(:phone_number => "+31-(0)10-1234123")
+        model.valid?.should be_true
+        model.phone_number.should eql('31101234123')
       end
 
       it "should raise a RuntimeError at validation if the attribute doesn't exist" do
