@@ -27,17 +27,24 @@ module PhonyRails
     if _country_number = options[:country_number] || country_number_for(options[:country_code])
       options[:add_plus] = true if options[:add_plus].nil?
       # (Force) add country_number if missing
-      number = "#{_country_number}#{number}" if not number =~ /\A(00|\+)?#{_country_number}/
+      # NOTE: do we need to force adding country code? Otherwise we can share lofic with next block
+      if !Phony.plausible?(number) || _country_number != country_code_from_number(number)
+        number = "#{_country_number}#{number}"
+      end
     elsif _default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
       options[:add_plus] = true if options[:add_plus].nil?
-      # Add default_country_number if missing
-      number = "#{_default_country_number}#{number}" if not number =~ /\A(00|\+|#{_default_country_number})/
+      number = "#{_default_country_number}#{number}" unless Phony.plausible?(number)
     end
     normalized_number = Phony.normalize(number)
     options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
     options[:add_plus] ? "+#{normalized_number}" : normalized_number
   rescue
     number # If all goes wrong .. we still return the original input.
+  end
+
+  def self.country_code_from_number(number)
+    return nil unless Phony.plausible?(number)
+    Phony.split(Phony.normalize(number)).first
   end
 
   # Wrapper for Phony.plausible?.  Takes the same options as #normalize_number.

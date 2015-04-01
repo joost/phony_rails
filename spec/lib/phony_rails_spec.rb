@@ -98,6 +98,10 @@ describe PhonyRails do
           PhonyRails.normalize_number("0606060606", default_country_code: 'FR').should eq('+33606060606')
         end
 
+        it "should pass issue Github issue #85" do
+          PhonyRails.normalize_number("47386160",  default_country_code: 'NO').should eq('+4747386160')
+          PhonyRails.normalize_number("47386160",  country_number: '47').should eq('+4747386160')
+        end
       end
 
       it "should not change original String" do
