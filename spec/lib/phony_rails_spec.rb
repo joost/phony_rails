@@ -89,18 +89,23 @@ describe PhonyRails do
       describe "specific tests from issues" do
 
         # https://github.com/joost/phony_rails/issues/79
-        it "should pass issue Github issue #42" do
+        it "should pass Github issue #42" do
           "8887716095".phony_formatted(format: :international, normalize: 'US', raise: true).should eq('+1 888 771 6095')
         end
 
         # https://github.com/joost/phony_rails/issues/42
-        it "should pass issue Github issue #42" do
+        it "should pass Github issue #42" do
           PhonyRails.normalize_number("0606060606", default_country_code: 'FR').should eq('+33606060606')
         end
 
-        it "should pass issue Github issue #85" do
+        it "should pass Github issue #85" do
           PhonyRails.normalize_number("47386160",  default_country_code: 'NO').should eq('+4747386160')
           PhonyRails.normalize_number("47386160",  country_number: '47').should eq('+4747386160')
+        end
+
+        it "should pass Github issue #87" do
+          PhonyRails.normalize_number('2318725305', country_code: 'US').should eq('+12318725305')
+          PhonyRails.normalize_number('2318725305', default_country_code: 'US').should eq('+12318725305')
         end
       end
 

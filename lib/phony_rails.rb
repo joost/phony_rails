@@ -33,7 +33,12 @@ module PhonyRails
       end
     elsif _default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
       options[:add_plus] = true if options[:add_plus].nil?
-      number = "#{_default_country_number}#{number}" unless Phony.plausible?(number)
+      # We try to add the default country number and see if it is a
+      # correct phone number. See https://github.com/joost/phony_rails/issues/87#issuecomment-89324426
+      if Phony.plausible?("#{_default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
+        number = "#{_default_country_number}#{number}"
+      end
+      # number = "#{_default_country_number}#{number}" unless Phony.plausible?(number)
     end
     normalized_number = Phony.normalize(number)
     options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
