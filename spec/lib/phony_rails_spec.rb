@@ -106,6 +106,7 @@ describe PhonyRails do
         it "should pass Github issue #87" do
           PhonyRails.normalize_number('2318725305', country_code: 'US').should eq('+12318725305')
           PhonyRails.normalize_number('2318725305', default_country_code: 'US').should eq('+12318725305')
+          PhonyRails.normalize_number('+2318725305', default_country_code: 'US').should eq('+2318725305')
         end
       end
 

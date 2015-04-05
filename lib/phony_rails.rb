@@ -35,8 +35,10 @@ module PhonyRails
       options[:add_plus] = true if options[:add_plus].nil?
       # We try to add the default country number and see if it is a
       # correct phone number. See https://github.com/joost/phony_rails/issues/87#issuecomment-89324426
-      if Phony.plausible?("#{_default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
-        number = "#{_default_country_number}#{number}"
+      if not (number =~ /\A\+/) # if we don't have a +
+        if Phony.plausible?("#{_default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
+          number = "#{_default_country_number}#{number}"
+        end
       end
       # number = "#{_default_country_number}#{number}" unless Phony.plausible?(number)
     end
