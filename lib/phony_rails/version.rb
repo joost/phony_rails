@@ -1,3 +1,3 @@
 module PhonyRails
-  VERSION = "0.12.3"
+  VERSION = "0.12.4"
 end

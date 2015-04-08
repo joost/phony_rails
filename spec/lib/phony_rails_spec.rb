@@ -108,6 +108,12 @@ describe PhonyRails do
           PhonyRails.normalize_number('2318725305', default_country_code: 'US').should eq('+12318725305')
           PhonyRails.normalize_number('+2318725305', default_country_code: 'US').should eq('+2318725305')
         end
+
+        it "should pass Github issue #89" do
+          number = '+33 (0)6 87 36 18 75'
+          Phony.plausible?(number).should be_true
+          PhonyRails.normalize_number(number, country_code: 'FR').should eq('+33687361875')
+        end
       end
 
       it "should not change original String" do
