@@ -5,7 +5,7 @@
     #   "(0)30 1234 123".phony_normalized # => '301234123'
     #   "(0)30 1234 123".phony_normalized(country_code: 'NL') # => '301234123'
     def phony_normalized(options = nil)
-      options = options.dup || {}
+      options = options ? options.dup : {}
       options[:default_country_code] = options.delete(:country_code) if options.key?(:country_code)
       PhonyRails.normalize_number(self, options)
     end
