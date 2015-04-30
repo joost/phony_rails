@@ -5,6 +5,8 @@
     #   "(0)30 1234 123".phony_normalized # => '301234123'
     #   "(0)30 1234 123".phony_normalized(country_code: 'NL') # => '301234123'
     def phony_normalized(options = {})
+      raise ArgumentError, "Expected options to be a Hash, got #{options.inspect}" if not options.is_a?(Hash)
+      options = options.dup
       normalize_country_code = options.delete(:country_code)
       PhonyRails.normalize_number(self, :default_country_code => normalize_country_code.to_s)
     end
@@ -21,6 +23,8 @@
     # To raise an error use:
     #   "somestring".phone_formatted(raise: true)
     def phony_formatted(options = {})
+      raise ArgumentError, "Expected options to be a Hash, got #{options.inspect}" if not options.is_a?(Hash)
+      options = options.dup
       normalize_country_code = options.delete(:normalize)
       s = (normalize_country_code ? PhonyRails.normalize_number(self, :default_country_code => normalize_country_code.to_s, :add_plus => false) : self.gsub(/\D/, ''))
       return if s.blank?

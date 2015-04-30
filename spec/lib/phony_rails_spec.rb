@@ -9,6 +9,12 @@ describe PhonyRails do
 
     describe 'the phony_formatted method' do
 
+      it 'should not modify the original options Hash' do
+        options = {:normalize => :NL, :format => :international}
+        "0101234123".phony_formatted(options)
+        options.should eql({:normalize => :NL, :format => :international})
+      end
+
       describe 'with the bang!' do
 
         it "should change the String using the bang method" do
@@ -144,6 +150,12 @@ describe PhonyRails do
 
       it "returns blank on blank string" do
         "".phony_normalized.should be_nil
+      end
+
+      it 'should not modify the original options Hash' do
+        options = {:normalize => :NL, :format => :international}
+        "0101234123".phony_normalized(options)
+        options.should eql({:normalize => :NL, :format => :international})
       end
 
       context "when String misses a country_code" do
