@@ -7,8 +7,7 @@
     def phony_normalized(options = {})
       raise ArgumentError, "Expected options to be a Hash, got #{options.inspect}" if not options.is_a?(Hash)
       options = options.dup
-      normalize_country_code = options.delete(:country_code)
-      PhonyRails.normalize_number(self, :default_country_code => normalize_country_code.to_s)
+      PhonyRails.normalize_number(self, options)
     end
 
     # Add a method to the String class so we can easily format phone numbers.

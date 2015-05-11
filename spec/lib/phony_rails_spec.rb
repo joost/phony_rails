@@ -166,6 +166,15 @@ describe PhonyRails do
         it "should normalize without :country_code option" do
           "010 1231234".phony_normalized.should eql("101231234")
         end
+
+        it "should normalize with :add_plus option" do
+          "010 1231234".phony_normalized(:country_code => :NL, :add_plus => false).should eql("31101231234")
+        end
+
+      end
+
+      it "should normalize with :add_plus option" do
+        "+31 (0)10 1231234".phony_normalized(:add_plus => false).should eql("31101231234")
       end
 
       it "should normalize a String" do
