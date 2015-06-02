@@ -1,4 +1,4 @@
-# PhonyRails [![Build Status](https://travis-ci.org/joost/phony_rails.svg?branch=master)](https://travis-ci.org/joost/phony_rails)
+# PhonyRails [![Build Status](https://travis-ci.org/joost/phony_rails.svg?branch=master)](https://travis-ci.org/joost/phony_rails) ![Dependencies Status](https://img.shields.io/gemnasium/joost/phony_rails.svg)
 
 This small Gem adds useful methods to your Rails app to validate, display and save phone numbers.
 It uses the super awesome Phony gem (https://github.com/floere/phony).
