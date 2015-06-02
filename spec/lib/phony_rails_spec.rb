@@ -96,7 +96,7 @@ describe PhonyRails do
 
         # https://github.com/joost/phony_rails/issues/79
         it "should pass Github issue #42" do
-          "8887716095".phony_formatted(format: :international, normalize: 'US', raise: true).should eq('+1 888 771 6095')
+          "8887716095".phony_formatted(format: :international, normalize: 'US', raise: true).should eq('+1 (888) 771-6095')
         end
 
         # https://github.com/joost/phony_rails/issues/42
