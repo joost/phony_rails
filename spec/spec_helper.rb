@@ -35,6 +35,13 @@ class ActiveRecordModel < ActiveRecord::Base
   include SharedModelMethods
 end
 
+class RelaxedActiveRecordModel < ActiveRecord::Base
+  self.table_name = 'active_record_models'
+  attr_accessor :phone_number, :country_code
+
+  phony_normalize :phone_number, :enforce_record_country => false
+end
+
 class ActiveRecordDummy < ActiveRecordModel
 end
 

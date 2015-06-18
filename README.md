@@ -106,7 +106,7 @@ You can validate against the normalized input as opposed to the raw input:
 
 #### Allowing records country codes to not match phone number country codes
 
-You may have a record specifying one country (via a `country_code` attribute) but using a phone number from another country.  For example, your record may be from Japan but have a phone number from the Philippines. By default, `phony_rails` will consider your record's `country_code` as part of the validation.  If that country doesn't match the country code in the phone number, validation will fail.  
+You may have a record specifying one country (via a `country_code` attribute) but using a phone number from another country.  For example, your record may be from Japan but have a phone number from the Philippines. By default, `phony_rails` will consider your record's `country_code` as part of the validation.  If that country doesn't match the country code in the phone number, validation will fail. Additionally, `phony_normalize` will always add the records country code as the country number (eg. the user enters '+81xxx' for Japan and the records `country_code` is 'DE' then `phony_normalize` will change the number to '+4981'). You can turn that off by adding `:enforce_record_country => false` the the `phony_normalize` options. The country_code will then only be added if no country code is specified.
 
 If you want to allow records from one country to have phone numbers from a different one, there are a couple of options you can use: `ignore_record_country_number` and `ignore_record_country_code`.  Use them like so:
 

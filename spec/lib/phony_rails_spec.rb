@@ -360,7 +360,7 @@ describe PhonyRails do
       end
 
       it "should accept supported options" do
-        options = [:country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as]
+        options = [:country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as, :enforce_record_country]
         options.each do |option_sym|
           expect(lambda {
             dummy_klass.phony_normalize(:phone_number, option_sym => false)
@@ -492,6 +492,55 @@ describe PhonyRails do
       expect(model.save).to be true # revalidate
       model.reload
       expect(model.fax_number).to eql('+61308612906')
+    end
+
+    context 'when enforce_record_country is turned off' do
+      let(:model_klass)  { RelaxedActiveRecordModel }
+      let(:record)       { model_klass.new }
+
+      before {
+        record.phone_number = phone_number
+        record.country_code = 'DE'
+        record.valid? # run the empty validation chain to execute the before hook (normalized the number)
+      }
+
+      context 'when the country_code attribute does not match the country number' do
+        context 'when the number is prefixed with a country number and a plus' do
+          let(:phone_number) { '+436601234567' }
+
+          it 'should not add the records country number' do
+            expect(record.phone_number).to eql('+436601234567')
+          end
+        end
+
+        # In this case it's not clear if there is a country number, so it should be added
+        context 'when the number is prefixed with a country number' do
+          let(:phone_number) { '436601234567' }
+
+          it 'should add the records country number' do
+            expect(record.phone_number).to eql('+49436601234567')
+          end
+        end
+      end
+
+      # This should be the case anyways
+      context 'when the country_code attribute matches the country number' do
+        context 'when the number includes a country number and a plus' do
+          let(:phone_number) { '+491721234567' }
+
+          it 'should not add the records country number' do
+            expect(record.phone_number).to eql('+491721234567')
+          end
+        end
+
+        context 'when the number has neither country number nor plus' do
+          let(:phone_number) { '01721234567' }
+
+          it 'should not add the records country number' do
+            expect(record.phone_number).to eql('+491721234567')
+          end
+        end
+      end
     end
   end
 
