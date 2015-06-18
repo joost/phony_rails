@@ -120,6 +120,12 @@ describe PhonyRails do
           expect(Phony.plausible?(number)).to be true
           expect(PhonyRails.normalize_number(number, country_code: 'FR')).to eq('+33687361875')
         end
+
+        it "should pass Github issue #90" do
+           number = '(0)30 1234 123'
+           expect(number.phony_normalized(country_code: 'NL')).to eq('+31301234123')
+        end
+
       end
 
       it "should not change original String" do
