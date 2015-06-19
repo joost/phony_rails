@@ -76,7 +76,10 @@ module PhonyRails
       # It also adds the country_code (number), eg. 31 for NL numbers.
       def set_phony_normalized_numbers(attributes, options = {})
         options = options.clone
-        options[:country_code] ||= self.country_code if self.respond_to?(:country_code)
+        if self.respond_to?(:country_code)
+          set_country_as = options[:enforce_record_country] ? :country_code : :default_country_code
+          options[set_country_as] ||= self.country_code
+        end
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
           raise RuntimeError, "No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)" if not self.class.attribute_method?(attribute_name)
@@ -94,10 +97,12 @@ module PhonyRails
       # you've geocoded before calling this method!
       def phony_normalize(*attributes)
         options = attributes.last.is_a?(Hash) ? attributes.pop : {}
-        options.assert_valid_keys :country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as
+        options.assert_valid_keys :country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as, :enforce_record_country
         if options[:as].present?
           raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if attributes.size > 1
         end
+
+        options[:enforce_record_country] = true if options[:enforce_record_country].nil?
 
         # Add before validation that saves a normalized version of the phone number
         self.before_validation do
