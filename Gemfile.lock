@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phony_rails (0.12.7)
+    phony_rails (0.12.8)
       activesupport (>= 3.0)
       countries (~> 0.8, >= 0.8.2)
       phony (~> 2.12)
@@ -80,7 +80,7 @@ GEM
       shellany (~> 0.0)
     optionable (0.2.0)
     origin (2.1.1)
-    phony (2.14.4)
+    phony (2.14.5)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
