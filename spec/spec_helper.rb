@@ -1,3 +1,8 @@
+require 'coveralls'
+Coveralls.wear!
+
+# Own code here.
+
 require 'rubygems'
 require 'bundler/setup'
 
