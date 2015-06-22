@@ -1,5 +1,27 @@
 # Change Log
 
+## [v0.12.8](https://github.com/joost/phony_rails/tree/v0.12.8) (2015-06-22)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.7...v0.12.8)
+
+**Closed issues:**
+
+- activerecord dependency [\#99](https://github.com/joost/phony_rails/issues/99)
+
+- Using a number different from the country [\#97](https://github.com/joost/phony_rails/issues/97)
+
+- UK 0203 numbers not handled correctly [\#95](https://github.com/joost/phony_rails/issues/95)
+
+- Consider keeping a Changelog for changes in each version. [\#91](https://github.com/joost/phony_rails/issues/91)
+
+- Phone numbers with extensions [\#78](https://github.com/joost/phony_rails/issues/78)
+
+**Merged pull requests:**
+
+- remove active\_record dependency [\#100](https://github.com/joost/phony_rails/pull/100) ([sbounmy](https://github.com/sbounmy))
+
+- Add enforce\_record\_country option to phony\_normalize method [\#98](https://github.com/joost/phony_rails/pull/98) ([phillipp](https://github.com/phillipp))
+
 ## [v0.12.7](https://github.com/joost/phony_rails/tree/v0.12.7) (2015-06-18)
 
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.6...v0.12.7)
