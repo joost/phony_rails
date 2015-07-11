@@ -2,3 +2,4 @@
 /.idea/
 .ruby-gemset
 .ruby-version
+coverage/*

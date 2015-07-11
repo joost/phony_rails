@@ -7,7 +7,7 @@ require 'phony_rails/version'
 module PhonyRails
 
   def self.country_number_for(country_code)
-    ISO3166::Country::Data[country_code.to_s.upcase].try(:[], 'country_code')
+    ISO3166::Country::Setup.data[country_code.to_s.upcase].try(:[], 'country_code')
   end
 
   # This method requires a country_code attribute (eg. NL) and phone_number to be set.
@@ -59,7 +59,7 @@ module PhonyRails
   def self.plausible_number?(number, options = {})
     return false if number.nil? || number.blank?
     number = normalize_number(number, options)
-    country_number = options[:country_number] || country_number_for(options[:country_code]) || 
+    country_number = options[:country_number] || country_number_for(options[:country_code]) ||
       default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
     Phony.plausible? number, cc: country_number
   rescue
