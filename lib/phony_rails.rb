@@ -7,7 +7,7 @@ require 'phony_rails/version'
 module PhonyRails
 
   def self.country_number_for(country_code)
-    ISO3166::Country::Setup.data[country_code.to_s.upcase].try(:[], 'country_code')
+    ISO3166::Country[country_code.to_s.upcase].try(:data).try(:[], 'country_code')
   end
 
   # This method requires a country_code attribute (eg. NL) and phone_number to be set.
