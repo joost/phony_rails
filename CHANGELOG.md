@@ -1,5 +1,19 @@
 # Change Log
 
+## [v0.12.9](https://github.com/joost/phony_rails/tree/v0.12.9) (2015-07-13)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.8...v0.12.9)
+
+**Closed issues:**
+
+- Countries 0.11.5 introduces a breaking change [\#103](https://github.com/joost/phony_rails/issues/103)
+
+**Merged pull requests:**
+
+- Get country data in a more straight forward way [\#105](https://github.com/joost/phony_rails/pull/105) ([humancopy](https://github.com/humancopy))
+
+- Replace Data with Setup.data [\#104](https://github.com/joost/phony_rails/pull/104) ([monfresh](https://github.com/monfresh))
+
 ## [v0.12.8](https://github.com/joost/phony_rails/tree/v0.12.8) (2015-06-22)
 
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.7...v0.12.8)
