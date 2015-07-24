@@ -1,13 +1,19 @@
 require 'phony'
-require 'iso3166'
 require 'phony_rails/string_extensions'
 require 'validators/phony_validator'
 require 'phony_rails/version'
+require 'yaml'
 
 module PhonyRails
 
   def self.country_number_for(country_code)
-    ISO3166::Country[country_code.to_s.upcase].try(:data).try(:[], 'country_code')
+    return if country_code.nil?
+
+    country_codes_hash[country_code.to_s.upcase]['country_code']
+  end
+
+  def self.country_codes_hash
+    YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), 'data/country_codes.yaml'))
   end
 
   # This method requires a country_code attribute (eg. NL) and phone_number to be set.

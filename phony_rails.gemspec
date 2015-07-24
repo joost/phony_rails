@@ -20,7 +20,6 @@ Gem::Specification.new do |gem|
   gem.post_install_message = "It now ads a '+' to the normalized number when it starts with a country number!"
 
   gem.add_dependency "phony", '~> 2.12'
-  gem.add_dependency "countries", '~> 0.11', '>= 0.11.5'
   gem.add_dependency "activesupport", ">= 3.0"
   gem.add_development_dependency "activerecord", ">= 3.0"
   gem.add_development_dependency "mongoid", ">= 3.0"
