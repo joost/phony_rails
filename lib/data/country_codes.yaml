@@ -1,0 +1,501 @@
+---
+AD:
+  country_code: '376'
+AE:
+  country_code: '971'
+AF:
+  country_code: '93'
+AG:
+  country_code: '1'
+AI:
+  country_code: '1'
+AL:
+  country_code: '355'
+AM:
+  country_code: '374'
+AN:
+  country_code: '599'
+AO:
+  country_code: '244'
+AQ:
+  country_code: '672'
+AR:
+  country_code: '54'
+AS:
+  country_code: '1'
+AT:
+  country_code: '43'
+AU:
+  country_code: '61'
+AW:
+  country_code: '297'
+AX:
+  country_code: '358'
+AZ:
+  country_code: '994'
+BA:
+  country_code: '387'
+BB:
+  country_code: '1'
+BD:
+  country_code: '880'
+BE:
+  country_code: '32'
+BF:
+  country_code: '226'
+BG:
+  country_code: '359'
+BH:
+  country_code: '973'
+BI:
+  country_code: '257'
+BJ:
+  country_code: '229'
+BL:
+  country_code: '590'
+BM:
+  country_code: '1'
+BN:
+  country_code: '673'
+BO:
+  country_code: '591'
+BQ:
+  country_code: '599'
+BR:
+  country_code: '55'
+BS:
+  country_code: '1'
+BT:
+  country_code: '975'
+BV:
+  country_code: ''
+BW:
+  country_code: '267'
+BY:
+  country_code: '375'
+BZ:
+  country_code: '501'
+CA:
+  country_code: '1'
+CC:
+  country_code: '61'
+CD:
+  country_code: '243'
+CF:
+  country_code: '236'
+CG:
+  country_code: '242'
+CH:
+  country_code: '41'
+CI:
+  country_code: '225'
+CK:
+  country_code: '682'
+CL:
+  country_code: '56'
+CM:
+  country_code: '237'
+CN:
+  country_code: '86'
+CO:
+  country_code: '57'
+CR:
+  country_code: '506'
+CU:
+  country_code: '53'
+CV:
+  country_code: '238'
+CW:
+  country_code: '599'
+CX:
+  country_code: '61'
+CY:
+  country_code: '357'
+CZ:
+  country_code: '420'
+DE:
+  country_code: '49'
+DJ:
+  country_code: '253'
+DK:
+  country_code: '45'
+DM:
+  country_code: '1'
+DO:
+  country_code: '1'
+DZ:
+  country_code: '213'
+EC:
+  country_code: '593'
+EE:
+  country_code: '372'
+EG:
+  country_code: '20'
+EH:
+  country_code: '212'
+ER:
+  country_code: '291'
+ES:
+  country_code: '34'
+ET:
+  country_code: '251'
+FI:
+  country_code: '358'
+FJ:
+  country_code: '679'
+FK:
+  country_code: '500'
+FM:
+  country_code: '691'
+FO:
+  country_code: '298'
+FR:
+  country_code: '33'
+GA:
+  country_code: '241'
+GB:
+  country_code: '44'
+GD:
+  country_code: '1'
+GE:
+  country_code: '995'
+GF:
+  country_code: '594'
+GG:
+  country_code: '44'
+GH:
+  country_code: '233'
+GI:
+  country_code: '350'
+GL:
+  country_code: '299'
+GM:
+  country_code: '220'
+GN:
+  country_code: '224'
+GP:
+  country_code: '590'
+GQ:
+  country_code: '240'
+GR:
+  country_code: '30'
+GS:
+  country_code: '500'
+GT:
+  country_code: '502'
+GU:
+  country_code: '1'
+GW:
+  country_code: '245'
+GY:
+  country_code: '592'
+HK:
+  country_code: '852'
+HM:
+  country_code: ''
+HN:
+  country_code: '504'
+HR:
+  country_code: '385'
+HT:
+  country_code: '509'
+HU:
+  country_code: '36'
+ID:
+  country_code: '62'
+IE:
+  country_code: '353'
+IL:
+  country_code: '972'
+IM:
+  country_code: '44'
+IN:
+  country_code: '91'
+IO:
+  country_code: '246'
+IQ:
+  country_code: '964'
+IR:
+  country_code: '98'
+IS:
+  country_code: '354'
+IT:
+  country_code: '39'
+JE:
+  country_code: '44'
+JM:
+  country_code: '1'
+JO:
+  country_code: '962'
+JP:
+  country_code: '81'
+KE:
+  country_code: '254'
+KG:
+  country_code: '996'
+KH:
+  country_code: '855'
+KI:
+  country_code: '686'
+KM:
+  country_code: '269'
+KN:
+  country_code: '1'
+KP:
+  country_code: '850'
+KR:
+  country_code: '82'
+KW:
+  country_code: '965'
+KY:
+  country_code: '1'
+KZ:
+  country_code: '7'
+LA:
+  country_code: '856'
+LB:
+  country_code: '961'
+LC:
+  country_code: '1'
+LI:
+  country_code: '423'
+LK:
+  country_code: '94'
+LR:
+  country_code: '231'
+LS:
+  country_code: '266'
+LT:
+  country_code: '370'
+LU:
+  country_code: '352'
+LV:
+  country_code: '371'
+LY:
+  country_code: '218'
+MA:
+  country_code: '212'
+MC:
+  country_code: '377'
+MD:
+  country_code: '373'
+ME:
+  country_code: '382'
+MF:
+  country_code: '590'
+MG:
+  country_code: '261'
+MH:
+  country_code: '692'
+MK:
+  country_code: '389'
+ML:
+  country_code: '223'
+MM:
+  country_code: '95'
+MN:
+  country_code: '976'
+MO:
+  country_code: '853'
+MP:
+  country_code: '1'
+MQ:
+  country_code: '596'
+MR:
+  country_code: '222'
+MS:
+  country_code: '1'
+MT:
+  country_code: '356'
+MU:
+  country_code: '230'
+MV:
+  country_code: '960'
+MW:
+  country_code: '265'
+MX:
+  country_code: '52'
+MY:
+  country_code: '60'
+MZ:
+  country_code: '258'
+NA:
+  country_code: '264'
+NC:
+  country_code: '687'
+NE:
+  country_code: '227'
+NF:
+  country_code: '672'
+NG:
+  country_code: '234'
+NI:
+  country_code: '505'
+NL:
+  country_code: '31'
+'NO':
+  country_code: '47'
+NP:
+  country_code: '977'
+NR:
+  country_code: '674'
+NU:
+  country_code: '683'
+NZ:
+  country_code: '64'
+OM:
+  country_code: '968'
+PA:
+  country_code: '507'
+PE:
+  country_code: '51'
+PF:
+  country_code: '689'
+PG:
+  country_code: '675'
+PH:
+  country_code: '63'
+PK:
+  country_code: '92'
+PL:
+  country_code: '48'
+PM:
+  country_code: '508'
+PN:
+  country_code: ''
+PR:
+  country_code: '1'
+PS:
+  country_code: '970'
+PT:
+  country_code: '351'
+PW:
+  country_code: '680'
+PY:
+  country_code: '595'
+QA:
+  country_code: '974'
+RE:
+  country_code: '262'
+RO:
+  country_code: '40'
+RS:
+  country_code: '381'
+RU:
+  country_code: '7'
+RW:
+  country_code: '250'
+SA:
+  country_code: '966'
+SB:
+  country_code: '677'
+SC:
+  country_code: '248'
+SD:
+  country_code: '249'
+SE:
+  country_code: '46'
+SG:
+  country_code: '65'
+SH:
+  country_code: '290'
+SI:
+  country_code: '386'
+SJ:
+  country_code: '47'
+SK:
+  country_code: '421'
+SL:
+  country_code: '232'
+SM:
+  country_code: '378'
+SN:
+  country_code: '221'
+SO:
+  country_code: '252'
+SR:
+  country_code: '597'
+SS:
+  country_code: '211'
+ST:
+  country_code: '239'
+SV:
+  country_code: '503'
+SX:
+  country_code: '1'
+SY:
+  country_code: '963'
+SZ:
+  country_code: '268'
+TC:
+  country_code: '1'
+TD:
+  country_code: '235'
+TF:
+  country_code: ''
+TG:
+  country_code: '228'
+TH:
+  country_code: '66'
+TJ:
+  country_code: '992'
+TK:
+  country_code: '690'
+TL:
+  country_code: '670'
+TM:
+  country_code: '993'
+TN:
+  country_code: '216'
+TO:
+  country_code: '676'
+TR:
+  country_code: '90'
+TT:
+  country_code: '1'
+TV:
+  country_code: '688'
+TW:
+  country_code: '886'
+TZ:
+  country_code: '255'
+UA:
+  country_code: '380'
+UG:
+  country_code: '256'
+UM:
+  country_code: ''
+US:
+  country_code: '1'
+UY:
+  country_code: '598'
+UZ:
+  country_code: '998'
+VA:
+  country_code: '39'
+VC:
+  country_code: '1'
+VE:
+  country_code: '58'
+VG:
+  country_code: '1'
+VI:
+  country_code: '1'
+VN:
+  country_code: '84'
+VU:
+  country_code: '678'
+WF:
+  country_code: '681'
+WS:
+  country_code: '685'
+YE:
+  country_code: '967'
+YT:
+  country_code: '262'
+ZA:
+  country_code: '27'
+ZM:
+  country_code: '260'
+ZW:
+  country_code: '263'
