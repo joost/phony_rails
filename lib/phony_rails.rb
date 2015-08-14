@@ -13,7 +13,7 @@ module PhonyRails
   end
 
   def self.country_codes_hash
-    YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), 'data/country_codes.yaml'))
+    @country_codes_hash ||= YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), 'data/country_codes.yaml'))
   end
 
   # This method requires a country_code attribute (eg. NL) and phone_number to be set.
