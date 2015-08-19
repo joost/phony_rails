@@ -1,5 +1,23 @@
 # Change Log
 
+## [Unreleased](https://github.com/joost/phony_rails/tree/HEAD)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.9...HEAD)
+
+**Closed issues:**
+
+- Can i skip a validation with another number? [\#110](https://github.com/joost/phony_rails/issues/110)
+
+- Consider dropping the dependency on the countries gem and using a YAML file instead [\#108](https://github.com/joost/phony_rails/issues/108)
+
+- undefined method `\[\]' for Data:Class [\#106](https://github.com/joost/phony_rails/issues/106)
+
+**Merged pull requests:**
+
+- Don't re-parse country codes YAML file every time it's needed. [\#111](https://github.com/joost/phony_rails/pull/111) ([jcoleman](https://github.com/jcoleman))
+
+- Replace countries dependency with YAML file [\#109](https://github.com/joost/phony_rails/pull/109) ([monfresh](https://github.com/monfresh))
+
 ## [v0.12.9](https://github.com/joost/phony_rails/tree/v0.12.9) (2015-07-13)
 
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.8...v0.12.9)
