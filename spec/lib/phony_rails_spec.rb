@@ -126,6 +126,14 @@ describe PhonyRails do
            expect(number.phony_normalized(country_code: 'NL')).to eq('+31301234123')
         end
 
+        it "should pass Github issue #90" do
+           number = '04575700834'
+           expect(number.phony_normalized(country_code: 'FI')).to eq('+3584575700834')
+           # Seems this number can be interpreted as from multiple countries, following fails:
+           # expect(number.phony_normalized(default_country_code: 'FI')).to eq('+3584575700834')
+           # expect("04575700834".phony_formatted(normalize: 'FI', format: :international)).to eql('+358 45 757 00 834')
+        end
+
       end
 
       it "should not change original String" do
