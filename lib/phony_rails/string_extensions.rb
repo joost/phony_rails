@@ -39,6 +39,7 @@
 
     # The bang method
     def phony_formatted!(options = {})
+      raise ArgumentError, "The :strict options is only supported in the phony_formatted (non bang) method." if options[:strict]
       replace(self.phony_formatted(options))
     end
 
