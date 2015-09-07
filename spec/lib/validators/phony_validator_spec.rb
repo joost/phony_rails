@@ -188,6 +188,22 @@ describe PhonyPlausibleValidator do
         expect(@home.errors.messages).to include(:phone_number => ["គឺជាលេខមិនត្រឹមត្រូវ"])
       end
     end
+
+    it "should translate the error message in Ukrainian" do
+      I18n.with_locale(:uk) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        expect(@home.errors.messages).to include(:phone_number => ["є недійсним номером"])
+      end
+    end
+
+    it "should translate the error message in Russian" do
+      I18n.with_locale(:ru) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        expect(@home.errors.messages).to include(:phone_number => ["является недействительным номером"])
+      end
+    end
   end
 end
 
