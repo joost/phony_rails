@@ -1,0 +1,4 @@
+ru:
+  errors:
+    messages:
+      improbable_phone: "имеет неверный формат"
