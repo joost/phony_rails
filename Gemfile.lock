@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phony_rails (0.12.10)
+    phony_rails (0.12.11)
       activesupport (>= 3.0)
       phony (~> 2.12)
 
