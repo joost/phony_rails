@@ -113,6 +113,8 @@ describe PhonyRails do
           expect(PhonyRails.normalize_number('2318725305', country_code: 'US')).to eq('+12318725305')
           expect(PhonyRails.normalize_number('2318725305', default_country_code: 'US')).to eq('+12318725305')
           expect(PhonyRails.normalize_number('+2318725305', default_country_code: 'US')).to eq('+2318725305')
+          # expect(Phony.plausible?("#{PhonyRails.country_number_for('US')}02318725305")).to be_truthy
+          expect(PhonyRails.normalize_number('02318725305', default_country_code: 'US')).to eq('+12318725305')
         end
 
         it "should pass Github issue #89" do
@@ -141,6 +143,15 @@ describe PhonyRails do
           }).to raise_error(ArgumentError)
         end
 
+        it "should pass Github issue #95" do
+          number = '02031234567'
+          expect(number.phony_normalized(default_country_code: 'GB')).to eq('+442031234567')
+        end
+
+        it 'should pass Github issue #121' do
+          number = '06-87-73-83-58'
+          expect(number.phony_normalized(default_country_code: 'FR')).to eq('+33687738358')
+        end
       end
 
       it "should not change original String" do

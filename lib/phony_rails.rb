@@ -44,6 +44,11 @@ module PhonyRails
       if not (number =~ /\A\+/) # if we don't have a +
         if Phony.plausible?("#{_default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
           number = "#{_default_country_number}#{number}"
+        elsif (number =~ /^0[^0]/) && Phony.plausible?("#{_default_country_number}#{number.gsub(/^0/, '')}")
+          # If the number starts with ONE zero (two might indicate a country code)
+          # and this is a plausible number for the default_country
+          # we prefer that one.
+          number = "#{_default_country_number}#{number.gsub(/^0/, '')}"
         end
       end
       # number = "#{_default_country_number}#{number}" unless Phony.plausible?(number)
