@@ -1,18 +1,36 @@
 # Change Log
 
-## [Unreleased](https://github.com/joost/phony_rails/tree/HEAD)
+## [v0.12.11](https://github.com/joost/phony_rails/tree/v0.12.11) (2015-11-12)
 
-[Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.9...HEAD)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.9...v0.12.11)
 
 **Closed issues:**
+
+- French formatting [\#121](https://github.com/joost/phony_rails/issues/121)
+
+- French phony\_normalize [\#120](https://github.com/joost/phony_rails/issues/120)
+
+- Correct phone number failed the validatiton [\#115](https://github.com/joost/phony_rails/issues/115)
+
+- 'no implicit conversion of nil into String' from phony\_formatted!\(spaces: '-', strict: true\) with invalid numbers [\#113](https://github.com/joost/phony_rails/issues/113)
 
 - Can i skip a validation with another number? [\#110](https://github.com/joost/phony_rails/issues/110)
 
 - Consider dropping the dependency on the countries gem and using a YAML file instead [\#108](https://github.com/joost/phony_rails/issues/108)
 
+- Some Finnish mobile numbers are formatted wrong [\#107](https://github.com/joost/phony_rails/issues/107)
+
 - undefined method `\[\]' for Data:Class [\#106](https://github.com/joost/phony_rails/issues/106)
 
+- Phony is out of date [\#102](https://github.com/joost/phony_rails/issues/102)
+
 **Merged pull requests:**
+
+- Update readme [\#117](https://github.com/joost/phony_rails/pull/117) ([toydestroyer](https://github.com/toydestroyer))
+
+- Add uk, ru error message translations [\#114](https://github.com/joost/phony_rails/pull/114) ([shhavel](https://github.com/shhavel))
+
+- Update phony\_rails.gemspec [\#112](https://github.com/joost/phony_rails/pull/112) ([Agsiegert](https://github.com/Agsiegert))
 
 - Don't re-parse country codes YAML file every time it's needed. [\#111](https://github.com/joost/phony_rails/pull/111) ([jcoleman](https://github.com/jcoleman))
 
