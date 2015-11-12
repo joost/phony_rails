@@ -27,6 +27,7 @@ module PhonyRails
   #   http://www.redguava.com.au/2011/06/rails-convert-phone-numbers-to-international-format-for-sms/
   def self.normalize_number(number, options = {})
     return if number.nil?
+    original_number = number
     number = number.clone # Just to be sure, we don't want to change the original.
     number.gsub!(/[^\(\)\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
@@ -57,7 +58,7 @@ module PhonyRails
     options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
     options[:add_plus] ? "+#{normalized_number}" : normalized_number
   rescue
-    number # If all goes wrong .. we still return the original input.
+    original_number # If all goes wrong .. we still return the original input.
   end
 
   def self.country_code_from_number(number)
