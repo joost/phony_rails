@@ -31,13 +31,23 @@ module PhonyRails
     number = number.clone # Just to be sure, we don't want to change the original.
     number.gsub!(/[^\(\)\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
+
     if _country_number = options[:country_number] || country_number_for(options[:country_code])
       options[:add_plus] = true if options[:add_plus].nil?
       # (Force) add country_number if missing
-      # NOTE: do we need to force adding country code? Otherwise we can share lofic with next block
-      if !Phony.plausible?(number) || _country_number != country_code_from_number(number)
-        number = "#{_country_number}#{number}"
+      # Prevent any prefix doubling (starting with + or 00)
+      # NOTE: do we need to force adding country code? Otherwise we can share logic with next block
+      if !Phony.plausible?(number) ||
+          Phony.plausible?("#{_country_number}#{number.sub(/\A\+()?/,'')}") ||
+           _country_number != country_code_from_number(number)
+        number = "#{_country_number}#{number.sub(/\A(\+(#{_country_number})?|00)/,'')}"
+      elsif (number =~ /^0[^0]/) && Phony.plausible?("#{_country_number}#{number.gsub(/^0/, '')}")
+        # If the number starts with ONE zero (two might indicate a country code)
+        # and this is a plausible number for the default_country
+        # we prefer that one.
+        number = "#{_country_number}#{number.gsub(/^0/, '')}"
       end
+
     elsif _default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code])
       options[:add_plus] = true if options[:add_plus].nil?
       # We try to add the default country number and see if it is a
@@ -54,6 +64,7 @@ module PhonyRails
       end
       # number = "#{_default_country_number}#{number}" unless Phony.plausible?(number)
     end
+
     normalized_number = Phony.normalize(number)
     options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
     options[:add_plus] ? "+#{normalized_number}" : normalized_number
@@ -77,6 +88,7 @@ module PhonyRails
   rescue
     false
   end
+
 
   module Extension
     extend ActiveSupport::Concern
