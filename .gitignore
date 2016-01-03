@@ -1,5 +1,8 @@
+.DS_Store
 /.rvmrc
 /.idea/
 .ruby-gemset
 .ruby-version
 coverage/*
+/.bundle
+/vendor
