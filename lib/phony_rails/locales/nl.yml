@@ -1,0 +1,4 @@
+nl:
+  errors:
+    messages:
+      improbable_phone: "is geen geldig nummer"

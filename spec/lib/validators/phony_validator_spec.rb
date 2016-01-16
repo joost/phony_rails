@@ -157,6 +157,14 @@ describe PhonyPlausibleValidator do
       expect(@home.errors.messages).to include(phone_number: ["is an invalid number"])
     end
 
+    it "should translate the error message in Dutch" do
+      I18n.with_locale(:nl) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        expect(@home.errors.messages).to include(phone_number: ["is geen geldig nummer"])
+      end
+    end
+
     it "should translate the error message in English" do
       I18n.with_locale(:en) do
         @home.phone_number = INVALID_NUMBER
