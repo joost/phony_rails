@@ -130,6 +130,7 @@ FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'
 FRENCH_NUMBER_WITH_COUNTRY_CODE = '33627899541'
 FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 627899541'
 INVALID_NUMBER = '123456789 123456789 123456789 123456789'
+NOT_A_NUMBER = 'HAHA'
 JAPAN_COUNTRY = 'jp'
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -153,6 +154,12 @@ describe PhonyPlausibleValidator do
 
     it "should invalidate an invalid number" do
       @home.phone_number = INVALID_NUMBER
+      expect(@home).to_not be_valid
+      expect(@home.errors.messages).to include(phone_number: ["is an invalid number"])
+    end
+
+    it "should invalidate not a number" do
+      @home.phone_number = NOT_A_NUMBER
       expect(@home).to_not be_valid
       expect(@home.errors.messages).to include(phone_number: ["is an invalid number"])
     end

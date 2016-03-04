@@ -94,7 +94,8 @@ module PhonyRails
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
           fail(RuntimeError, "No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)") unless self.class.attribute_method?(attribute_name)
-          send("#{attribute_name}=", PhonyRails.normalize_number(send(attribute), options))
+          new_value= PhonyRails.normalize_number(send(attribute), options)
+          send("#{attribute_name}=", new_value) if new_value
         end
       end
     end
