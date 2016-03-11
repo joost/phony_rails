@@ -8,7 +8,7 @@ module PhonyRails
   def self.country_number_for(country_code)
     return if country_code.nil?
 
-    country_codes_hash[country_code.to_s.upcase]['country_code']
+    country_codes_hash.fetch(country_code.to_s.upcase, {})['country_code']
   end
 
   def self.country_codes_hash
