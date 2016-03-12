@@ -87,14 +87,14 @@ module PhonyRails
       # It also adds the country_code (number), eg. 31 for NL numbers.
       def set_phony_normalized_numbers(attributes, options = {})
         options = options.clone
-        if self.respond_to?(:country_code)
+        if respond_to?(:country_code)
           set_country_as = options[:enforce_record_country] ? :country_code : :default_country_code
-          options[set_country_as] ||= self.country_code
+          options[set_country_as] ||= country_code
         end
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
-          fail(RuntimeError, "No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)") unless self.class.attribute_method?(attribute_name)
-          new_value= PhonyRails.normalize_number(send(attribute), options)
+          raise("No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)") unless self.class.attribute_method?(attribute_name)
+          new_value = PhonyRails.normalize_number(send(attribute), options)
           send("#{attribute_name}=", new_value) if new_value
         end
       end
@@ -128,11 +128,11 @@ module PhonyRails
         main_options = attributes.last.is_a?(Hash) ? attributes.pop : {}
         main_options.assert_valid_keys :country_code, :default_country_code
         attributes.each do |attribute|
-          fail(StandardError, "Instance method normalized_#{attribute} already exists on #{self.name} (PhonyRails)") if method_defined?(:"normalized_#{attribute}")
+          raise(StandardError, "Instance method normalized_#{attribute} already exists on #{name} (PhonyRails)") if method_defined?(:"normalized_#{attribute}")
           define_method :"normalized_#{attribute}" do |*args|
             options = args.first || {}
-            fail(ArgumentError, "No attribute/method #{attribute} found on #{self.class.name} (PhonyRails)") unless self.respond_to?(attribute)
-            options[:country_code] ||= country_code if self.respond_to?(:country_code)
+            raise(ArgumentError, "No attribute/method #{attribute} found on #{self.class.name} (PhonyRails)") unless respond_to?(attribute)
+            options[:country_code] ||= country_code if respond_to?(:country_code)
             PhonyRails.normalize_number(send(attribute), main_options.merge(options))
           end
         end

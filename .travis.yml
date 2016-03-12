@@ -1,7 +1,9 @@
 language: ruby
 rvm:
-  - "1.9.3"
-  - "2.1.3"
-  - "2.2.1"
+  - '1.9.3'
+  - '2.1.3'
+  - '2.2.1'
   - rbx
-script: bundle exec rspec spec
+script:
+  - bundle exec rspec spec
+  - bundle exec rubocop
