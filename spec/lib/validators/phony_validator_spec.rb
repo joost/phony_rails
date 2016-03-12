@@ -50,6 +50,10 @@ ActiveRecord::Schema.define do
   create_table :mismatched_helpful_homes do |table|
     table.column :phone_number, :string
   end
+
+  create_table :invalid_country_code_helpful_homes do |table|
+    table.column :phone_number, :string
+  end
 end
 
 #--------------------
@@ -116,6 +120,17 @@ end
 class MismatchedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number, :country_code
   validates :phone_number, phony_plausible: {ignore_record_country_code: true}
+end
+
+#--------------------
+
+class InvalidCountryCodeHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number
+
+  def country_code
+    "--"
+  end
 end
 #-----------------------------------------------------------------------------------------------------------------------
 # Tests
@@ -484,6 +499,29 @@ describe ActiveModel::Validations::HelperMethods do
 
       it "should allow this number" do
         expect(@home).to be_valid
+      end
+    end
+
+        #--------------------
+    context 'when a country code is set to something invalid' do
+      before(:each) do
+        @home = InvalidCountryCodeHelpfulHome.new
+      end
+
+      it "should allow any valid number" do
+        @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
+        expect(@home).to be_valid
+      end
+
+      it "should not allow any invalid number" do
+        @home.phone_number = INVALID_NUMBER
+        expect(@home).to_not be_valid
+      end
+
+      it "should not raise a NoMethodError when looking up a country fails (Regression)" do
+        expect {
+          @home.valid?
+        }.to_not raise_error
       end
     end
 
