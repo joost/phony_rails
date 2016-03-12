@@ -3,15 +3,14 @@
 #   validate :phone_number, :phony_plausible => true
 require 'active_model'
 class PhonyPlausibleValidator < ActiveModel::EachValidator
-
   # Validates a String using Phony.plausible? method.
   def validate_each(record, attribute, value)
     return if value.blank?
 
     @record = record
 
-    value = PhonyRails.normalize_number value, default_country_code: normalized_country_code if normalized_country_code
-    @record.errors.add(attribute, error_message) if not Phony.plausible?(value, cc: country_number)
+    value = PhonyRails.normalize_number(value.dup, default_country_code: normalized_country_code) if normalized_country_code
+    @record.errors.add(attribute, error_message) unless Phony.plausible?(value, cc: country_number)
   end
 
   private
@@ -43,22 +42,19 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
   def normalized_country_code
     options[:normalized_country_code]
   end
-
 end
 
 module ActiveModel
   module Validations
     module HelperMethods
-
       def validates_plausible_phone(*attr_names)
         # merged attributes are modified somewhere, so we are cloning them for each validator
         merged_attributes = _merge_attributes(attr_names)
 
         validates_with PresenceValidator, merged_attributes.clone if merged_attributes[:presence]
-        validates_with FormatValidator, merged_attributes.clone if (merged_attributes[:with] or merged_attributes[:without])
+        validates_with FormatValidator, merged_attributes.clone if merged_attributes[:with] || merged_attributes[:without]
         validates_with PhonyPlausibleValidator, merged_attributes.clone
       end
-
     end
   end
 end

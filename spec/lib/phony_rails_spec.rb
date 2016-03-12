@@ -8,9 +8,9 @@ describe PhonyRails do
   describe 'phony_format String extension' do
     describe 'the phony_formatted method' do
       it 'should not modify the original options Hash' do
-        options = {normalize: :NL, format: :international}
+        options = { normalize: :NL, format: :international }
         '0101234123'.phony_formatted(options)
-        expect(options).to eql({normalize: :NL, format: :international})
+        expect(options).to eql(normalize: :NL, format: :international)
       end
 
       describe 'with the bang!' do
@@ -69,7 +69,7 @@ describe PhonyRails do
         context 'when raise is true' do
           it 'should raise the error' do
             expect(lambda do
-              "8887716095".phony_formatted(format: :international, raise: true)
+              '8887716095'.phony_formatted(format: :international, raise: true)
             end).to raise_error(NoMethodError)
           end
         end
@@ -89,12 +89,12 @@ describe PhonyRails do
 
         # https://github.com/joost/phony_rails/issues/42
         it 'should pass Github issue #42' do
-          expect(PhonyRails.normalize_number("0606060606", default_country_code: 'FR')).to eq('+33606060606')
+          expect(PhonyRails.normalize_number('0606060606', default_country_code: 'FR')).to eq('+33606060606')
         end
 
         it 'should pass Github issue #85' do
-          expect(PhonyRails.normalize_number("47386160", default_country_code: 'NO')).to eq('+4747386160')
-          expect(PhonyRails.normalize_number("47386160", country_number: '47')).to eq('+4747386160')
+          expect(PhonyRails.normalize_number('47386160', default_country_code: 'NO')).to eq('+4747386160')
+          expect(PhonyRails.normalize_number('47386160', country_number: '47')).to eq('+4747386160')
         end
 
         it 'should pass Github issue #87' do
@@ -126,9 +126,9 @@ describe PhonyRails do
 
         it 'should pass Github issue #113' do
           number = '(951) 703-593'
-          expect(lambda {
+          expect(lambda do
             number.phony_formatted!(normalize: 'US', spaces: '-', strict: true)
-          }).to raise_error(ArgumentError)
+          end).to raise_error(ArgumentError)
         end
 
         it 'should pass Github issue #95' do
@@ -192,7 +192,7 @@ describe PhonyRails do
           normal.phone_number = 'HAHA'
           expect(normal).to_not be_valid
           expect(normal.phone_number).to eq('HAHA')
-          expect(normal.errors.messages).to include(phone_number: ["is an invalid number"])
+          expect(normal.errors.messages).to include(phone_number: ['is an invalid number'])
         end
       end
 
@@ -215,7 +215,7 @@ describe PhonyRails do
       end
 
       it 'returns nil on blank string' do
-        expect("".phony_formatted).to be_nil
+        expect(''.phony_formatted).to be_nil
       end
     end
 
@@ -225,9 +225,9 @@ describe PhonyRails do
       end
 
       it 'should not modify the original options Hash' do
-        options = {normalize: :NL, format: :international}
+        options = { normalize: :NL, format: :international }
         '0101234123'.phony_normalized(options)
-        expect(options).to eql({normalize: :NL, format: :international})
+        expect(options).to eql(normalize: :NL, format: :international)
       end
 
       context 'when String misses a country_code' do
@@ -295,7 +295,6 @@ describe PhonyRails do
       it 'should recognize lowercase country codes' do
         expect(PhonyRails.normalize_number('010-1234123', country_code: 'nl')).to eql('+31101234123')
       end
-
     end
 
     it 'should handle some edge cases (with country_code)' do
@@ -336,7 +335,7 @@ describe PhonyRails do
       is_expected.to be_plausible_number valid_number, country_code: 'US'
     end
 
-    it "should return false for an invalid number" do
+    it 'should return false for an invalid number' do
       is_expected.not_to be_plausible_number invalid_number, country_code: 'US'
     end
 
@@ -381,9 +380,9 @@ describe PhonyRails do
       end
 
       it 'should raise error on existing methods' do
-        expect(lambda {
+        expect(lambda do
           model_klass.phony_normalized_method(:phone_method)
-        }).to raise_error(StandardError)
+        end).to raise_error(StandardError)
       end
 
       it 'should raise error on not existing attribute' do
@@ -414,15 +413,15 @@ describe PhonyRails do
       end
 
       it 'should accept :as option with single existing attribute name' do
-        expect(lambda {
+        expect(lambda do
           model_klass.phony_normalize(:phone_number, as: 'phone_number_as_normalized')
-        }).to_not raise_error
+        end).to_not raise_error
       end
 
       it 'should accept a non existing attribute name' do
-        expect(lambda {
+        expect(lambda do
           dummy_klass.phony_normalize(:non_existing_attribute)
-        }).to_not raise_error
+        end).to_not raise_error
       end
 
       it 'should accept supported options' do
@@ -448,7 +447,7 @@ describe PhonyRails do
         expect(model.normalized_phone_attribute).to eql('+31101234123')
       end
 
-      it "should return a normalized version of a method" do
+      it 'should return a normalized version of a method' do
         model = model_klass.new(phone_method: '+31-(0)10-1234123')
         expect(model.normalized_phone_method).to eql('+31101234123')
       end
@@ -526,17 +525,17 @@ describe PhonyRails do
       it 'should raise a RuntimeError at validation if the attribute doesn\'t exist' do
         dummy_klass.phony_normalize :non_existing_attribute
         dummy = dummy_klass.new
-        expect(lambda {
+        expect(lambda do
           dummy.valid?
-        }).to raise_error(RuntimeError)
+        end).to raise_error(RuntimeError)
       end
 
       it 'should raise a RuntimeError at validation if the :as option attribute doesn\'t exist' do
         dummy_klass.phony_normalize :phone_number, as: :non_existing_attribute
         dummy = dummy_klass.new
-        expect(lambda {
+        expect(lambda do
           dummy.valid?
-        }).to raise_error(RuntimeError)
+        end).to raise_error(RuntimeError)
       end
     end
   end
@@ -564,11 +563,11 @@ describe PhonyRails do
       let(:model_klass)  { RelaxedActiveRecordModel }
       let(:record)       { model_klass.new }
 
-      before {
+      before do
         record.phone_number = phone_number
         record.country_code = 'DE'
         record.valid? # run the empty validation chain to execute the before hook (normalized the number)
-      }
+      end
 
       context 'when the country_code attribute does not match the country number' do
         context 'when the number is prefixed with a country number and a plus' do
