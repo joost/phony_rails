@@ -29,11 +29,8 @@ class String
     return if options[:strict] && !Phony.plausible?(s)
     Phony.format(s, options.reverse_merge(format: :national))
   rescue
-    if options[:raise]
-      raise
-    else
-      s
-    end
+    raise if options[:raise]
+    s
   end
 
   # The bang method
@@ -41,4 +38,4 @@ class String
     raise ArgumentError, 'The :strict options is only supported in the phony_formatted (non bang) method.' if options[:strict]
     replace(phony_formatted(options))
   end
-  end
+end
