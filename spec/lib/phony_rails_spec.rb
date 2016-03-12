@@ -174,6 +174,26 @@ describe PhonyRails do
           phone = PhonyRails.normalize_number(phone, default_country_code: 'FR')
           expect(phone).to eq('+336123456789')
         end
+
+        it 'should pass Github issue #92 (invalid number with normalization)' do
+          ActiveRecord::Schema.define do
+            create_table :normal_homes do |table|
+              table.column :phone_number, :string
+            end
+          end
+
+          class NormalHome < ActiveRecord::Base
+            attr_accessor :phone_number
+            phony_normalize :phone_number, default_country_code: 'US'
+            validates :phone_number, phony_plausible: true
+          end
+
+          normal = NormalHome.new
+          normal.phone_number = 'HAHA'
+          expect(normal).to_not be_valid
+          expect(normal.phone_number).to eq('HAHA')
+          expect(normal.errors.messages).to include(phone_number: ["is an invalid number"])
+        end
       end
 
       it 'should not change original String' do
