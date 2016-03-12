@@ -1,5 +1,31 @@
 # Change Log
 
+## [Unreleased](https://github.com/joost/phony_rails/tree/HEAD)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.11...HEAD)
+
+**Closed issues:**
+
+- Adding country code twice for Luxemburg numbers [\#128](https://github.com/joost/phony_rails/issues/128)
+
+- Unexpected result when calling normalize\_number multiple times with country\_code option [\#126](https://github.com/joost/phony_rails/issues/126)
+
+- No method find\_by\_normalized\_phone\_number [\#125](https://github.com/joost/phony_rails/issues/125)
+
+- Invalid number is valid? [\#124](https://github.com/joost/phony_rails/issues/124)
+
+- Can it validate mobile phone? [\#122](https://github.com/joost/phony_rails/issues/122)
+
+**Merged pull requests:**
+
+- Do not raise NoMethodError when an illegal country code is set [\#133](https://github.com/joost/phony_rails/pull/133) ([klaustopher](https://github.com/klaustopher))
+
+- only assigned normalize values if there is one [\#132](https://github.com/joost/phony_rails/pull/132) ([Smcchoi](https://github.com/Smcchoi))
+
+- Adding Kosovo phone code [\#131](https://github.com/joost/phony_rails/pull/131) ([Xanders](https://github.com/Xanders))
+
+- Add Dutch translation for invalid number [\#129](https://github.com/joost/phony_rails/pull/129) ([bdewater](https://github.com/bdewater))
+
 ## [v0.12.11](https://github.com/joost/phony_rails/tree/v0.12.11) (2015-11-12)
 
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.9...v0.12.11)
