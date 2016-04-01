@@ -27,7 +27,7 @@ module PhonyRails
   def self.normalize_number(number, options = {})
     return if number.nil?
     original_number = number
-    number = number.clone # Just to be sure, we don't want to change the original.
+    number = number.dup # Just to be sure, we don't want to change the original.
     number.gsub!(/[^\(\)\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
     if _country_number = options[:country_number] || country_number_for(options[:country_code])
@@ -86,7 +86,7 @@ module PhonyRails
       # This methods sets the attribute to the normalized version.
       # It also adds the country_code (number), eg. 31 for NL numbers.
       def set_phony_normalized_numbers(attributes, options = {})
-        options = options.clone
+        options = options.dup
         if respond_to?(:country_code)
           set_country_as = options[:enforce_record_country] ? :country_code : :default_country_code
           options[set_country_as] ||= country_code
