@@ -25,7 +25,7 @@ class String
     options = options.dup
     normalize_country_code = options.delete(:normalize)
     s, ext = PhonyRails.extract_extension(self)
-    s = (normalize_country_code ? PhonyRails.normalize_number(s, default_country_code: normalize_country_code.to_s, add_plus: false) : gsub(/\D/, ''))
+    s = (normalize_country_code ? PhonyRails.normalize_number(s, default_country_code: normalize_country_code.to_s, add_plus: false) : s.gsub(/\D/, ''))
     return if s.blank?
     return if options[:strict] && !Phony.plausible?(s)
     PhonyRails.format_extension(Phony.format(s, options.reverse_merge(format: :national)), ext)

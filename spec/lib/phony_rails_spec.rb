@@ -91,6 +91,7 @@ describe PhonyRails do
             expect("101234123#{prefix}123".phony_formatted(normalize: :NL, format: :international)).to eql('+31 10 123 4123 x123')
             expect("31101234123#{prefix}123".phony_formatted(normalize: :NL)).to eql('010 123 4123 x123')
             expect("8887716095#{prefix}123".phony_formatted(format: :international, normalize: 'US', raise: true)).to eq('+1 (888) 771-6095 x123')
+            expect("+12145551212#{prefix}123".phony_formatted).to eq('(214) 555-1212 x123')
           end
         end
       end
