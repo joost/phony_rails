@@ -320,6 +320,31 @@ describe PhonyRails do
     it 'should normalize even an implausible number' do
       expect(PhonyRails.normalize_number('01')).to eql('1')
     end
+
+    context 'with default_country_code set' do
+
+      before { PhonyRails.default_country_code = 'NL' }
+      after { PhonyRails.default_country_code = nil }
+
+      it 'normalize using the default' do
+        expect(PhonyRails.normalize_number('010-1234123')).to eql('+31101234123')
+        expect(PhonyRails.normalize_number('010-1234123')).to eql('+31101234123')
+        expect(PhonyRails.normalize_number('070-4157134')).to eql('+31704157134')
+        expect(PhonyRails.normalize_number('0031-70-4157134')).to eql('+31704157134')
+        expect(PhonyRails.normalize_number('+31-70-4157134')).to eql('+31704157134')
+      end
+
+      it 'allows default_country_code to be overridden' do
+        expect(PhonyRails.normalize_number('0322-69497', country_code: 'BE')).to eql('+3232269497')
+        expect(PhonyRails.normalize_number('+32 3 226 94 97', country_code: 'BE')).to eql('+3232269497')
+        expect(PhonyRails.normalize_number('0450 764 000', country_code: 'AU')).to eql('+61450764000')
+
+        expect(PhonyRails.normalize_number('0322-69497', default_country_code: 'BE')).to eql('+3232269497')
+        expect(PhonyRails.normalize_number('+32 3 226 94 97', default_country_code: 'BE')).to eql('+3232269497')
+        expect(PhonyRails.normalize_number('0450 764 000', default_country_code: 'AU')).to eql('+61450764000')
+      end
+
+    end
   end
 
   describe 'PhonyRails.plausible_number?' do
@@ -367,6 +392,24 @@ describe PhonyRails do
       expect(Phony).to receive(:plausible?).twice.and_raise('unexpected error')
       is_expected.not_to be_plausible_number normalizable_number, country_code: 'US'
     end
+
+    context 'with default_country_code set' do
+
+      before { PhonyRails.default_country_code = 'FR' }
+      after { PhonyRails.default_country_code = nil }
+
+      it 'uses the default' do
+        is_expected.not_to be_plausible_number normalizable_number
+        is_expected.to be_plausible_number formatted_french_number_with_country_code
+      end
+
+      it 'allows default_country_code to be overridden' do
+        is_expected.not_to be_plausible_number empty_number, country_code: 'US'
+        is_expected.not_to be_plausible_number nil_number, country_code: 'US'
+      end
+
+    end
+
   end
 
   shared_examples_for 'model with PhonyRails' do
