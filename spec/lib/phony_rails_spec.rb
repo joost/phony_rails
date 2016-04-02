@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe PhonyRails do
+  EXT_PREFIXES = %w(ext ex x xt # :).freeze
+
   it 'should not pollute the global namespace with a Country class' do
     should_not be_const_defined 'Country'
   end
@@ -77,6 +79,18 @@ describe PhonyRails do
         context 'when raise is false (default)' do
           it 'should return original String on exception' do
             expect('8887716095'.phony_formatted(format: :international)).to eq('8887716095')
+          end
+        end
+      end
+
+      describe 'with extensions' do
+        EXT_PREFIXES.each do |prefix|
+          it "should format number with #{prefix} extension" do
+            expect("+319090#{prefix}123".phony_formatted(strict: true)).to eql(nil)
+            expect("101234123#{prefix}123".phony_formatted(normalize: :NL)).to eql('010 123 4123 x123')
+            expect("101234123#{prefix}123".phony_formatted(normalize: :NL, format: :international)).to eql('+31 10 123 4123 x123')
+            expect("31101234123#{prefix}123".phony_formatted(normalize: :NL)).to eql('010 123 4123 x123')
+            expect("8887716095#{prefix}123".phony_formatted(format: :international, normalize: 'US', raise: true)).to eq('+1 (888) 771-6095 x123')
           end
         end
       end
@@ -297,6 +311,30 @@ describe PhonyRails do
       end
     end
 
+    context 'number with an extension' do
+      EXT_PREFIXES.each do |prefix|
+        it "should handle some edge cases (with country_code) and #{prefix} extension" do
+          expect(PhonyRails.normalize_number("some nasty stuff in this +31 number 10-1234123 string #{prefix}123", country_code: 'NL')).to eql('+31101234123 x123')
+          expect(PhonyRails.normalize_number("070-4157134#{prefix}123", country_code: 'NL')).to eql('+31704157134 x123')
+          expect(PhonyRails.normalize_number("0031-70-4157134#{prefix}123", country_code: 'NL')).to eql('+31704157134 x123')
+          expect(PhonyRails.normalize_number("+31-70-4157134#{prefix}123", country_code: 'NL')).to eql('+31704157134 x123')
+          expect(PhonyRails.normalize_number("0322-69497#{prefix}123", country_code: 'BE')).to eql('+3232269497 x123')
+          expect(PhonyRails.normalize_number("+32 3 226 94 97#{prefix}123", country_code: 'BE')).to eql('+3232269497 x123')
+          expect(PhonyRails.normalize_number("0450 764 000#{prefix}123", country_code: 'AU')).to eql('+61450764000 x123')
+        end
+
+        it "should handle some edge cases (with default_country_code) and #{prefix}" do
+          expect(PhonyRails.normalize_number("some nasty stuff in this +31 number 10-1234123 string #{prefix}123", country_code: 'NL')).to eql('+31101234123 x123')
+          expect(PhonyRails.normalize_number("070-4157134#{prefix}123", default_country_code: 'NL')).to eql('+31704157134 x123')
+          expect(PhonyRails.normalize_number("0031-70-4157134#{prefix}123", default_country_code: 'NL')).to eql('+31704157134 x123')
+          expect(PhonyRails.normalize_number("+31-70-4157134#{prefix}123", default_country_code: 'NL')).to eql('+31704157134 x123')
+          expect(PhonyRails.normalize_number("0322-69497#{prefix}123", default_country_code: 'BE')).to eql('+3232269497 x123')
+          expect(PhonyRails.normalize_number("+32 3 226 94 97#{prefix}123", default_country_code: 'BE')).to eql('+3232269497 x123')
+          expect(PhonyRails.normalize_number("0450 764 000#{prefix}123", default_country_code: 'AU')).to eql('+61450764000 x123')
+        end
+      end
+    end
+
     it 'should handle some edge cases (with country_code)' do
       expect(PhonyRails.normalize_number('some nasty stuff in this +31 number 10-1234123 string', country_code: 'NL')).to eql('+31101234123')
       expect(PhonyRails.normalize_number('070-4157134', country_code: 'NL')).to eql('+31704157134')
@@ -366,6 +404,32 @@ describe PhonyRails do
     it 'returns false if something goes wrong' do
       expect(Phony).to receive(:plausible?).twice.and_raise('unexpected error')
       is_expected.not_to be_plausible_number normalizable_number, country_code: 'US'
+    end
+  end
+
+  describe 'PhonyRails#extract_extension' do
+    it 'returns [nil, nil] on nil input' do
+      expect(PhonyRails.extract_extension(nil)).to eq [nil, nil]
+    end
+
+    it 'returns [number, nil] when number does not have an extension' do
+      expect(PhonyRails.extract_extension('123456789')).to eq ['123456789', nil]
+    end
+
+    EXT_PREFIXES.each do |prefix|
+      it "returns [number, ext] when number has a #{prefix} extension" do
+        expect(PhonyRails.extract_extension("123456789#{prefix}123")).to eq %w(123456789 123)
+      end
+    end
+  end
+
+  describe 'PhonyRails#format_extension' do
+    it 'returns just number if no extension' do
+      expect(PhonyRails.format_extension('+123456789', nil)).to eq '+123456789'
+    end
+
+    it 'returns number with extension if extension exists' do
+      expect(PhonyRails.format_extension('+123456789', '123')).to eq '+123456789 x123'
     end
   end
 
@@ -560,8 +624,8 @@ describe PhonyRails do
     end
 
     context 'when enforce_record_country is turned off' do
-      let(:model_klass)  { RelaxedActiveRecordModel }
-      let(:record)       { model_klass.new }
+      let(:model_klass) { RelaxedActiveRecordModel }
+      let(:record) { model_klass.new }
 
       before do
         record.phone_number = phone_number
