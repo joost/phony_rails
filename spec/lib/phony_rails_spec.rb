@@ -322,7 +322,6 @@ describe PhonyRails do
     end
 
     context 'with default_country_code set' do
-
       before { PhonyRails.default_country_code = 'NL' }
       after { PhonyRails.default_country_code = nil }
 
@@ -343,7 +342,6 @@ describe PhonyRails do
         expect(PhonyRails.normalize_number('+32 3 226 94 97', default_country_code: 'BE')).to eql('+3232269497')
         expect(PhonyRails.normalize_number('0450 764 000', default_country_code: 'AU')).to eql('+61450764000')
       end
-
     end
   end
 
@@ -394,7 +392,6 @@ describe PhonyRails do
     end
 
     context 'with default_country_code set' do
-
       before { PhonyRails.default_country_code = 'FR' }
       after { PhonyRails.default_country_code = nil }
 
@@ -407,9 +404,25 @@ describe PhonyRails do
         is_expected.not_to be_plausible_number empty_number, country_code: 'US'
         is_expected.not_to be_plausible_number nil_number, country_code: 'US'
       end
+    end
+  end
 
+  describe 'PhonyRails.default_country' do
+    before { PhonyRails.default_country_code = 'US' }
+    after { PhonyRails.default_country_code = nil }
+
+    it 'can set a global default country code' do
+      expect(PhonyRails.default_country_code). to eq 'US'
     end
 
+    it 'can set a global default country code' do
+      PhonyRails.default_country_number = '1'
+      expect(PhonyRails.default_country_number).to eq '1'
+    end
+
+    it 'default country code affects default country number' do
+      expect(PhonyRails.default_country_number).to eq '1'
+    end
   end
 
   shared_examples_for 'model with PhonyRails' do

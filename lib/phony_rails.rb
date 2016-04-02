@@ -5,7 +5,6 @@ require 'phony_rails/version'
 require 'yaml'
 
 module PhonyRails
-
   def self.default_country_code
     @default_country_code ||= nil
   end
@@ -55,7 +54,7 @@ module PhonyRails
       if !Phony.plausible?(number) || _country_number != country_code_from_number(number)
         number = "#{_country_number}#{number}"
       end
-    elsif _default_country_number = options[:default_country_number] || country_number_for(options[:default_country_code]) || default_country_number
+    elsif _default_country_number = extract_default_country_number(options)
       options[:add_plus] = true if options[:add_plus].nil?
       # We try to add the default country number and see if it is a
       # correct phone number. See https://github.com/joost/phony_rails/issues/87#issuecomment-89324426
@@ -76,6 +75,10 @@ module PhonyRails
     options[:add_plus] ? "+#{normalized_number}" : normalized_number
   rescue
     original_number # If all goes wrong .. we still return the original input.
+  end
+
+  def self.extract_default_country_number(options = {})
+    options[:default_country_number] || country_number_for(options[:default_country_code]) || default_country_number
   end
 
   def self.country_code_from_number(number)
