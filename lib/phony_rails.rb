@@ -90,11 +90,13 @@ module PhonyRails
 
   def self.extract_extension(number_and_ext)
     return [nil, nil] if number_and_ext.nil?
+    # :nocov:
     if subbed = number_and_ext.sub(COMMON_EXTENSIONS, '')
       [subbed, Regexp.last_match(2)]
     else
       [number_and_ext, nil]
     end
+    # :nocov:
   end
 
   def self.format_extension(number, ext)
