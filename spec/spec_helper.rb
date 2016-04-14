@@ -21,18 +21,22 @@ ActiveRecord::Schema.define do
     table.column :phone_number, :string
     table.column :phone_number_as_normalized, :string
     table.column :fax_number, :string
+    table.column :country_code_attribute, :string
+    table.column :symboled_phone, :string
   end
 end
 
 module SharedModelMethods
   extend ActiveSupport::Concern
   included do
-    attr_accessor :phone_method, :phone1_method, :country_code
+    attr_accessor :phone_method, :phone1_method, :symboled_phone_method, :country_code, :country_code_attribute
     phony_normalized_method :phone_attribute # adds normalized_phone_attribute method
     phony_normalized_method :phone_method # adds normalized_phone_method method
     phony_normalized_method :phone1_method, default_country_code: 'DE' # adds normalized_phone_method method
+    phony_normalized_method :symboled_phone_method, country_code: :country_code_attribute # adds phone_with_symboled_options method
     phony_normalize :phone_number # normalized on validation
     phony_normalize :fax_number, default_country_code: 'AU'
+    phony_normalize :symboled_phone, default_country_code: :country_code_attribute
   end
 end
 
@@ -57,6 +61,8 @@ class MongoidModel
   field :phone_number,    type: String
   field :phone_number_as_normalized, type: String
   field :fax_number
+  field :country_code_attribute, type: String
+  field :symboled_phone, type: String
   include SharedModelMethods
 end
 

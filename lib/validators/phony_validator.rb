@@ -8,7 +8,6 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
     return if value.blank?
 
     @record = record
-
     value = PhonyRails.normalize_number(value.dup, default_country_code: normalized_country_code) if normalized_country_code
     @record.errors.add(attribute, error_message) unless Phony.plausible?(value, cc: country_number)
   end
@@ -16,15 +15,15 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
   private
 
   def error_message
-    options[:message] || :improbable_phone
+    options_value(:message) || :improbable_phone
   end
 
   def country_number
-    options[:country_number] || record_country_number || country_number_from_country_code
+    options_value(:country_number) || record_country_number || country_number_from_country_code
   end
 
   def record_country_number
-    @record.country_number if @record.respond_to?(:country_number) && !options[:ignore_record_country_number]
+    @record.country_number if @record.respond_to?(:country_number) && !options_value(:ignore_record_country_number)
   end
 
   def country_number_from_country_code
@@ -32,15 +31,23 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
   end
 
   def country_code
-    options[:country_code] || record_country_code
+    options_value(:country_code) || record_country_code
   end
 
   def record_country_code
-    @record.country_code if @record.respond_to?(:country_code) && !options[:ignore_record_country_code]
+    @record.country_code if @record.respond_to?(:country_code) && !options_value(:ignore_record_country_code)
   end
 
   def normalized_country_code
-    options[:normalized_country_code]
+    options_value(:normalized_country_code)
+  end
+
+  def options_value(option)
+    if options[option].is_a?(Symbol)
+      @record.send(options[option])
+    else
+      options[option]
+    end
   end
 end
 

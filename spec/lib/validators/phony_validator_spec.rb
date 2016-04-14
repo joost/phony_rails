@@ -54,6 +54,11 @@ ActiveRecord::Schema.define do
   create_table :invalid_country_code_helpful_homes do |table|
     table.column :phone_number, :string
   end
+
+  create_table :symbolizable_helpful_homes do |table|
+    table.column :phone_number, :string
+    table.column :phone_number_country_code, :string
+  end
 end
 
 #--------------------
@@ -131,6 +136,12 @@ class InvalidCountryCodeHelpfulHome < ActiveRecord::Base
   def country_code
     '--'
   end
+end
+
+#--------------------
+class SymbolizableHelpfulHome < ActiveRecord::Base
+  attr_accessor :phone_number, :phone_number_country_code
+  validates_plausible_phone :phone_number, country_code: :phone_number_country_code
 end
 #-----------------------------------------------------------------------------------------------------------------------
 # Tests
@@ -500,6 +511,37 @@ describe ActiveModel::Validations::HelperMethods do
         expect do
           @home.valid?
         end.to_not raise_error
+      end
+    end
+
+    #--------------------
+    context 'when a country code is passed as a symbol' do
+      before(:each) do
+        @home = SymbolizableHelpfulHome.new
+      end
+
+      it 'should validate an empty number' do
+        expect(@home).to be_valid
+      end
+
+      it 'should validate a valid number with the right country code' do
+        @home.phone_number = POLISH_NUMBER_WITH_COUNTRY_CODE
+        @home.phone_number_country_code = "PL"
+        expect(@home).to be_valid
+      end
+
+      it 'should invalidate a valid number with the wrong country code' do
+        @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
+        @home.phone_number_country_code = "PL"
+        expect(@home).to_not be_valid
+        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+      end
+
+      it 'should invalidate a valid number without a country code' do
+        @home.phone_number = VALID_NUMBER
+        @home.phone_number_country_code = "PL"
+        expect(@home).to_not be_valid
+        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
       end
     end
   end
