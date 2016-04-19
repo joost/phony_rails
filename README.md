@@ -79,6 +79,14 @@ PhonyRails.normalize_number('+4790909090', default_country_code: 'SE') # => '+47
 
 The country_code should always be a ISO 3166-1 alpha-2 (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
 
+#### Default for all models
+
+You can set the default_country_code for all models using:
+
+```ruby
+PhonyRails.default_country_code = "US"
+```
+
 ### Validation
 
 In your model use the Phony.plausible method to validate an attribute:
