@@ -526,20 +526,20 @@ describe ActiveModel::Validations::HelperMethods do
 
       it 'should validate a valid number with the right country code' do
         @home.phone_number = POLISH_NUMBER_WITH_COUNTRY_CODE
-        @home.phone_number_country_code = "PL"
+        @home.phone_number_country_code = 'PL'
         expect(@home).to be_valid
       end
 
       it 'should invalidate a valid number with the wrong country code' do
         @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
-        @home.phone_number_country_code = "PL"
+        @home.phone_number_country_code = 'PL'
         expect(@home).to_not be_valid
         expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
       end
 
       it 'should invalidate a valid number without a country code' do
         @home.phone_number = VALID_NUMBER
-        @home.phone_number_country_code = "PL"
+        @home.phone_number_country_code = 'PL'
         expect(@home).to_not be_valid
         expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
       end

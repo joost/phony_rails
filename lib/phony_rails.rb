@@ -103,7 +103,7 @@ module PhonyRails
       def assign_values_for_phony_symbol_options(options)
         symbol_options = [:country_number, :default_country_number, :country_code, :default_country_code]
         symbol_options.each do |option|
-          options[option] = self.send(options[option]) if options[option].is_a?(Symbol)
+          options[option] = send(options[option]) if options[option].is_a?(Symbol)
         end
       end
     end
