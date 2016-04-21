@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phony_rails (0.13.1)
+    phony_rails (0.14.0)
       activesupport (>= 3.0)
       phony (~> 2.12)
 
@@ -139,3 +139,6 @@ DEPENDENCIES
   rspec
   rubocop
   sqlite3
+
+BUNDLED WITH
+   1.11.2

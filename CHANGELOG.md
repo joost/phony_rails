@@ -1,5 +1,29 @@
 # Change Log
 
+## [Unreleased](https://github.com/joost/phony_rails/tree/HEAD)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.13.0...HEAD)
+
+**Closed issues:**
+
+- In normalize\_number, .clone is being used, which preserves "frozenness", causing method to fail sometimes [\#136](https://github.com/joost/phony_rails/issues/136)
+
+- question Is thr any way to find country code from mobile no? [\#135](https://github.com/joost/phony_rails/issues/135)
+
+- invalid number assumed to be valid [\#130](https://github.com/joost/phony_rails/issues/130)
+
+- Split fails when a + is present [\#123](https://github.com/joost/phony_rails/issues/123)
+
+**Merged pull requests:**
+
+- Adds ability to pass symbols as option values to phony model helpers [\#139](https://github.com/joost/phony_rails/pull/139) ([jonathan-wheeler](https://github.com/jonathan-wheeler))
+
+- Add support for phone numbers with extensions [\#138](https://github.com/joost/phony_rails/pull/138) ([jerryclinesmith](https://github.com/jerryclinesmith))
+
+- Add support for a default country code [\#137](https://github.com/joost/phony_rails/pull/137) ([jerryclinesmith](https://github.com/jerryclinesmith))
+
+- Added first RuboCop stuff. [\#134](https://github.com/joost/phony_rails/pull/134) ([joost](https://github.com/joost))
+
 ## [v0.13.0](https://github.com/joost/phony_rails/tree/v0.13.0) (2016-03-12)
 
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.11...v0.13.0)
