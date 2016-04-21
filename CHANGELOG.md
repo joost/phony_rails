@@ -1,8 +1,8 @@
 # Change Log
 
-## [Unreleased](https://github.com/joost/phony_rails/tree/HEAD)
+## [v0.14.0](https://github.com/joost/phony_rails/tree/v0.14.0) (2016-04-21)
 
-[Full Changelog](https://github.com/joost/phony_rails/compare/v0.13.0...HEAD)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.13.0...v0.14.0)
 
 **Closed issues:**
 
