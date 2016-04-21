@@ -45,6 +45,7 @@ module PhonyRails
     return if number.nil?
     original_number = number
     number = number.dup # Just to be sure, we don't want to change the original.
+    number, ext = extract_extension(number)
     number.gsub!(/[^\(\)\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
     if _country_number = options[:country_number] || country_number_for(options[:country_code])
@@ -56,25 +57,32 @@ module PhonyRails
       end
     elsif _default_country_number = extract_default_country_number(options)
       options[:add_plus] = true if options[:add_plus].nil?
-      # We try to add the default country number and see if it is a
-      # correct phone number. See https://github.com/joost/phony_rails/issues/87#issuecomment-89324426
-      unless number =~ /\A\+/ # if we don't have a +
-        if Phony.plausible?("#{_default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
-          number = "#{_default_country_number}#{number}"
-        elsif (number =~ /^0[^0]/) && Phony.plausible?("#{_default_country_number}#{number.gsub(/^0/, '')}")
-          # If the number starts with ONE zero (two might indicate a country code)
-          # and this is a plausible number for the default_country
-          # we prefer that one.
-          number = "#{_default_country_number}#{number.gsub(/^0/, '')}"
-        end
-      end
-      # number = "#{_default_country_number}#{number}" unless Phony.plausible?(number)
+      number = normalize_number_default_country(number, _default_country_number)
     end
     normalized_number = Phony.normalize(number)
     options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
-    options[:add_plus] ? "+#{normalized_number}" : normalized_number
+    normalized_number = options[:add_plus] ? "+#{normalized_number}" : normalized_number
+    format_extension(normalized_number, ext)
   rescue
     original_number # If all goes wrong .. we still return the original input.
+  end
+
+  def self.normalize_number_default_country(number, default_country_number)
+    # We try to add the default country number and see if it is a
+    # correct phone number. See https://github.com/joost/phony_rails/issues/87#issuecomment-89324426
+    unless number =~ /\A\+/ # if we don't have a +
+      if Phony.plausible?("#{default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
+        return "#{default_country_number}#{number}"
+      elsif (number =~ /^0[^0]/) && Phony.plausible?("#{default_country_number}#{number.gsub(/^0/, '')}")
+        # If the number starts with ONE zero (two might indicate a country code)
+        # and this is a plausible number for the default_country
+        # we prefer that one.
+        return "#{default_country_number}#{number.gsub(/^0/, '')}"
+      end
+    end
+    # number = "#{default_country_number}#{number}" unless Phony.plausible?(number)
+    # Just return the number unchanged
+    number
   end
 
   def self.extract_default_country_number(options = {})
@@ -90,6 +98,7 @@ module PhonyRails
   # NB: This method calls #normalize_number and passes _options_ directly to that method.
   def self.plausible_number?(number, options = {})
     return false if number.nil? || number.blank?
+    number = extract_extension(number).first
     number = normalize_number(number, options)
     country_number = options[:country_number] || country_number_for(options[:country_code]) ||
                      options[:default_country_number] || country_number_for(options[:default_country_code]) ||
@@ -97,6 +106,23 @@ module PhonyRails
     Phony.plausible? number, cc: country_number
   rescue
     false
+  end
+
+  COMMON_EXTENSIONS = /[ ]*(ext|ex|x|xt|#|:)+[^0-9]*\(*([-0-9]{1,})\)*#?$/i
+
+  def self.extract_extension(number_and_ext)
+    return [nil, nil] if number_and_ext.nil?
+    # :nocov:
+    if subbed = number_and_ext.sub(COMMON_EXTENSIONS, '')
+      [subbed, Regexp.last_match(2)]
+    else
+      [number_and_ext, nil]
+    end
+    # :nocov:
+  end
+
+  def self.format_extension(number, ext)
+    ext.present? ? "#{number} x#{ext}" : number
   end
 
   module Extension

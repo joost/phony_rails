@@ -186,6 +186,15 @@ You can also easily normalize a phone number String:
 "(0)30 1234 123".phony_normalized(country_code: 'NL') # => '301234123'
 ```
 
+Extensions are supported (identified by "ext", "ex", "x", "xt", "#", or ":") and will show at the end of the number:
+
+```ruby
+"+31 (0)30 1234 123 x999".phony_normalized # => '31301234123 x999'
+"+31 (0)30 1234 123 ext999".phony_normalized # => '31301234123 x999'
+"+31 (0)30 1234 123 #999".phony_normalized # => '31301234123 x999'
+```
+
+
 ### Find by normalized number
 
 Say you want to find a record by a phone number. Best is to normalize user input and compare to an attribute stored in the db.
