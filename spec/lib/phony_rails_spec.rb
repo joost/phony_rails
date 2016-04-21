@@ -620,6 +620,11 @@ describe PhonyRails do
         model.country_code = nil
         expect(model.normalized_phone1_method(country_code: nil)).to eql('+49308612906')
       end
+
+      it 'should accept a symbol when setting country_code options' do
+        model = model_klass.new(symboled_phone_method: '02031234567', country_code_attribute: 'GB')
+        expect(model.normalized_symboled_phone_method).to eql('+442031234567')
+      end
     end
 
     describe 'using model#phony_normalize' do
@@ -657,6 +662,12 @@ describe PhonyRails do
         expect(lambda do
           dummy.valid?
         end).to raise_error(RuntimeError)
+      end
+
+      it 'should accept a symbol when setting country_code options' do
+        model = model_klass.new(symboled_phone: '0606060606', country_code_attribute: 'FR')
+        expect(model).to be_valid
+        expect(model.symboled_phone).to eql('+33606060606')
       end
     end
   end

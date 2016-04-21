@@ -135,6 +135,7 @@ module PhonyRails
       # It also adds the country_code (number), eg. 31 for NL numbers.
       def set_phony_normalized_numbers(attributes, options = {})
         options = options.dup
+        assign_values_for_phony_symbol_options(options)
         if respond_to?(:country_code)
           set_country_as = options[:enforce_record_country] ? :country_code : :default_country_code
           options[set_country_as] ||= country_code
@@ -144,6 +145,13 @@ module PhonyRails
           raise("No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)") unless self.class.attribute_method?(attribute_name)
           new_value = PhonyRails.normalize_number(send(attribute), options)
           send("#{attribute_name}=", new_value) if new_value
+        end
+      end
+
+      def assign_values_for_phony_symbol_options(options)
+        symbol_options = [:country_number, :default_country_number, :country_code, :default_country_code]
+        symbol_options.each do |option|
+          options[option] = send(options[option]) if options[option].is_a?(Symbol)
         end
       end
     end
@@ -178,10 +186,11 @@ module PhonyRails
         attributes.each do |attribute|
           raise(StandardError, "Instance method normalized_#{attribute} already exists on #{name} (PhonyRails)") if method_defined?(:"normalized_#{attribute}")
           define_method :"normalized_#{attribute}" do |*args|
-            options = args.first || {}
+            options = main_options.merge(args.first || {})
+            assign_values_for_phony_symbol_options(options)
             raise(ArgumentError, "No attribute/method #{attribute} found on #{self.class.name} (PhonyRails)") unless respond_to?(attribute)
             options[:country_code] ||= country_code if respond_to?(:country_code)
-            PhonyRails.normalize_number(send(attribute), main_options.merge(options))
+            PhonyRails.normalize_number(send(attribute), options)
           end
         end
       end
