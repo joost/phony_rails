@@ -15,7 +15,7 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
   private
 
   def error_message
-    options_value(:message) || :improbable_phone
+    options[:message] || :improbable_phone
   end
 
   def country_number
@@ -43,11 +43,11 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
   end
 
   def options_value(option)
-    if options[option].is_a?(Symbol)
-      @record.send(options[option])
-    else
-      options[option]
-    end
+    option_value = options[option]
+
+    return option_value unless option_value.is_a?(Symbol)
+
+    @record.send(option_value)
   end
 end
 
