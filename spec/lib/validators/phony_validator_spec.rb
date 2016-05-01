@@ -143,6 +143,28 @@ class SymbolizableHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number, :phone_number_country_code
   validates_plausible_phone :phone_number, country_code: :phone_number_country_code
 end
+
+#--------------------
+class NoModelMethod < HelpfulHome
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, country_code: :nonexistent_method
+end
+
+#--------------------
+class MessageOptionUndefinedInModel < HelpfulHome
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, message: :email
+end
+
+#--------------------
+class MessageOptionSameAsModelMethod < HelpfulHome
+  attr_accessor :phone_number
+  validates_plausible_phone :phone_number, message: :email
+
+  def email
+    'user@example.com'
+  end
+end
 #-----------------------------------------------------------------------------------------------------------------------
 # Tests
 #-----------------------------------------------------------------------------------------------------------------------
@@ -542,6 +564,38 @@ describe ActiveModel::Validations::HelperMethods do
         @home.phone_number_country_code = 'PL'
         expect(@home).to_not be_valid
         expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+      end
+    end
+
+    #--------------------
+    context 'when a nonexistent method is passed as a symbol to an option other than message' do
+      it 'raises NoMethodError' do
+        @home = NoModelMethod.new
+        @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
+
+        expect { @home.save }.to raise_error(NoMethodError)
+      end
+    end
+
+    #--------------------
+    context 'when a nonexistent method is passed as a symbol to the message option' do
+      it 'does not raise an error' do
+        @home = MessageOptionUndefinedInModel.new
+        @home.phone_number = INVALID_NUMBER
+
+        expect { @home.save }.to_not raise_error
+      end
+    end
+
+    #--------------------
+    context 'when an existing Model method is passed as a symbol to the message option' do
+      it 'does not use the Model method' do
+        @home = MessageOptionSameAsModelMethod.new
+        @home.phone_number = INVALID_NUMBER
+
+        expect(@home).to_not receive(:email)
+
+        @home.save
       end
     end
   end
