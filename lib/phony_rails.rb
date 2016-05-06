@@ -144,7 +144,7 @@ module PhonyRails
           attribute_name = options[:as] || attribute
           raise("No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)") unless self.class.attribute_method?(attribute_name)
           new_value = PhonyRails.normalize_number(send(attribute), options)
-          send("#{attribute_name}=", new_value) if new_value
+          send("#{attribute_name}=", new_value) if new_value || attribute_name != attribute
         end
       end
 
