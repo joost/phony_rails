@@ -1,5 +1,19 @@
 # Change Log
 
+## [v0.14.1](https://github.com/joost/phony_rails/tree/v0.14.1) (2016-05-08)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.0...v0.14.1)
+
+**Closed issues:**
+
+- Pull request \#139 \(released in 0.14.0\) breaks message: :improbable\_phone option [\#140](https://github.com/joost/phony_rails/issues/140)
+
+**Merged pull requests:**
+
+- Fixed a bug that prevents a normalized attribute from being set to nil [\#142](https://github.com/joost/phony_rails/pull/142) ([kylerippey](https://github.com/kylerippey))
+
+- Read message value directly from options [\#141](https://github.com/joost/phony_rails/pull/141) ([monfresh](https://github.com/monfresh))
+
 ## [v0.14.0](https://github.com/joost/phony_rails/tree/v0.14.0) (2016-04-21)
 
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.13.0...v0.14.0)
