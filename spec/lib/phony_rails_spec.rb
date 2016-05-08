@@ -634,11 +634,26 @@ describe PhonyRails do
         expect(model.phone_number).to eql('+31101234123')
       end
 
+      it 'should nilify attribute when it is set to nil' do
+        model = model_klass.new(phone_number: '+31-(0)10-1234123')
+        model.phone_number = nil
+        expect(model).to be_valid
+        expect(model.phone_number).to eql(nil)
+      end
+
       it 'should set a normalized version of an attribute using :as option' do
         model_klass.phony_normalize :phone_number, as: :phone_number_as_normalized
         model = model_klass.new(phone_number: '+31-(0)10-1234123')
         expect(model).to be_valid
         expect(model.phone_number_as_normalized).to eql('+31101234123')
+      end
+
+      it 'should nilify normalized version of an attribute when it is set to nil using :as option ' do
+        model_klass.phony_normalize :phone_number, as: :phone_number_as_normalized
+        model = model_klass.new(phone_number: '+31-(0)10-1234123', phone_number_as_normalized: '+31101234123')
+        model.phone_number = nil
+        expect(model).to be_valid
+        expect(model.phone_number_as_normalized).to eq(nil)
       end
 
       it 'should not add a + using :add_plus option' do
