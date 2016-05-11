@@ -54,6 +54,18 @@ end
 class ActiveRecordDummy < ActiveRecordModel
 end
 
+class ActiveModelModel # in case you don't want a database for your model
+  include ActiveModel::Model # this provides most of the interface of AR
+  include ActiveModel::Validations::Callbacks # we use callbacks for normalization
+  include SharedModelMethods
+
+  # database columns don't give us free attributes, we have to define them
+  attr_accessor :phone_number, :phone_attribute, :phone_number_as_normalized, :country_code_attribute, :fax_number, :symboled_phone
+end
+
+class ActiveModelDummy < ActiveModelModel
+end
+
 class MongoidModel
   include Mongoid::Document
   include Mongoid::Phony

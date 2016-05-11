@@ -687,6 +687,12 @@ describe PhonyRails do
     end
   end
 
+  describe 'ActiveModel + ActiveModel::Validations::Callbacks' do
+    let(:model_klass) { ActiveModelModel }
+    let(:dummy_klass) { ActiveModelDummy }
+    it_behaves_like 'model with PhonyRails'
+  end
+
   describe 'ActiveRecord' do
     let(:model_klass) { ActiveRecordModel }
     let(:dummy_klass) { ActiveRecordDummy }

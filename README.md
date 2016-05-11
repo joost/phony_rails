@@ -46,6 +46,23 @@ class SomeModel < ActiveRecord::Base
 end
 ```
 
+#### ActiveModel (models without database)
+
+For Rails-like models without a database, add:
+
+```ruby
+class SomeModel
+  include ActiveModel::Model # we get AR-like attributes and validations
+  include ActiveModel::Validations::Callbacks # a dependency for normalization
+
+  # your attributes must be defined, they are not inherited from a DB table
+  attr_accessor :phone_number, :phone_number_as_normalized
+
+  # Once the model is set up, we have the same things as with ActiveRecord
+  phony_normalize :phone_number, default_country_code: 'US'
+end
+```
+
 #### Mongoid
 
 For **Mongoid**, in keeping with Mongoid plug-in conventions you must include the `Mongoid::Phony` module:
