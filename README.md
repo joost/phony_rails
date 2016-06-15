@@ -108,9 +108,9 @@ so we can use:
 
 ```ruby
 validates_plausible_phone :phone_number, presence: true
-validates_plausible_phone :phone_number, with: /^\+\d+/
-validates_plausible_phone :phone_number, without: /^\+\d+/
-validates_plausible_phone :phone_number, presence: true, with: /^\+\d+/
+validates_plausible_phone :phone_number, with: /\A\+\d+/
+validates_plausible_phone :phone_number, without: /\A\+\d+/
+validates_plausible_phone :phone_number, presence: true, with: /\A\+\d+/
 ```
 
 the i18n key is `:improbable_phone`. Languages supported by default: de, en, fr, it, ja, kh, nl, tr, ua and ru.
