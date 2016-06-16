@@ -1,5 +1,15 @@
 # Change Log
 
+## [Unreleased](https://github.com/joost/phony_rails/tree/HEAD)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.1...HEAD)
+
+**Merged pull requests:**
+
+- Do not use insecure multiline regex in examples [\#146](https://github.com/joost/phony_rails/pull/146) ([bdewater](https://github.com/bdewater))
+
+- support for ActiveModel::Model alternative to database-backed models only [\#144](https://github.com/joost/phony_rails/pull/144) ([brandondees](https://github.com/brandondees))
+
 ## [v0.14.1](https://github.com/joost/phony_rails/tree/v0.14.1) (2016-05-08)
 
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.0...v0.14.1)
