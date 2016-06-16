@@ -83,6 +83,6 @@ end
 
 I18n.config.enforce_available_locales = true
 
-RSpec.configure do |config|
-  # some (optional) config here
-end
+# RSpec.configure do |config|
+#   # some (optional) config here
+# end
