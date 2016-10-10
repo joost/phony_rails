@@ -643,6 +643,22 @@ describe PhonyRails do
         expect(model.phone_number).to eql(nil)
       end
 
+      it 'should nilify attribute when it is set to nil' do
+        model = ActiveRecordModel.create!(phone_number: '+31-(0)10-1234123')
+        model.phone_number = nil
+        expect(model).to be_valid
+        expect(model.save).to be(true)
+        expect(model.reload.phone_number).to eql(nil)
+      end
+
+      it 'should empty attribute when it is set to ""' do # Github issue #149
+        model = ActiveRecordModel.create!(phone_number: '+31-(0)10-1234123')
+        model.phone_number = ''
+        expect(model).to be_valid
+        expect(model.save).to be(true)
+        expect(model.reload.phone_number).to eql('')
+      end
+
       it 'should set a normalized version of an attribute using :as option' do
         model_klass.phony_normalize :phone_number, as: :phone_number_as_normalized
         model = model_klass.new(phone_number: '+31-(0)10-1234123')
