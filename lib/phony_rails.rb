@@ -95,7 +95,7 @@ module PhonyRails
   # Wrapper for Phony.plausible?.  Takes the same options as #normalize_number.
   # NB: This method calls #normalize_number and passes _options_ directly to that method.
   def self.plausible_number?(number, options = {})
-    return false if number&.blank?
+    return false if number.blank?
     number = extract_extension(number).first
     number = normalize_number(number, options)
     country_number = options[:country_number] || country_number_for(options[:country_code]) ||
