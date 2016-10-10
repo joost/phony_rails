@@ -108,7 +108,7 @@ module PhonyRails
     false
   end
 
-  COMMON_EXTENSIONS = /[ ]*(ext|ex|x|xt|#|:)+[^0-9]*\(*([-0-9]{1,})\)*#?$/i
+  COMMON_EXTENSIONS = /[ ]*(ext|ex|x|xt|#|:)+[^0-9]*\(?([-0-9]{1,})\)?#?$/i
 
   def self.extract_extension(number_and_ext)
     return [nil, nil] if number_and_ext.nil?
