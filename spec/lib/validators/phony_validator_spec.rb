@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 require 'spec_helper'
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -170,16 +171,16 @@ end
 #-----------------------------------------------------------------------------------------------------------------------
 
 I18n.locale = :en
-VALID_NUMBER = '1 555 555 5555'.freeze
-NORMALIZABLE_NUMBER = '555 555 5555'.freeze
-AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '61390133997'.freeze
-POLISH_NUMBER_WITH_COUNTRY_CODE = '48600600600'.freeze
-FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'.freeze
-FRENCH_NUMBER_WITH_COUNTRY_CODE = '33627899541'.freeze
-FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 627899541'.freeze
-INVALID_NUMBER = '123456789 123456789 123456789 123456789'.freeze
-NOT_A_NUMBER = 'HAHA'.freeze
-JAPAN_COUNTRY = 'jp'.freeze
+VALID_NUMBER = '1 555 555 5555'
+NORMALIZABLE_NUMBER = '555 555 5555'
+AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '61390133997'
+POLISH_NUMBER_WITH_COUNTRY_CODE = '48600600600'
+FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'
+FRENCH_NUMBER_WITH_COUNTRY_CODE = '33627899541'
+FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 627899541'
+INVALID_NUMBER = '123456789 123456789 123456789 123456789'
+NOT_A_NUMBER = 'HAHA'
+JAPAN_COUNTRY = 'jp'
 
 #-----------------------------------------------------------------------------------------------------------------------
 describe PhonyPlausibleValidator do
@@ -230,7 +231,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:fr) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["est un numéro invalide"])
+        expect(@home.errors.messages).to include(phone_number: ['est un numéro invalide'])
       end
     end
 
@@ -238,7 +239,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:ja) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["は正しい電話番号ではありません"])
+        expect(@home.errors.messages).to include(phone_number: ['は正しい電話番号ではありません'])
       end
     end
 
@@ -246,7 +247,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:km) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["គឺជាលេខមិនត្រឹមត្រូវ"])
+        expect(@home.errors.messages).to include(phone_number: ['គឺជាលេខមិនត្រឹមត្រូវ'])
       end
     end
 
@@ -254,7 +255,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:uk) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["є недійсним номером"])
+        expect(@home.errors.messages).to include(phone_number: ['є недійсним номером'])
       end
     end
 
@@ -262,7 +263,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:ru) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["является недействительным номером"])
+        expect(@home.errors.messages).to include(phone_number: ['является недействительным номером'])
       end
     end
   end

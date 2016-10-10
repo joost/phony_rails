@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe PhonyRails do
@@ -17,7 +18,7 @@ describe PhonyRails do
 
       describe 'with the bang!' do
         it 'should change the String using the bang method' do
-          s = '0101234123'
+          s = +'0101234123' # Mutable String
           expect(s.phony_formatted!(normalize: :NL, format: :international)).to eql('+31 10 123 4123')
           expect(s).to eql('+31 10 123 4123')
         end

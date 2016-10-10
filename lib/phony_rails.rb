@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'phony'
 require 'phony_rails/string_extensions'
 require 'validators/phony_validator'
@@ -71,14 +72,11 @@ module PhonyRails
     # We try to add the default country number and see if it is a
     # correct phone number. See https://github.com/joost/phony_rails/issues/87#issuecomment-89324426
     unless number =~ /\A\+/ # if we don't have a +
-      if Phony.plausible?("#{default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
-        return "#{default_country_number}#{number}"
-      elsif (number =~ /^0[^0]/) && Phony.plausible?("#{default_country_number}#{number.gsub(/^0/, '')}")
-        # If the number starts with ONE zero (two might indicate a country code)
-        # and this is a plausible number for the default_country
-        # we prefer that one.
-        return "#{default_country_number}#{number.gsub(/^0/, '')}"
-      end
+      return "#{default_country_number}#{number}" if Phony.plausible?("#{default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
+      # If the number starts with ONE zero (two might indicate a country code)
+      # and this is a plausible number for the default_country
+      # we prefer that one.
+      return "#{default_country_number}#{number.gsub(/^0/, '')}" if (number =~ /^0[^0]/) && Phony.plausible?("#{default_country_number}#{number.gsub(/^0/, '')}")
     end
     # number = "#{default_country_number}#{number}" unless Phony.plausible?(number)
     # Just return the number unchanged
@@ -97,7 +95,7 @@ module PhonyRails
   # Wrapper for Phony.plausible?.  Takes the same options as #normalize_number.
   # NB: This method calls #normalize_number and passes _options_ directly to that method.
   def self.plausible_number?(number, options = {})
-    return false if number.nil? || number.blank?
+    return false if number&.blank?
     number = extract_extension(number).first
     number = normalize_number(number, options)
     country_number = options[:country_number] || country_number_for(options[:country_code]) ||
