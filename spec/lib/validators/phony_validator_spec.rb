@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 require 'spec_helper'
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -230,7 +231,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:fr) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["est un numéro invalide"])
+        expect(@home.errors.messages).to include(phone_number: ['est un numéro invalide'])
       end
     end
 
@@ -238,7 +239,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:ja) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["は正しい電話番号ではありません"])
+        expect(@home.errors.messages).to include(phone_number: ['は正しい電話番号ではありません'])
       end
     end
 
@@ -246,7 +247,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:km) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["គឺជាលេខមិនត្រឹមត្រូវ"])
+        expect(@home.errors.messages).to include(phone_number: ['គឺជាលេខមិនត្រឹមត្រូវ'])
       end
     end
 
@@ -254,7 +255,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:uk) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["є недійсним номером"])
+        expect(@home.errors.messages).to include(phone_number: ['є недійсним номером'])
       end
     end
 
@@ -262,7 +263,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:ru) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ["является недействительным номером"])
+        expect(@home.errors.messages).to include(phone_number: ['является недействительным номером'])
       end
     end
   end
@@ -323,7 +324,13 @@ describe ActiveModel::Validations::HelperMethods do
         @home = OptionalHelpfulHome.new
       end
 
+      it 'should validate an nil number' do
+        @home.phone_number = nil
+        expect(@home).to be_valid
+      end
+
       it 'should validate an empty number' do
+        @home.phone_number = ''
         expect(@home).to be_valid
       end
 

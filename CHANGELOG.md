@@ -1,5 +1,14 @@
 # Change Log
 
+## [Unreleased](https://github.com/joost/phony_rails/tree/HEAD)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.2...HEAD)
+
+**Closed issues:**
+
+- Add support for internal Russian phone style \(8 926 ... instead of +7 926 ...\) [\#148](https://github.com/joost/phony_rails/issues/148)
+- is it necessary to extend ActiveRecord::Base instead of ActiveModel::Model ? [\#143](https://github.com/joost/phony_rails/issues/143)
+
 ## [v0.14.2](https://github.com/joost/phony_rails/tree/v0.14.2) (2016-06-16)
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.1...v0.14.2)
 

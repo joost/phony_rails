@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 require File.expand_path('../lib/phony_rails/version', __FILE__)
 
 Gem::Specification.new do |gem|
@@ -19,8 +20,8 @@ Gem::Specification.new do |gem|
   gem.post_install_message = 'PhonyRails v0.10.0 changes the way numbers are stored!'
   gem.post_install_message = "It now adds a '+' to the normalized number when it starts with a country number!"
 
-  gem.add_dependency 'phony', '~> 2.15'
-  gem.add_dependency 'activesupport', '>= 3.0'
+  gem.add_runtime_dependency 'phony', '~> 2.15'
+  gem.add_runtime_dependency 'activesupport', '>= 3.0'
   gem.add_development_dependency 'activerecord', '>= 3.0'
   gem.add_development_dependency 'mongoid', '>= 3.0'
 end
