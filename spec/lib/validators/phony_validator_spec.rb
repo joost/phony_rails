@@ -324,7 +324,13 @@ describe ActiveModel::Validations::HelperMethods do
         @home = OptionalHelpfulHome.new
       end
 
+      it 'should validate an nil number' do
+        @home.phone_number = nil
+        expect(@home).to be_valid
+      end
+
       it 'should validate an empty number' do
+        @home.phone_number = ''
         expect(@home).to be_valid
       end
 
