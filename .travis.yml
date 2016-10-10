@@ -1,7 +1,13 @@
 language: ruby
 rvm:
-  - '2.2.3'
-  - '2.3.1'
+- 2.2.3
+- 2.3.1
 script:
-  - bundle exec rspec spec
-  - bundle exec rubocop
+- bundle exec rspec spec
+- bundle exec rubocop
+deploy:
+  provider: rubygems
+  api_key:
+    secure: KP9HSdb/cWP66VD57MgLG3c3H6nlzWH0h6jF/j4Hi5ylJH1BcAU7FYB8ej2yj/WvCCk8Nwc6Pvr3xipAkDzRPCeDiZk0MPu0U+nnE+vlytZ3wmcoo0puDSRxn2KMjCv78ZdgbQkE3ik1a7TsmaxMMQGNrkT5ADDi2XHBneyCPYs=
+  on:
+    tags: true
