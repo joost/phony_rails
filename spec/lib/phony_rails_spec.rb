@@ -10,14 +10,14 @@ describe PhonyRails do
 
   describe 'phony_format String extension' do
     describe 'the phony_formatted method' do
-      it 'should not modify the original options Hash' do
+      it 'does not modify the original options Hash' do
         options = { normalize: :NL, format: :international }
         '0101234123'.phony_formatted(options)
         expect(options).to eql(normalize: :NL, format: :international)
       end
 
       describe 'with the bang!' do
-        it 'should change the String using the bang method' do
+        it 'changes the String using the bang method' do
           # Mutable String
           s = +'0101234123' rescue '0101234123' # rubocop:disable Style/RescueModifier
           expect(s.phony_formatted!(normalize: :NL, format: :international)).to eql('+31 10 123 4123')
@@ -26,7 +26,7 @@ describe PhonyRails do
       end
 
       describe 'with strict option' do
-        it 'should return nil with non plausible number' do
+        it 'returns nil with non plausible number' do
           number = '+319090' # not valid
           expect(Phony.plausible?(number)).to be false
           expect(number.phony_formatted(strict: true)).to eql(nil)
@@ -79,7 +79,7 @@ describe PhonyRails do
         end
 
         context 'when raise is false (default)' do
-          it 'should return original String on exception' do
+          it 'returns original String on exception' do
             expect('8887716095'.phony_formatted(format: :international)).to eq('8887716095')
           end
         end
@@ -395,35 +395,35 @@ describe PhonyRails do
     let(:empty_number) { '' }
     let(:nil_number) { nil }
 
-    it 'should return true for a valid number' do
+    it 'returns true for a valid number' do
       is_expected.to be_plausible_number valid_number, country_code: 'US'
     end
 
-    it 'should return false for an invalid number' do
+    it 'returns false for an invalid number' do
       is_expected.not_to be_plausible_number invalid_number, country_code: 'US'
     end
 
-    it 'should return true for a normalizable number' do
+    it 'returns true for a normalizable number' do
       is_expected.to be_plausible_number normalizable_number, country_code: 'US'
     end
 
-    it 'should return false for a valid number with the wrong country code' do
+    it 'returns false for a valid number with the wrong country code' do
       is_expected.not_to be_plausible_number normalizable_number, country_code: 'FR'
     end
 
-    it 'should return true for a well formatted valid number' do
+    it 'returns true for a well formatted valid number' do
       is_expected.to be_plausible_number formatted_french_number_with_country_code, country_code: 'FR'
     end
 
-    it 'should return false for an empty number' do
+    it 'returns false for an empty number' do
       is_expected.not_to be_plausible_number empty_number, country_code: 'US'
     end
 
-    it 'should return false for a nil number' do
+    it 'returns false for a nil number' do
       is_expected.not_to be_plausible_number nil_number, country_code: 'US'
     end
 
-    it 'should return false when no country code is supplied' do
+    it 'returns false when no country code is supplied' do
       is_expected.not_to be_plausible_number normalizable_number
     end
 
@@ -565,12 +565,12 @@ describe PhonyRails do
 
     describe 'using model#phony_normalized_method' do
       # Following examples have complete number (with country code!)
-      it 'should return a normalized version of an attribute' do
+      it 'returns a normalized version of an attribute' do
         model = model_klass.new(phone_attribute: '+31-(0)10-1234123')
         expect(model.normalized_phone_attribute).to eql('+31101234123')
       end
 
-      it 'should return a normalized version of a method' do
+      it 'returnsa normalized version of a method' do
         model = model_klass.new(phone_method: '+31-(0)10-1234123')
         expect(model.normalized_phone_method).to eql('+31101234123')
       end
