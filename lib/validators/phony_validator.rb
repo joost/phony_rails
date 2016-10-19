@@ -9,7 +9,7 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
 
     @record = record
     value = PhonyRails.normalize_number(value.dup, default_country_code: normalized_country_code) if normalized_country_code
-    value, = PhonyRails.extract_extension(value)
+    value = PhonyRails.extract_extension(value).first
     @record.errors.add(attribute, error_message) unless Phony.plausible?(value, cc: country_number)
   end
 
