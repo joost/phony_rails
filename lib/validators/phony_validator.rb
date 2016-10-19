@@ -10,10 +10,17 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
 
     @record = record
     value = PhonyRails.normalize_number(value.dup, default_country_code: normalized_country_code) if normalized_country_code
-    @record.errors.add(attribute, error_message) unless Phony.plausible?(value, cc: country_number)
+    @record.errors.add(attribute, error_message) unless valid?(value)
   end
 
   private
+
+  def valid?(value)
+    value, ext = PhonyRails.extract_extension(value)
+    extension_valid = ext ? ext =~ /\d+/ : true
+
+    Phony.plausible?(value, cc: country_number) && extension_valid
+  end
 
   def error_message
     options[:message] || :improbable_phone
