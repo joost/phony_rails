@@ -151,6 +151,8 @@ phony_normalize :phone_number, as: :phone_number_normalized, default_country_cod
 validates_plausible_phone :phone_number, normalized_country_code: 'US'
 ```
 
+Validation supports phone numbers with extension, such as `+18181231234 x1234` or `'+1 (818)151-5483 #4312'` out-of-the-box.
+
 #### Allowing records country codes to not match phone number country codes
 
 You may have a record specifying one country (via a `country_code` attribute) but using a phone number from another country.  For example, your record may be from Japan but have a phone number from the Philippines. By default, `phony_rails` will consider your record's `country_code` as part of the validation.  If that country doesn't match the country code in the phone number, validation will fail.

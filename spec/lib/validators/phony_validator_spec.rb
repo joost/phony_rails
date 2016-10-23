@@ -172,6 +172,8 @@ end
 
 I18n.locale = :en
 VALID_NUMBER = '1 555 555 5555'.freeze
+VALID_NUMBER_WITH_EXTENSION = '1 555 555 5555 x123'.freeze
+VALID_NUMBER_WITH_INVALID_EXTENSION = '1 555 555 5555 x1a'.freeze
 NORMALIZABLE_NUMBER = '555 555 5555'.freeze
 AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '61390133997'.freeze
 POLISH_NUMBER_WITH_COUNTRY_CODE = '48600600600'.freeze
@@ -199,8 +201,19 @@ describe PhonyPlausibleValidator do
       expect(@home).to be_valid
     end
 
+    it 'should validate a valid number with extension' do
+      @home.phone_number = VALID_NUMBER_WITH_EXTENSION
+      expect(@home).to be_valid
+    end
+
     it 'should invalidate an invalid number' do
       @home.phone_number = INVALID_NUMBER
+      expect(@home).to_not be_valid
+      expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+    end
+
+    it 'should invalidate an valid number with invalid extension' do
+      @home.phone_number = VALID_NUMBER_WITH_INVALID_EXTENSION
       expect(@home).to_not be_valid
       expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
     end
