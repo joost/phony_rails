@@ -192,7 +192,11 @@ module PhonyRails
 end
 
 # check whether it is ActiveRecord or Mongoid being used
-ActiveRecord::Base.send :include, PhonyRails::Extension if defined?(ActiveRecord)
+if defined?(ActiveRecord)
+  ActiveSupport.on_load(:active_record) do
+    ActiveRecord::Base.send :include, PhonyRails::Extension
+  end
+end
 
 ActiveModel::Model.send :include, PhonyRails::Extension if defined?(ActiveModel::Model)
 
