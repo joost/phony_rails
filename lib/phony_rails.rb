@@ -110,13 +110,8 @@ module PhonyRails
 
   def self.extract_extension(number_and_ext)
     return [nil, nil] if number_and_ext.nil?
-    # :nocov:
-    if subbed = number_and_ext.sub(COMMON_EXTENSIONS, '')
-      [subbed, Regexp.last_match(2)]
-    else
-      [number_and_ext, nil]
-    end
-    # :nocov:
+    subbed = number_and_ext.sub(COMMON_EXTENSIONS, '')
+    [subbed, Regexp.last_match(2)]
   end
 
   def self.format_extension(number, ext)
@@ -197,7 +192,11 @@ module PhonyRails
 end
 
 # check whether it is ActiveRecord or Mongoid being used
-ActiveRecord::Base.send :include, PhonyRails::Extension if defined?(ActiveRecord)
+if defined?(ActiveRecord)
+  ActiveSupport.on_load(:active_record) do
+    ActiveRecord::Base.send :include, PhonyRails::Extension
+  end
+end
 
 ActiveModel::Model.send :include, PhonyRails::Extension if defined?(ActiveModel::Model)
 
