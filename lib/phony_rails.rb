@@ -164,37 +164,11 @@ module PhonyRails
 
         options[:enforce_record_country] = true if options[:enforce_record_country].nil?
 
-        if options[:if].present?
-          conditional = if options[:if].respond_to?(:call)
-                          options[:if]
-                        elsif options[:if].respond_to?(:to_sym)
-                          -> { self.send(options[:if].to_sym) }
-                        else
-                          -> { options[:if] }
-                        end
-          # Add before validation that saves a normalized version of the phone number
-          before_validation if: conditional do
-            set_phony_normalized_numbers(attributes, options)
-          end
-        elsif options[:unless].present?
-          conditional = if options[:unless].respond_to?(:call)
-                          options[:unless]
-                        elsif options[:unless].respond_to?(:to_sym)
-                          -> { self.send(options[:unless].to_sym) }
-                        else
-                          -> { options[:unless] }
-                        end
+        conditional = create_before_validation_conditional_hash options
 
-          # Add before validation that saves a normalized version of the phone number
-          before_validation unless: conditional do
-            set_phony_normalized_numbers(attributes, options)
-          end
-        else
-
-          # Add before validation that saves a normalized version of the phone number
-          before_validation do
-            set_phony_normalized_numbers(attributes, options)
-          end
+        # Add before validation that saves a normalized version of the phone number
+        before_validation conditional do
+          set_phony_normalized_numbers(attributes, options)
         end
       end
 
@@ -214,6 +188,35 @@ module PhonyRails
             PhonyRails.normalize_number(send(attribute), options)
           end
         end
+      end
+
+      private
+
+      # Creates a hash representing a conditional for before_validation
+      # This allows conditional normalization
+      # Returns something like `{ unless: -> { attribute == 'something' } }`
+      # If no if/unless options passed in, returns `{ if: -> { true } }`
+      def create_before_validation_conditional_hash options
+        if options[:if].present?
+          type = :if
+          source = options[:if]
+        elsif options[:unless].present?
+          type = :unless
+          source = options[:unless]
+        else
+          type = :if
+          source = true
+        end
+
+        conditional = {}
+        conditional[type] = if source.respond_to?(:call)
+                              source
+                            elsif source.respond_to?(:to_sym)
+                              -> { self.send(source.to_sym) }
+                            else
+                              -> { source }
+                            end
+        conditional
       end
     end
   end
