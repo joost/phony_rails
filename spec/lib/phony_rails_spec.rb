@@ -702,6 +702,36 @@ describe PhonyRails do
         expect(model).to be_valid
         expect(model.symboled_phone).to eql('+33606060606')
       end
+
+      context 'conditional normalization' do
+        context 'standalone methods' do
+          it 'should only normalize if the :if conditional is true' do
+            model_klass.phony_normalize :recipient, default_country_code: 'US', if: :use_phone?
+
+            sms_alarm = model_klass.new recipient: '222 333 4444', delivery_method: 'sms'
+            email_alarm = model_klass.new recipient: 'foo123@example.com', delivery_method: 'email'
+            expect(sms_alarm).to be_valid
+            expect(email_alarm).to be_valid
+            expect(sms_alarm.recipient).to eq('+12223334444')
+            expect(email_alarm.recipient).to eq('foo123@example.com')
+          end
+
+          it 'should only normalize if the :unless conditional is false' do
+            model_klass.phony_normalize :recipient, default_country_code: 'US', unless: :use_email?
+
+            sms_alarm = model_klass.new recipient: '222 333 4444', delivery_method: 'sms'
+            email_alarm = model_klass.new recipient: 'foo123@example.com', delivery_method: 'email'
+            expect(sms_alarm).to be_valid
+            expect(email_alarm).to be_valid
+            expect(sms_alarm.recipient).to eq('+12223334444')
+            expect(email_alarm.recipient).to eq('foo123@example.com')
+          end
+        end
+
+        context 'using lambdas' do
+
+        end
+      end
     end
   end
 

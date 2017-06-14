@@ -157,7 +157,7 @@ module PhonyRails
       # you've geocoded before calling this method!
       def phony_normalize(*attributes)
         options = attributes.last.is_a?(Hash) ? attributes.pop : {}
-        options.assert_valid_keys :country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as, :enforce_record_country
+        options.assert_valid_keys :country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as, :enforce_record_country, :if, :unless
         if options[:as].present?
           raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if attributes.size > 1
         end
@@ -165,7 +165,15 @@ module PhonyRails
         options[:enforce_record_country] = true if options[:enforce_record_country].nil?
 
         # Add before validation that saves a normalized version of the phone number
-        before_validation do
+        conditional = if options[:if].present?
+                        -> { self.public_send options[:if] }
+                      elsif options[:unless].present?
+                        -> { !self.public_send options[:unless] }
+                      else
+                        -> { true }
+                      end
+
+        before_validation if: conditional do
           set_phony_normalized_numbers(attributes, options)
         end
       end

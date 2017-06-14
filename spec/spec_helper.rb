@@ -30,7 +30,7 @@ end
 module SharedModelMethods
   extend ActiveSupport::Concern
   included do
-    attr_accessor :phone_method, :phone1_method, :symboled_phone_method, :country_code, :country_code_attribute
+    attr_accessor :phone_method, :phone1_method, :symboled_phone_method, :country_code, :country_code_attribute, :recipient, :delivery_method
     phony_normalized_method :phone_attribute # adds normalized_phone_attribute method
     phony_normalized_method :phone_method # adds normalized_phone_method method
     phony_normalized_method :phone1_method, default_country_code: 'DE' # adds normalized_phone_method method
@@ -38,6 +38,14 @@ module SharedModelMethods
     phony_normalize :phone_number # normalized on validation
     phony_normalize :fax_number, default_country_code: 'AU'
     phony_normalize :symboled_phone, default_country_code: :country_code_attribute
+
+    def use_phone?
+      delivery_method == 'sms'
+    end
+
+    def use_email?
+      delivery_method == 'email'
+    end
   end
 end
 
