@@ -43,6 +43,9 @@ class SomeModel < ActiveRecord::Base
 
   # Creates method normalized_fax_number that returns the normalized version of fax_number
   phony_normalized_method :fax_number
+
+  # Conditionally normalizes the attribute
+  phony_normalize :recipient, default_country_code: 'US', if: -> { contact_method == 'phone_number' }
 end
 ```
 
