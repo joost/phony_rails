@@ -164,17 +164,37 @@ module PhonyRails
 
         options[:enforce_record_country] = true if options[:enforce_record_country].nil?
 
-        # Add before validation that saves a normalized version of the phone number
-        conditional = if options[:if].present?
-                        -> { self.public_send options[:if] }
-                      elsif options[:unless].present?
-                        -> { !self.public_send options[:unless] }
-                      else
-                        -> { true }
-                      end
+        if options[:if].present?
+          conditional = if options[:if].respond_to?(:call)
+                          options[:if]
+                        elsif options[:if].respond_to?(:to_sym)
+                          -> { self.send(options[:if].to_sym) }
+                        else
+                          -> { options[:if] }
+                        end
+          # Add before validation that saves a normalized version of the phone number
+          before_validation if: conditional do
+            set_phony_normalized_numbers(attributes, options)
+          end
+        elsif options[:unless].present?
+          conditional = if options[:unless].respond_to?(:call)
+                          options[:unless]
+                        elsif options[:unless].respond_to?(:to_sym)
+                          -> { self.send(options[:unless].to_sym) }
+                        else
+                          -> { options[:unless] }
+                        end
 
-        before_validation if: conditional do
-          set_phony_normalized_numbers(attributes, options)
+          # Add before validation that saves a normalized version of the phone number
+          before_validation unless: conditional do
+            set_phony_normalized_numbers(attributes, options)
+          end
+        else
+
+          # Add before validation that saves a normalized version of the phone number
+          before_validation do
+            set_phony_normalized_numbers(attributes, options)
+          end
         end
       end
 
