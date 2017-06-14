@@ -164,7 +164,7 @@ module PhonyRails
 
         options[:enforce_record_country] = true if options[:enforce_record_country].nil?
 
-        conditional = create_before_validation_conditional_hash options
+        conditional = create_before_validation_conditional_hash(options)
 
         # Add before validation that saves a normalized version of the phone number
         before_validation conditional do
@@ -196,7 +196,7 @@ module PhonyRails
       # This allows conditional normalization
       # Returns something like `{ unless: -> { attribute == 'something' } }`
       # If no if/unless options passed in, returns `{ if: -> { true } }`
-      def create_before_validation_conditional_hash options
+      def create_before_validation_conditional_hash(options)
         if options[:if].present?
           type = :if
           source = options[:if]
@@ -212,7 +212,7 @@ module PhonyRails
         conditional[type] = if source.respond_to?(:call)
                               source
                             elsif source.respond_to?(:to_sym)
-                              -> { self.send(source.to_sym) }
+                              -> { send(source.to_sym) }
                             else
                               -> { source }
                             end

@@ -741,7 +741,7 @@ describe PhonyRails do
           end
 
           it 'should only normalize if the :unless conditional is false' do
-            model_klass.phony_normalize :recipient, default_country_code: 'US', unless: -> { delivery_method == 'email'}
+            model_klass.phony_normalize :recipient, default_country_code: 'US', unless: -> { delivery_method == 'email' }
 
             sms_alarm = model_klass.new recipient: '222 333 4444', delivery_method: 'sms'
             email_alarm = model_klass.new recipient: 'foo123@example.com', delivery_method: 'email'
