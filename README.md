@@ -151,7 +151,7 @@ You can validate against the normalized input as opposed to the raw input:
 
 ```ruby
 phony_normalize :phone_number, as: :phone_number_normalized, default_country_code: 'US'
-validates_plausible_phone :phone_number_normalized, normalized_country_code: 'US'
+validates_plausible_phone :phone_number_normalized
 ```
 
 Validation supports phone numbers with extension, such as `+18181231234 x1234` or `'+1 (818)151-5483 #4312'` out-of-the-box.
