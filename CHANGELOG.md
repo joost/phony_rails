@@ -2,12 +2,44 @@
 
 ## [Unreleased](https://github.com/joost/phony_rails/tree/HEAD)
 
-[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.2...HEAD)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.5...HEAD)
+
+**Closed issues:**
+
+- Fail validation on raw input [\#161](https://github.com/joost/phony_rails/issues/161)
+- Extension example in README does not work [\#155](https://github.com/joost/phony_rails/issues/155)
+- Switching the dependancy from `ActiveRecord::Base` to `ActiveModel::Model` breaks support for Rails 3 apps [\#147](https://github.com/joost/phony_rails/issues/147)
+
+**Merged pull requests:**
+
+- Conditional Normalization [\#166](https://github.com/joost/phony_rails/pull/166) ([Ross-Hunter](https://github.com/Ross-Hunter))
+- Fixed belongs\_to\_required\_by\_default in Rails 5 [\#158](https://github.com/joost/phony_rails/pull/158) ([olivierpichon](https://github.com/olivierpichon))
+- `subbed` always return number [\#157](https://github.com/joost/phony_rails/pull/157) ([mrclmrvn](https://github.com/mrclmrvn))
+
+## [v0.14.5](https://github.com/joost/phony_rails/tree/v0.14.5) (2017-02-08)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.4...v0.14.5)
+
+**Closed issues:**
+
+- phone number not being validated [\#154](https://github.com/joost/phony_rails/issues/154)
+- Make phony\_normalize optional, on condition [\#149](https://github.com/joost/phony_rails/issues/149)
+
+**Merged pull requests:**
+
+- Fix Rails 3 compatibility in issue \#147 [\#156](https://github.com/joost/phony_rails/pull/156) ([wvanheerde](https://github.com/wvanheerde))
+- Support of phone numbers with extension in validator [\#153](https://github.com/joost/phony_rails/pull/153) ([Kukunin](https://github.com/Kukunin))
+
+## [v0.14.4](https://github.com/joost/phony_rails/tree/v0.14.4) (2016-10-10)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.2...v0.14.4)
 
 **Closed issues:**
 
 - Add support for internal Russian phone style \(8 926 ... instead of +7 926 ...\) [\#148](https://github.com/joost/phony_rails/issues/148)
 - is it necessary to extend ActiveRecord::Base instead of ActiveModel::Model ? [\#143](https://github.com/joost/phony_rails/issues/143)
+
+**Merged pull requests:**
+
+- Bundle updates and fixes Travis [\#151](https://github.com/joost/phony_rails/pull/151) ([joost](https://github.com/joost))
 
 ## [v0.14.2](https://github.com/joost/phony_rails/tree/v0.14.2) (2016-06-16)
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.1...v0.14.2)
@@ -313,8 +345,8 @@
 - Mongoid support. [\#14](https://github.com/joost/phony_rails/pull/14) ([siong1987](https://github.com/siong1987))
 - Do not pollute the global namespace with a Country class [\#13](https://github.com/joost/phony_rails/pull/13) ([Jell](https://github.com/Jell))
 - Address issue \#11 - need to use a newer version of phony for additional countries [\#12](https://github.com/joost/phony_rails/pull/12) ([rjhaveri](https://github.com/rjhaveri))
-- Compatibility with Ruby 1.8.7 [\#10](https://github.com/joost/phony_rails/pull/10) ([henning-koch](https://github.com/henning-koch))
-- remove cause for warning: already initialized constant VERSION [\#9](https://github.com/joost/phony_rails/pull/9) ([henning-koch](https://github.com/henning-koch))
+- Compatibility with Ruby 1.8.7 [\#10](https://github.com/joost/phony_rails/pull/10) ([triskweline](https://github.com/triskweline))
+- remove cause for warning: already initialized constant VERSION [\#9](https://github.com/joost/phony_rails/pull/9) ([triskweline](https://github.com/triskweline))
 - validator translation [\#8](https://github.com/joost/phony_rails/pull/8) ([ddidier](https://github.com/ddidier))
 - refactored tests and added options to validates\_plausible\_phone [\#6](https://github.com/joost/phony_rails/pull/6) ([ddidier](https://github.com/ddidier))
 - some tests and a helper method [\#5](https://github.com/joost/phony_rails/pull/5) ([ddidier](https://github.com/ddidier))
