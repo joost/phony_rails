@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe PhonyRails do
-  EXT_PREFIXES = %w(ext ex x xt # :).freeze
+  EXT_PREFIXES = %w[ext ex x xt # :].freeze
 
   it 'should not pollute the global namespace with a Country class' do
     should_not be_const_defined 'Country'
@@ -477,7 +478,7 @@ describe PhonyRails do
 
     EXT_PREFIXES.each do |prefix|
       it "returns [number, ext] when number has a #{prefix} extension" do
-        expect(PhonyRails.extract_extension("123456789#{prefix}123")).to eq %w(123456789 123)
+        expect(PhonyRails.extract_extension("123456789#{prefix}123")).to eq %w[123456789 123]
       end
     end
   end
@@ -548,7 +549,7 @@ describe PhonyRails do
       end
 
       it 'should accept supported options' do
-        options = [:country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as, :enforce_record_country]
+        options = %i[country_number default_country_number country_code default_country_code add_plus as enforce_record_country]
         options.each do |option_sym|
           expect(lambda do
             dummy_klass.phony_normalize(:phone_number, option_sym => false)

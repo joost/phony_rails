@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Uses the Phony.plausible method to validate an attribute.
 # Usage:
 #   validate :phone_number, :phony_plausible => true

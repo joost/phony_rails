@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class String
   # Usage:
   #   "+31 (0)30 1234 123".phony_normalized # => '+31301234123'

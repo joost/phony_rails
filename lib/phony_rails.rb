@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'phony'
 require 'phony_rails/string_extensions'
 require 'validators/phony_validator'
@@ -142,7 +143,7 @@ module PhonyRails
       end
 
       def assign_values_for_phony_symbol_options(options)
-        symbol_options = [:country_number, :default_country_number, :country_code, :default_country_code]
+        symbol_options = %i[country_number default_country_number country_code default_country_code]
         symbol_options.each do |option|
           options[option] = send(options[option]) if options[option].is_a?(Symbol)
         end
