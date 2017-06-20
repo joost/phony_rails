@@ -157,15 +157,17 @@ module PhonyRails
       # you've geocoded before calling this method!
       def phony_normalize(*attributes)
         options = attributes.last.is_a?(Hash) ? attributes.pop : {}
-        options.assert_valid_keys :country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as, :enforce_record_country
+        options.assert_valid_keys :country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as, :enforce_record_country, :if, :unless
         if options[:as].present?
           raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if attributes.size > 1
         end
 
         options[:enforce_record_country] = true if options[:enforce_record_country].nil?
 
+        conditional = create_before_validation_conditional_hash(options)
+
         # Add before validation that saves a normalized version of the phone number
-        before_validation do
+        before_validation conditional do
           set_phony_normalized_numbers(attributes, options)
         end
       end
@@ -186,6 +188,35 @@ module PhonyRails
             PhonyRails.normalize_number(send(attribute), options)
           end
         end
+      end
+
+      private
+
+      # Creates a hash representing a conditional for before_validation
+      # This allows conditional normalization
+      # Returns something like `{ unless: -> { attribute == 'something' } }`
+      # If no if/unless options passed in, returns `{ if: -> { true } }`
+      def create_before_validation_conditional_hash(options)
+        if options[:if].present?
+          type = :if
+          source = options[:if]
+        elsif options[:unless].present?
+          type = :unless
+          source = options[:unless]
+        else
+          type = :if
+          source = true
+        end
+
+        conditional = {}
+        conditional[type] = if source.respond_to?(:call)
+                              source
+                            elsif source.respond_to?(:to_sym)
+                              -> { send(source.to_sym) }
+                            else
+                              -> { source }
+                            end
+        conditional
       end
     end
   end
