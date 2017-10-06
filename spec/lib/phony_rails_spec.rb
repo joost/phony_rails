@@ -483,6 +483,12 @@ describe PhonyRails do
     end
   end
 
+  describe 'PhonyRails.country_from_number' do
+    it 'returns the country of the plausible phone number' do
+      expect(PhonyRails.country_from_number('+32475000000')).to eq 'BE'
+    end
+  end
+
   describe 'PhonyRails#format_extension' do
     it 'returns just number if no extension' do
       expect(PhonyRails.format_extension('+123456789', nil)).to eq '+123456789'
