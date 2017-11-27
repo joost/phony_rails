@@ -65,7 +65,7 @@ module PhonyRails
     options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
     normalized_number = options[:add_plus] ? "+#{normalized_number}" : normalized_number
     format_extension(normalized_number, ext)
-  rescue
+  rescue StandardError
     original_number # If all goes wrong .. we still return the original input.
   end
 
@@ -103,7 +103,7 @@ module PhonyRails
                      options[:default_country_number] || country_number_for(options[:default_country_code]) ||
                      default_country_number
     Phony.plausible? number, cc: country_number
-  rescue
+  rescue StandardError
     false
   end
 

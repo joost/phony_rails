@@ -64,7 +64,8 @@ end
 class ActiveRecordDummy < ActiveRecordModel
 end
 
-class ActiveModelModel # in case you don't want a database for your model
+# In case you don't want a database for your model
+class ActiveModelModel
   include ActiveModel::Model # this provides most of the interface of AR
   include ActiveModel::Validations::Callbacks # we use callbacks for normalization
   include SharedModelMethods

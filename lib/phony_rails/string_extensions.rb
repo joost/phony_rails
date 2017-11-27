@@ -31,7 +31,7 @@ class String
     return if s.blank?
     return if options[:strict] && !Phony.plausible?(s)
     PhonyRails.format_extension(Phony.format(s, options.reverse_merge(format: :national)), ext)
-  rescue
+  rescue StandardError
     raise if options[:raise]
     s
   end
