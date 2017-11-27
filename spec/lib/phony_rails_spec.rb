@@ -212,6 +212,12 @@ describe PhonyRails do
           expect(normal.phone_number).to eq('HAHA')
           expect(normal.errors.messages).to include(phone_number: ['is an invalid number'])
         end
+
+        it 'should pass Github issue #170' do
+          phone = '(+49) 175 123 4567'
+          phone = PhonyRails.normalize_number(phone)
+          expect(phone).to eq('+491751234567')
+        end
       end
 
       it 'should not change original String' do
