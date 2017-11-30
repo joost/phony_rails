@@ -3,7 +3,7 @@ PATH
   specs:
     phony_rails (0.14.6)
       activesupport (>= 3.0)
-      phony (> 2.15)
+      kaodim-phony (> 2.15.50)
 
 GEM
   remote: https://rubygems.org/
@@ -55,6 +55,7 @@ GEM
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     json (2.1.0)
+    kaodim-phony (2.15.50)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -74,7 +75,6 @@ GEM
     parallel (1.12.0)
     parser (2.4.0.2)
       ast (~> 2.3)
-    phony (2.15.49)
     powerpack (0.1.1)
     pry (0.11.3)
       coderay (~> 1.1.0)
