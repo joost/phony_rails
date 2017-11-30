@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
   gem.post_install_message = "It now adds a '+' to the normalized number when it starts with a country number!"
 
   gem.add_runtime_dependency 'activesupport', '>= 3.0'
-  gem.add_runtime_dependency 'phony', '> 2.15'
+  gem.add_runtime_dependency 'kaodim-phony', '> 2.15.50'
   gem.add_development_dependency 'activerecord', '>= 3.0'
   gem.add_development_dependency 'mongoid', '>= 3.0'
 end
