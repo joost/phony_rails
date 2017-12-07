@@ -215,7 +215,7 @@ describe PhonyRails do
 
         it 'should pass Github issue #170' do
           phone = '(+49) 175 123 4567'
-          phone = PhonyRails.normalize_number(phone)
+          phone = PhonyRails.normalize_number(phone, default_country_code: 'DE')
           expect(phone).to eq('+491751234567')
         end
       end
