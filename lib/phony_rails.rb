@@ -93,6 +93,11 @@ module PhonyRails
     Phony.split(Phony.normalize(number)).first
   end
 
+  def self.country_from_number(number)
+    return nil unless Phony.plausible?(number)
+    country_codes_hash.select { |_country, hash| hash['country_code'] == country_code_from_number(number) }.keys[0]
+  end
+
   # Wrapper for Phony.plausible?.  Takes the same options as #normalize_number.
   # NB: This method calls #normalize_number and passes _options_ directly to that method.
   def self.plausible_number?(number, options = {})
