@@ -64,7 +64,10 @@ module PhonyRails
     normalized_number = Phony.normalize(number)
     options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
     normalized_number = options[:add_plus] ? "+#{normalized_number}" : normalized_number
-    format_extension(normalized_number, ext)
+
+    options[:extension] = true if options[:extension].nil?
+    normalized_number = options[:extension] ? format_extension(normalized_number, ext) : normalized_number
+    normalized_number
   rescue StandardError
     original_number # If all goes wrong .. we still return the original input.
   end
