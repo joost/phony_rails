@@ -344,13 +344,9 @@ describe PhonyRails do
         end
 
         it "should remove #{prefix} extension (with extension: false)" do
-          expect(PhonyRails.normalize_number("some nasty stuff in this +31 number 10-1234123 string #{prefix}123", extension: false, country_code: 'NL')).to eql('+31101234123')
-          expect(PhonyRails.normalize_number("070-4157134#{prefix}123", extension: false, country_code: 'NL')).to eql('+31704157134')
           expect(PhonyRails.normalize_number("0031-70-4157134#{prefix}123", extension: false, country_code: 'NL')).to eql('+31704157134')
           expect(PhonyRails.normalize_number("+31-70-4157134#{prefix}123", extension: false, country_code: 'NL')).to eql('+31704157134')
           expect(PhonyRails.normalize_number("0322-69497#{prefix}123", extension: false, country_code: 'BE')).to eql('+3232269497')
-          expect(PhonyRails.normalize_number("+32 3 226 94 97#{prefix}123", extension: false, country_code: 'BE')).to eql('+3232269497')
-          expect(PhonyRails.normalize_number("0450 764 000#{prefix}123", extension: false, country_code: 'AU')).to eql('+61450764000')
         end
       end
     end
