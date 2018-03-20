@@ -41,6 +41,7 @@ module PhonyRails
   #   :country_code => The country code we should use.
   #   :default_country_code => Some fallback code (eg. 'NL') that can be used as default (comes from phony_normalize_numbers method).
   #   :add_plus => Add a '+' in front so we know the country code is added. (default: true)
+  #   :extension => Include the extension. (default: true)
   # This idea came from:
   #   http://www.redguava.com.au/2011/06/rails-convert-phone-numbers-to-international-format-for-sms/
   def self.normalize_number(number, options = {})
@@ -64,7 +65,10 @@ module PhonyRails
     normalized_number = Phony.normalize(number)
     options[:add_plus] = true if options[:add_plus].nil? && Phony.plausible?(normalized_number)
     normalized_number = options[:add_plus] ? "+#{normalized_number}" : normalized_number
-    format_extension(normalized_number, ext)
+
+    options[:extension] = true if options[:extension].nil?
+    normalized_number = options[:extension] ? format_extension(normalized_number, ext) : normalized_number
+    normalized_number
   rescue StandardError
     original_number # If all goes wrong .. we still return the original input.
   end
