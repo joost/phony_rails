@@ -75,7 +75,7 @@ describe PhonyRails do
           it 'should raise the error' do
             expect(lambda do
               '8887716095'.phony_formatted(format: :international, raise: true)
-            end).to raise_error(NoMethodError)
+            end).to raise_error(Phony::FormattingError)
           end
         end
 
