@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phony_rails (0.14.6)
+    phony_rails (0.14.7)
       activesupport (>= 3.0)
       phony (> 2.15)
 
@@ -74,7 +74,7 @@ GEM
     parallel (1.12.0)
     parser (2.4.0.2)
       ast (~> 2.3)
-    phony (2.15.49)
+    phony (2.16.3)
     powerpack (0.1.1)
     pry (0.11.3)
       coderay (~> 1.1.0)
@@ -140,4 +140,4 @@ DEPENDENCIES
   sqlite3
 
 BUNDLED WITH
-   1.13.5
+   1.16.1
