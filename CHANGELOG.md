@@ -1,5 +1,19 @@
 # Change Log
 
+## [v0.14.7](https://github.com/joost/phony_rails/tree/v0.14.7) (2018-05-25)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.6...v0.14.7)
+
+**Closed issues:**
+
+- Country code wrapped in brackets is not recognized [\#170](https://github.com/joost/phony_rails/issues/170)
+- Invalid number in countryCode VN [\#159](https://github.com/joost/phony_rails/issues/159)
+
+**Merged pull requests:**
+
+- Extension option added to normalize\_number [\#176](https://github.com/joost/phony_rails/pull/176) ([ramaboo](https://github.com/ramaboo))
+- return country from phone number [\#169](https://github.com/joost/phony_rails/pull/169) ([aovertus](https://github.com/aovertus))
+- Fix code example in README to match description [\#167](https://github.com/joost/phony_rails/pull/167) ([mattruzicka](https://github.com/mattruzicka))
+
 ## [v0.14.6](https://github.com/joost/phony_rails/tree/v0.14.6) (2017-06-20)
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.5...v0.14.6)
 
