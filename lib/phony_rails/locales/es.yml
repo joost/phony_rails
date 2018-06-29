@@ -1,0 +1,4 @@
+es:
+  errors:
+    messages:
+      improbable_phone: "es un número inválido"
