@@ -44,7 +44,7 @@ module PhonyRails
   #   :extension => Include the extension. (default: true)
   # This idea came from:
   #   http://www.redguava.com.au/2011/06/rails-convert-phone-numbers-to-international-format-for-sms/
-  def self.normalize_number(number, options = {})
+  def self.normalize_number(number, options = {}, current_instance = nil)
     return if number.nil?
     original_number = number
     number = number.dup # Just to be sure, we don't want to change the original.
@@ -58,7 +58,7 @@ module PhonyRails
       if !Phony.plausible?(number) || _country_number != country_code_from_number(number)
         number = "#{_country_number}#{number}"
       end
-    elsif _default_country_number = extract_default_country_number(options)
+    elsif _default_country_number = extract_default_country_number(options, current_instance)
       options[:add_plus] = true if options[:add_plus].nil?
       number = normalize_number_default_country(number, _default_country_number)
     end
@@ -88,8 +88,13 @@ module PhonyRails
     number
   end
 
-  def self.extract_default_country_number(options = {})
-    options[:default_country_number] || country_number_for(options[:default_country_code]) || default_country_number
+  def self.extract_default_country_number(options = {}, current_instance = nil)
+    country_code = if current_instance.present? && options[:default_country_code].respond_to?(:call)
+                     options[:default_country_code].call(current_instance) rescue nil
+                   else
+                     options[:default_country_code]
+                   end
+    options[:default_country_number] || country_number_for(country_code) || default_country_number
   end
 
   def self.country_code_from_number(number)
@@ -136,7 +141,7 @@ module PhonyRails
 
       # This methods sets the attribute to the normalized version.
       # It also adds the country_code (number), eg. 31 for NL numbers.
-      def set_phony_normalized_numbers(attributes, options = {})
+      def set_phony_normalized_numbers(current_instance, attributes, options = {})
         options = options.dup
         assign_values_for_phony_symbol_options(options)
         if respond_to?(:country_code)
@@ -146,7 +151,7 @@ module PhonyRails
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
           raise("No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)") unless self.class.attribute_method?(attribute_name)
-          new_value = PhonyRails.normalize_number(send(attribute), options)
+          new_value = PhonyRails.normalize_number(send(attribute), options, current_instance)
           send("#{attribute_name}=", new_value) if new_value || attribute_name != attribute
         end
       end
@@ -178,7 +183,7 @@ module PhonyRails
 
         # Add before validation that saves a normalized version of the phone number
         before_validation conditional do
-          set_phony_normalized_numbers(attributes, options)
+          set_phony_normalized_numbers(self, attributes, options)
         end
       end
 

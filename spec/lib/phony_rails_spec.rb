@@ -20,7 +20,7 @@ describe PhonyRails do
       describe 'with the bang!' do
         it 'changes the String using the bang method' do
           # Mutable String
-          s = +'0101234123' rescue '0101234123' # rubocop:disable Style/RescueModifier
+          s = +'0101234123' rescue '0101234123'
           expect(s.phony_formatted!(normalize: :NL, format: :international)).to eql('+31 10 123 4123')
           expect(s).to eql('+31 10 123 4123')
         end
@@ -720,6 +720,30 @@ describe PhonyRails do
         model = model_klass.new(symboled_phone: '0606060606', country_code_attribute: 'FR')
         expect(model).to be_valid
         expect(model.symboled_phone).to eql('+33606060606')
+      end
+
+      context 'relational normalization' do
+        it 'should normalize based on custom attribute of the current model' do
+          model_klass.phony_normalize :phone_number, default_country_code: ->(instance) { instance.custom_country_code }
+          model = model_klass.new phone_number: '012 416 0001', custom_country_code: 'MY'
+          expect(model).to be_valid
+          expect(model.phone_number).to eq('+60124160001')
+        end
+
+        it 'should normalize based on specific attribute of the associative model' do
+          model_klass.phony_normalize :phone_number, default_country_code: ->(instance) { instance.home_country.country_code }
+          home_country = double('home_country', country_code: 'MY')
+          model = model_klass.new phone_number: '012 416 0001', home_country: home_country
+          expect(model).to be_valid
+          expect(model.phone_number).to eq('+60124160001')
+        end
+
+        it 'should normalize based on default value if missing associative model' do
+          model_klass.phony_normalize :phone_number, default_country_code: ->(instance) { instance.home_country&.country_code || 'MY' }
+          model = model_klass.new phone_number: '012 416 0001', home_country: nil
+          expect(model).to be_valid
+          expect(model.phone_number).to eq('+60124160001')
+        end
       end
 
       context 'conditional normalization' do
