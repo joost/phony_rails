@@ -180,6 +180,7 @@ POLISH_NUMBER_WITH_COUNTRY_CODE = '48600600600'
 FORMATTED_AUSTRALIAN_NUMBER_WITH_COUNTRY_CODE = '+61 390133997'
 FRENCH_NUMBER_WITH_COUNTRY_CODE = '33627899541'
 FORMATTED_FRENCH_NUMBER_WITH_COUNTRY_CODE = '+33 627899541'
+CROATIA_NUMBER_WITH_COUNTRY_CODE = '385 98 352 085'
 INVALID_NUMBER = '123456789 123456789 123456789 123456789'
 NOT_A_NUMBER = 'HAHA'
 JAPAN_COUNTRY = 'jp'
@@ -592,6 +593,12 @@ describe ActiveModel::Validations::HelperMethods do
         @home.phone_number_country_code = 'PL'
         expect(@home).to_not be_valid
         expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+      end
+
+      it "should pass Gitlab issue #165" do
+        @home.phone_number = CROATIA_NUMBER_WITH_COUNTRY_CODE
+        @home.phone_number_country_code = 'HR'
+        expect(@home).to be_valid
       end
     end
 
