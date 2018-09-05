@@ -240,6 +240,14 @@ describe PhonyPlausibleValidator do
       end
     end
 
+    it 'should translate the error message in Spanish' do
+      I18n.with_locale(:es) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        expect(@home.errors.messages).to include(phone_number: ['es un número inválido'])
+      end
+    end
+
     it 'should translate the error message in French' do
       I18n.with_locale(:fr) do
         @home.phone_number = INVALID_NUMBER
