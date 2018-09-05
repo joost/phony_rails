@@ -458,7 +458,7 @@ describe PhonyRails do
     it 'should pass Github issue #95' do
       is_expected.to be_plausible_number '+358414955444', default_country_code: :de
     end
-    
+
     context 'with default_country_code set' do
       before { PhonyRails.default_country_code = 'FR' }
       after { PhonyRails.default_country_code = nil }
