@@ -218,6 +218,12 @@ describe PhonyRails do
           phone = PhonyRails.normalize_number(phone)
           expect(phone).to eq('+491751234567')
         end
+
+        it 'should pass Github issue #170 (part 2)' do
+          phone = '(+49) 175 123 4567'
+          phone = PhonyRails.normalize_number(phone, default_country_code: 'DE')
+          expect(phone).to eq('+491751234567')
+        end
       end
 
       it 'should not change original String' do
