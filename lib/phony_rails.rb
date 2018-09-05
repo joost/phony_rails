@@ -97,11 +97,14 @@ module PhonyRails
     options[:default_country_number] || country_number_for(country_code) || default_country_number
   end
 
+  # Returns the country dail code (eg. '31') for a number (eg. +31612341234).
+  # Should probably be named 'country_number_from_number'.
   def self.country_code_from_number(number)
     return nil unless Phony.plausible?(number)
     Phony.split(Phony.normalize(number)).first
   end
 
+  # Returns the country (eg. 'NL') for a number (eg. +31612341234).
   def self.country_from_number(number)
     return nil unless Phony.plausible?(number)
     country_codes_hash.select { |_country, hash| hash['country_code'] == country_code_from_number(number) }.keys[0]
@@ -109,13 +112,16 @@ module PhonyRails
 
   # Wrapper for Phony.plausible?.  Takes the same options as #normalize_number.
   # NB: This method calls #normalize_number and passes _options_ directly to that method.
+  # It uses the 'cc' option for Phony. This was a required param before?
   def self.plausible_number?(number, options = {})
     return false if number.blank?
     number = extract_extension(number).first
     number = normalize_number(number, options)
     country_number = options[:country_number] || country_number_for(options[:country_code]) ||
+                     country_code_from_number(number) ||
                      options[:default_country_number] || country_number_for(options[:default_country_code]) ||
                      default_country_number
+    puts "Validating #{number} with #{country_number}"
     Phony.plausible? number, cc: country_number
   rescue StandardError
     false
