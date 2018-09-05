@@ -409,6 +409,7 @@ describe PhonyRails do
     subject { described_class }
     let(:valid_number) { '1 555 555 5555' }
     let(:invalid_number) { '123456789 123456789 123456789 123456789' }
+    let(:another_invalid_number) { '441212' }
     let(:normalizable_number) { '555 555 5555' }
     let(:formatted_french_number_with_country_code) { '+33 627899541' }
     let(:empty_number) { '' }
@@ -418,8 +419,11 @@ describe PhonyRails do
       is_expected.to be_plausible_number valid_number, country_code: 'US'
     end
 
-    it 'returns false for an invalid number' do
+    it 'returns false for an invalid numbers' do
+      is_expected.not_to be_plausible_number invalid_number
       is_expected.not_to be_plausible_number invalid_number, country_code: 'US'
+      is_expected.not_to be_plausible_number another_invalid_number
+      is_expected.not_to be_plausible_number another_invalid_number, country_code: 'US'
     end
 
     it 'returns true for a normalizable number' do
@@ -451,6 +455,10 @@ describe PhonyRails do
       is_expected.not_to be_plausible_number normalizable_number, country_code: 'US'
     end
 
+    it 'should pass Github issue #95' do
+      is_expected.to be_plausible_number '+358414955444', default_country_code: :de
+    end
+    
     context 'with default_country_code set' do
       before { PhonyRails.default_country_code = 'FR' }
       after { PhonyRails.default_country_code = nil }
@@ -498,6 +506,12 @@ describe PhonyRails do
       it "returns [number, ext] when number has a #{prefix} extension" do
         expect(PhonyRails.extract_extension("123456789#{prefix}123")).to eq %w[123456789 123]
       end
+    end
+  end
+
+  describe 'PhonyRails.country_code_from_number' do
+    it 'returns the code of the plausible phone number' do
+      expect(PhonyRails.country_code_from_number('+32475000000')).to eq '32'
     end
   end
 
