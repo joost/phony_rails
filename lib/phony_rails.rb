@@ -76,7 +76,7 @@ module PhonyRails
   def self.normalize_number_default_country(number, default_country_number)
     # We try to add the default country number and see if it is a
     # correct phone number. See https://github.com/joost/phony_rails/issues/87#issuecomment-89324426
-    unless number =~ /\A\(?\+/ # if we don't have a +
+    unless number =~ /\A\(?(\+|00)/ # if we don't have a + or 00
       return "#{default_country_number}#{number}" if Phony.plausible?("#{default_country_number}#{number}") || !Phony.plausible?(number) || country_code_from_number(number).nil?
       # If the number starts with ONE zero (two might indicate a country code)
       # and this is a plausible number for the default_country
