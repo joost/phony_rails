@@ -1,5 +1,19 @@
 # Change Log
 
+## [v0.14.9](https://github.com/joost/phony_rails/tree/v0.14.9) (2018-09-05)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.7...v0.14.9)
+
+**Closed issues:**
+
+- Cut new release 0.14.7 to include new extension removal logic [\#177](https://github.com/joost/phony_rails/issues/177)
+- default\_country\_code based on relation [\#174](https://github.com/joost/phony_rails/issues/174)
+
+**Merged pull requests:**
+
+- Allow brackets. Closes \#170. [\#182](https://github.com/joost/phony_rails/pull/182) ([joost](https://github.com/joost))
+- add lambda support for default country code [\#181](https://github.com/joost/phony_rails/pull/181) ([kimyu92](https://github.com/kimyu92))
+- Add Spanish translation for validation error [\#178](https://github.com/joost/phony_rails/pull/178) ([r-sierra](https://github.com/r-sierra))
+
 ## [v0.14.7](https://github.com/joost/phony_rails/tree/v0.14.7) (2018-05-25)
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.6...v0.14.7)
 
@@ -127,7 +141,7 @@
 **Merged pull requests:**
 
 - Update readme [\#117](https://github.com/joost/phony_rails/pull/117) ([toydestroyer](https://github.com/toydestroyer))
-- Add uk, ru error message translations [\#114](https://github.com/joost/phony_rails/pull/114) ([shhavel](https://github.com/shhavel))
+- Add uk, ru error message translations [\#114](https://github.com/joost/phony_rails/pull/114) ([sanavy](https://github.com/sanavy))
 - Update phony\_rails.gemspec [\#112](https://github.com/joost/phony_rails/pull/112) ([Agsiegert](https://github.com/Agsiegert))
 - Don't re-parse country codes YAML file every time it's needed. [\#111](https://github.com/joost/phony_rails/pull/111) ([jcoleman](https://github.com/jcoleman))
 - Replace countries dependency with YAML file [\#109](https://github.com/joost/phony_rails/pull/109) ([monfresh](https://github.com/monfresh))
