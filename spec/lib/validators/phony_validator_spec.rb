@@ -595,7 +595,7 @@ describe ActiveModel::Validations::HelperMethods do
         expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
       end
 
-      it "should pass Gitlab issue #165" do
+      it 'should pass Gitlab issue #165' do
         @home.phone_number = CROATIA_NUMBER_WITH_COUNTRY_CODE
         @home.phone_number_country_code = 'HR'
         expect(@home).to be_valid
