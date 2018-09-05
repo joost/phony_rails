@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path('../lib/phony_rails/version', __FILE__)
+require File.expand_path('lib/phony_rails/version', __dir__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ['Joost Hietbrink']

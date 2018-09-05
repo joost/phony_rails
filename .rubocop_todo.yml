@@ -61,3 +61,6 @@ Style/Documentation:
     - 'lib/phony_rails.rb'
     - 'lib/phony_rails/string_extensions.rb'
     - 'lib/validators/phony_validator.rb'
+
+Style/RescueModifier:
+  Enabled: false
