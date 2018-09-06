@@ -230,6 +230,12 @@ describe PhonyRails do
           phone = PhonyRails.normalize_number(phone, default_country_code: 'DE')
           expect(phone).to eq('+4123456789')
         end
+
+        it 'should pass Github issue #175' do
+          phone = '+1 260-437-9123'
+          phone = PhonyRails.normalize_number(phone, default_country_code: 'DE')
+          expect(phone).to eq('+12604379123')
+        end
       end
 
       it 'should not change original String' do
