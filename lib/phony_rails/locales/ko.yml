@@ -1,0 +1,4 @@
+ko:
+  errors:
+    messages:
+      improbable_phone: "는 올바른 전화번호가 아닙니다"
