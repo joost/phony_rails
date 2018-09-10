@@ -265,19 +265,19 @@ describe PhonyPlausibleValidator do
       end
     end
 
-    it 'should translate the error message in Korean' do
-      I18n.with_locale(:ko) do
-        @home.phone_number = INVALID_NUMBER
-        @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['는 올바른 전화번호가 아닙니다'])
-      end
-    end
-
     it 'should translate the error message in Khmer' do
       I18n.with_locale(:km) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
         expect(@home.errors.messages).to include(phone_number: ['គឺជាលេខមិនត្រឹមត្រូវ'])
+      end
+    end
+
+    it 'should translate the error message in Korean' do
+      I18n.with_locale(:ko) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        expect(@home.errors.messages).to include(phone_number: ['는 올바른 전화번호가 아닙니다'])
       end
     end
 
