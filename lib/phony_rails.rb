@@ -121,7 +121,6 @@ module PhonyRails
                      country_code_from_number(number) ||
                      options[:default_country_number] || country_number_for(options[:default_country_code]) ||
                      default_country_number
-    puts "Validating #{number} with #{country_number}"
     Phony.plausible? number, cc: country_number
   rescue StandardError
     false
