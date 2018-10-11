@@ -1,5 +1,25 @@
 # Change Log
 
+## [v0.14.10](https://github.com/joost/phony_rails/tree/v0.14.10) (2018-10-11)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.9...v0.14.10)
+
+**Closed issues:**
+
+- PhonyRails.default\_country\_code too intrusive in plausible\_number? method [\#179](https://github.com/joost/phony_rails/issues/179)
+- default\_country\_code overrides 00-prefix country code [\#175](https://github.com/joost/phony_rails/issues/175)
+- Valid 260 area code number is reported as invalid [\#168](https://github.com/joost/phony_rails/issues/168)
+- Croatian number not validating as plausible. [\#165](https://github.com/joost/phony_rails/issues/165)
+- phony\_formatted not returning original String for non-digit only strings [\#163](https://github.com/joost/phony_rails/issues/163)
+- should all normalized numbers be valid? [\#162](https://github.com/joost/phony_rails/issues/162)
+- Extensions not working out of the box for validator [\#160](https://github.com/joost/phony_rails/issues/160)
+
+**Merged pull requests:**
+
+- Remove errant `puts` [\#188](https://github.com/joost/phony_rails/pull/188) ([stevenharman](https://github.com/stevenharman))
+- Close issues [\#185](https://github.com/joost/phony_rails/pull/185) ([joost](https://github.com/joost))
+- Better PhonyRails.plausible\_number? method. Closes \#179. [\#184](https://github.com/joost/phony_rails/pull/184) ([joost](https://github.com/joost))
+- Allow numbers starting with 00 country codes. Closes \#175. [\#183](https://github.com/joost/phony_rails/pull/183) ([joost](https://github.com/joost))
+
 ## [v0.14.9](https://github.com/joost/phony_rails/tree/v0.14.9) (2018-09-05)
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.7...v0.14.9)
 
