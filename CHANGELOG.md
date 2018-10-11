@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.14.11](https://github.com/joost/phony_rails/tree/v0.14.11) (2018-10-11)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.10...v0.14.11)
+
+**Closed issues:**
+
+- Problem with normalizing Estonian number [\#187](https://github.com/joost/phony_rails/issues/187)
+
+**Merged pull requests:**
+
+- Add Korean translation\(including spec\) [\#186](https://github.com/joost/phony_rails/pull/186) ([freelyageha](https://github.com/freelyageha))
+
 ## [v0.14.10](https://github.com/joost/phony_rails/tree/v0.14.10) (2018-10-11)
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.9...v0.14.10)
 
