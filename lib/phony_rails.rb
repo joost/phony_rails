@@ -156,8 +156,11 @@ module PhonyRails
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
           raise("No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)") unless self.class.attribute_method?(attribute_name)
+          if options[:normalize_when_valid]
+            cache_original_attribute(current_instance, attribute)
+          end
           new_value = PhonyRails.normalize_number(send(attribute), options, current_instance)
-          send("#{attribute_name}=", new_value) if new_value || attribute_name != attribute
+          current_instance.public_send("#{attribute_name}=", new_value) if new_value || attribute_name != attribute
         end
       end
 
@@ -169,7 +172,25 @@ module PhonyRails
       end
     end
 
+    def cache_original_attribute(current_instance, attribute)
+      current_instance.define_singleton_method("#{attribute}_original=")  { |value| @original = value }
+      current_instance.define_singleton_method("#{attribute}_original") { @original }
+      current_instance.public_send("#{attribute}_original=", current_instance.public_send(attribute.to_s))
+    end
+
     module ClassMethods
+      PHONY_RAILS_COLLECTION_VALID_KEYS = %i[
+        add_plus
+        as
+        country_code
+        country_number
+        default_country_code
+        default_country_number
+        enforce_record_country
+        if
+        normalize_when_valid
+        unless
+      ].freeze
       # Use this method on the class level like:
       #   phony_normalize :phone_number, :fax_number, :default_country_code => 'NL'
       #
@@ -177,7 +198,7 @@ module PhonyRails
       # you've geocoded before calling this method!
       def phony_normalize(*attributes)
         options = attributes.last.is_a?(Hash) ? attributes.pop : {}
-        options.assert_valid_keys :country_number, :default_country_number, :country_code, :default_country_code, :add_plus, :as, :enforce_record_country, :if, :unless
+        options.assert_valid_keys(*PHONY_RAILS_COLLECTION_VALID_KEYS)
         if options[:as].present?
           raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if attributes.size > 1
         end

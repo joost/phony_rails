@@ -60,6 +60,10 @@ ActiveRecord::Schema.define do
     table.column :phone_number, :string
     table.column :phone_number_country_code, :string
   end
+
+  create_table :normalizabled_phone_homes do |table|
+    table.column :phone_number, :string
+  end
 end
 
 #--------------------
@@ -166,6 +170,13 @@ class MessageOptionSameAsModelMethod < HelpfulHome
     'user@example.com'
   end
 end
+#--------------------
+class NormalizabledPhoneHome < ActiveRecord::Base
+  attr_accessor :phone_number, :country_code
+  validates_plausible_phone :phone_number
+  phony_normalize :phone_number, country_code: 'PL', normalize_when_valid: true
+end
+
 #-----------------------------------------------------------------------------------------------------------------------
 # Tests
 #-----------------------------------------------------------------------------------------------------------------------
@@ -639,6 +650,22 @@ describe ActiveModel::Validations::HelperMethods do
         expect(@home).to_not receive(:email)
 
         @home.save
+      end
+    end
+
+    context 'when a number has already code_number' do
+      it 'does not normalize code after validation' do
+        @home = NormalizabledPhoneHome.new
+        @home.phone_number = '+44 799 449 595'
+        @home.country_code = 'PL'
+
+        expect(@home).to_not be_valid
+        expect(@home.phone_number).to eql('+44 799 449 595')
+
+        @home.phone_number = '+48 799 449 595'
+
+        expect(@home).to be_valid
+        expect(@home.phone_number).to eql('+48799449595')
       end
     end
   end
