@@ -246,6 +246,14 @@ describe PhonyRails do
           phone2 = PhonyRails.normalize_number(phone2, default_country_code: 'EE')
           expect(phone2).to eq('+37275016183')
         end
+
+        it 'should pass Github issue #180' do
+          phone = '5555555555'
+          phone = PhonyRails.normalize_number(phone, default_country_code: 'AU')
+          expect(phone).to eq('+615555555555')
+          phone = PhonyRails.normalize_number(phone, default_country_code: 'AU')
+          expect(phone).to eq('+615555555555')
+        end
       end
 
       it 'should not change original String' do
