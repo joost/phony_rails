@@ -4,6 +4,7 @@
 # Usage:
 #   validate :phone_number, :phony_plausible => true
 require 'active_model'
+
 class PhonyPlausibleValidator < ActiveModel::EachValidator
   # Validates a String using Phony.plausible? method.
   def validate_each(record, attribute, value)
@@ -13,6 +14,8 @@ class PhonyPlausibleValidator < ActiveModel::EachValidator
     value = PhonyRails.normalize_number(value.dup, default_country_code: normalized_country_code) if normalized_country_code
     value = PhonyRails.extract_extension(value).first
     @record.errors.add(attribute, error_message) unless Phony.plausible?(value, cc: country_number)
+    @record.public_send("#{attribute}=", @record.public_send("#{attribute}_original")) if @record.respond_to?("#{attribute}_original") &&
+                                                                                          !Phony.plausible?(value, cc: country_number)
   end
 
   private
