@@ -249,9 +249,9 @@ describe PhonyRails do
 
         it 'should pass Github issue #180' do
           phone = '5555555555'
-          phone = PhonyRails.normalize_number(phone, default_country_code: 'AU')
+          phone = PhonyRails.normalize_number(phone, default_country_code: 'AU', country_code: 'AU')
           expect(phone).to eq('+615555555555')
-          phone = PhonyRails.normalize_number(phone, default_country_code: 'AU')
+          phone = PhonyRails.normalize_number(phone, default_country_code: 'AU', country_code: 'AU')
           expect(phone).to eq('+615555555555')
         end
       end
