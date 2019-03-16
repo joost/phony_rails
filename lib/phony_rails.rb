@@ -46,18 +46,18 @@ module PhonyRails
   #   http://www.redguava.com.au/2011/06/rails-convert-phone-numbers-to-international-format-for-sms/
   def self.normalize_number(number, options = {}, current_instance = nil)
     return if number.nil?
+
     original_number = number
     number = number.dup # Just to be sure, we don't want to change the original.
     number, ext = extract_extension(number)
     number.gsub!(/[^\(\)\d\+]/, '') # Strips weird stuff from the number
     return if number.blank?
+
     if _country_number = options[:country_number] || country_number_for(options[:country_code])
       options[:add_plus] = true if options[:add_plus].nil?
       # (Force) add country_number if missing
       # NOTE: do we need to force adding country code? Otherwise we can share logic with next block
-      if !Phony.plausible?(number) || _country_number != country_code_from_number(number)
-        number = "#{_country_number}#{number}"
-      end
+      number = "#{_country_number}#{number}" if !Phony.plausible?(number) || _country_number != country_code_from_number(number)
     elsif _default_country_number = extract_default_country_number(options, current_instance)
       options[:add_plus] = true if options[:add_plus].nil?
       number = normalize_number_default_country(number, _default_country_number)
@@ -101,12 +101,14 @@ module PhonyRails
   # Should probably be named 'country_number_from_number'.
   def self.country_code_from_number(number)
     return nil unless Phony.plausible?(number)
+
     Phony.split(Phony.normalize(number)).first
   end
 
   # Returns the country (eg. 'NL') for a number (eg. +31612341234).
   def self.country_from_number(number)
     return nil unless Phony.plausible?(number)
+
     country_codes_hash.select { |_country, hash| hash['country_code'] == country_code_from_number(number) }.keys[0]
   end
 
@@ -115,6 +117,7 @@ module PhonyRails
   # It uses the 'cc' option for Phony. This was a required param before?
   def self.plausible_number?(number, options = {})
     return false if number.blank?
+
     number = extract_extension(number).first
     number = normalize_number(number, options)
     country_number = options[:country_number] || country_number_for(options[:country_code]) ||
@@ -126,10 +129,11 @@ module PhonyRails
     false
   end
 
-  COMMON_EXTENSIONS = /[ ]*(ext|ex|x|xt|#|:)+[^0-9]*\(?([-0-9]{1,})\)?#?$/i
+  COMMON_EXTENSIONS = /[ ]*(ext|ex|x|xt|#|:)+[^0-9]*\(?([-0-9]{1,})\)?#?$/i.freeze
 
   def self.extract_extension(number_and_ext)
     return [nil, nil] if number_and_ext.nil?
+
     subbed = number_and_ext.sub(COMMON_EXTENSIONS, '')
     [subbed, Regexp.last_match(2)]
   end
@@ -156,9 +160,8 @@ module PhonyRails
         attributes.each do |attribute|
           attribute_name = options[:as] || attribute
           raise("No attribute #{attribute_name} found on #{self.class.name} (PhonyRails)") unless self.class.attribute_method?(attribute_name)
-          if options[:normalize_when_valid]
-            cache_original_attribute(current_instance, attribute)
-          end
+
+          cache_original_attribute(current_instance, attribute) if options[:normalize_when_valid]
           new_value = PhonyRails.normalize_number(send(attribute), options, current_instance)
           current_instance.public_send("#{attribute_name}=", new_value) if new_value || attribute_name != attribute
         end
@@ -221,10 +224,12 @@ module PhonyRails
         main_options.assert_valid_keys :country_code, :default_country_code
         attributes.each do |attribute|
           raise(StandardError, "Instance method normalized_#{attribute} already exists on #{name} (PhonyRails)") if method_defined?(:"normalized_#{attribute}")
+
           define_method :"normalized_#{attribute}" do |*args|
             options = main_options.merge(args.first || {})
             assign_values_for_phony_symbol_options(options)
             raise(ArgumentError, "No attribute/method #{attribute} found on #{self.class.name} (PhonyRails)") unless respond_to?(attribute)
+
             options[:country_code] ||= country_code if respond_to?(:country_code)
             PhonyRails.normalize_number(send(attribute), options)
           end
