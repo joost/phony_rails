@@ -11,6 +11,3 @@ gem 'guard-rspec' # ,    '~> 4.2.0'
 gem 'rake'
 gem 'rspec' # ,          '~> 2.14.0'
 gem 'rubocop'
-
-# For testing
-gem 'sqlite3'
