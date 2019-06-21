@@ -1,5 +1,18 @@
 # Change Log
 
+## [v0.14.12](https://github.com/joost/phony_rails/tree/v0.14.12) (2019-06-21)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.11...v0.14.12)
+
+**Closed issues:**
+
+- Some German numbers not passing plausible\_numbers? without country\_code [\#193](https://github.com/joost/phony_rails/issues/193)
+
+**Merged pull requests:**
+
+- Upgrade Ruby versions and Relax dependancies [\#192](https://github.com/joost/phony_rails/pull/192) ([berkos](https://github.com/berkos))
+- Add possibility to return original phone number when is not valid [\#190](https://github.com/joost/phony_rails/pull/190) ([synion](https://github.com/synion))
+- Add UK country\_code. [\#189](https://github.com/joost/phony_rails/pull/189) ([ayghor](https://github.com/ayghor))
+
 ## [v0.14.11](https://github.com/joost/phony_rails/tree/v0.14.11) (2018-10-11)
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.10...v0.14.11)
 
@@ -172,7 +185,7 @@
 **Merged pull requests:**
 
 - Update readme [\#117](https://github.com/joost/phony_rails/pull/117) ([toydestroyer](https://github.com/toydestroyer))
-- Add uk, ru error message translations [\#114](https://github.com/joost/phony_rails/pull/114) ([sanavy](https://github.com/sanavy))
+- Add uk, ru error message translations [\#114](https://github.com/joost/phony_rails/pull/114) ([shhavel](https://github.com/shhavel))
 - Update phony\_rails.gemspec [\#112](https://github.com/joost/phony_rails/pull/112) ([Agsiegert](https://github.com/Agsiegert))
 - Don't re-parse country codes YAML file every time it's needed. [\#111](https://github.com/joost/phony_rails/pull/111) ([jcoleman](https://github.com/jcoleman))
 - Replace countries dependency with YAML file [\#109](https://github.com/joost/phony_rails/pull/109) ([monfresh](https://github.com/monfresh))
