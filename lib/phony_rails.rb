@@ -177,7 +177,7 @@ module PhonyRails
 
     def cache_original_attribute(current_instance, attribute)
       attribute_name = "#{attribute}_original"
-      current_instance.define_singleton_method("#{attribute_name}=")  { |value| instance_variable_set("@#{attribute_name}", value) }
+      current_instance.define_singleton_method("#{attribute_name}=") { |value| instance_variable_set("@#{attribute_name}", value) }
       current_instance.define_singleton_method(attribute_name) { instance_variable_get("@#{attribute_name}") }
       current_instance.public_send("#{attribute}_original=", current_instance.public_send(attribute.to_s))
     end
