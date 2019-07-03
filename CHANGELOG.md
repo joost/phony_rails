@@ -1,5 +1,16 @@
 # Change Log
 
+## [v0.14.13](https://github.com/joost/phony_rails/tree/v0.14.13) (2019-07-03)
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.12...v0.14.13)
+
+**Closed issues:**
+
+- 0.4.11 was the latest release. However the new normalize\_when\_valid has been sitting here for a while... Release? [\#194](https://github.com/joost/phony_rails/issues/194)
+
+**Merged pull requests:**
+
+- Fixing \#195 - Original value should be cached in correct instance var [\#196](https://github.com/joost/phony_rails/pull/196) ([dlikhten](https://github.com/dlikhten))
+
 ## [v0.14.12](https://github.com/joost/phony_rails/tree/v0.14.12) (2019-06-21)
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.11...v0.14.12)
 
