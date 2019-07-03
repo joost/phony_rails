@@ -172,9 +172,11 @@ class MessageOptionSameAsModelMethod < HelpfulHome
 end
 #--------------------
 class NormalizabledPhoneHome < ActiveRecord::Base
-  attr_accessor :phone_number, :country_code
+  attr_accessor :phone_number, :phone_number2, :country_code
   validates_plausible_phone :phone_number
+  validates_plausible_phone :phone_number2
   phony_normalize :phone_number, country_code: 'PL', normalize_when_valid: true
+  phony_normalize :phone_number2, country_code: 'PL', normalize_when_valid: true
 end
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -666,6 +668,23 @@ describe ActiveModel::Validations::HelperMethods do
 
         expect(@home).to be_valid
         expect(@home.phone_number).to eql('+48799449595')
+      end
+
+      it 'does not normalize code after validation with multiple attributes' do
+        @home = NormalizabledPhoneHome.new
+        @home.phone_number = '+44 799 449 595'
+        @home.phone_number2 = '+44 222 111 333'
+        @home.country_code = 'PL'
+
+        expect(@home).to_not be_valid
+        expect(@home.phone_number).to eql('+44 799 449 595')
+        expect(@home.phone_number2).to eql('+44 222 111 333')
+
+        @home.phone_number = '+48 799 449 595'
+        @home.phone_number2 = '+48 222 111 333'
+        expect(@home).to be_valid
+        expect(@home.phone_number).to eql('+48799449595')
+        expect(@home.phone_number2).to eql('+48222111333')
       end
     end
   end
