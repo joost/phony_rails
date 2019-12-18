@@ -4,7 +4,7 @@ This small Gem adds useful methods to your Rails app to validate, display and sa
 It uses the super awesome Phony gem (https://github.com/floere/phony).
 
 Find version information in the [CHANGELOG](CHANGELOG.md).
- 
+
 ## Installation
 
 Add this line to your application's Gemfile:
