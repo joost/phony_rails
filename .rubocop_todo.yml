@@ -13,6 +13,13 @@ Lint/AssignmentInCondition:
     - 'lib/phony_rails.rb'
 
 # Offense count: 2
+# Cop supports --auto-correct.
+Lint/SendWithMixinArgument:
+  Exclude:
+    - 'lib/phony_rails.rb'
+
+# Offense count: 2
+# Configuration parameters: AllowKeywordBlockArguments.
 Lint/UnderscorePrefixedVariableName:
   Exclude:
     - 'lib/phony_rails.rb'
