@@ -1,6 +1,6 @@
 inherit_from: .rubocop_todo.yml
 require: rubocop-performance
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context', 'define', 'shared_examples_for']
