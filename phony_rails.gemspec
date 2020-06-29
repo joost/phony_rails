@@ -25,5 +25,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'mongoid', '>= 3.0'
 
   # For testing
-  gem.add_development_dependency 'sqlite3', '~> 1.3.6'
+  gem.add_development_dependency 'sqlite3', '>= 1.4.0'
 end
