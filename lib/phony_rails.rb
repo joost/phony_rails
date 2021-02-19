@@ -278,12 +278,12 @@ end
 
 ActiveModel::Model.send :include, PhonyRails::Extension if defined?(ActiveModel::Model)
 
-if defined?(Mongoid)
-  module Mongoid::Phony
-    extend ActiveSupport::Concern
-    include PhonyRails::Extension
-  end
-end
+# if defined?(Mongoid)
+#   module Mongoid::Phony
+#     extend ActiveSupport::Concern
+#     include PhonyRails::Extension
+#   end
+# end
 
 Dir["#{File.dirname(__FILE__)}/phony_rails/locales/*.yml"].each do |file|
   I18n.load_path << file

@@ -210,7 +210,7 @@ describe PhonyRails do
           normal.phone_number = 'HAHA'
           expect(normal).to_not be_valid
           expect(normal.phone_number).to eq('HAHA')
-          expect(normal.errors.messages).to include(phone_number: ['is an invalid number'])
+          expect(normal.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
         end
 
         it 'should pass Github issue #170' do
@@ -923,9 +923,9 @@ describe PhonyRails do
     end
   end
 
-  describe 'Mongoid' do
-    let(:model_klass) { MongoidModel }
-    let(:dummy_klass) { MongoidDummy }
-    it_behaves_like 'model with PhonyRails'
-  end
+  # describe 'Mongoid' do
+  #   let(:model_klass) { MongoidModel }
+  #   let(:dummy_klass) { MongoidDummy }
+  #   it_behaves_like 'model with PhonyRails'
+  # end
 end

@@ -9,7 +9,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'active_record'
-require 'mongoid'
+# require 'mongoid'
 require 'phony_rails'
 
 ActiveRecord::Base.establish_connection(
@@ -80,20 +80,20 @@ end
 class ActiveModelDummy < ActiveModelModel
 end
 
-class MongoidModel
-  include Mongoid::Document
-  include Mongoid::Phony
-  field :phone_attribute, type: String
-  field :phone_number,    type: String
-  field :phone_number_as_normalized, type: String
-  field :fax_number
-  field :country_code_attribute, type: String
-  field :symboled_phone, type: String
-  include SharedModelMethods
-end
+# class MongoidModel
+#   include Mongoid::Document
+#   include Mongoid::Phony
+#   field :phone_attribute, type: String
+#   field :phone_number,    type: String
+#   field :phone_number_as_normalized, type: String
+#   field :fax_number
+#   field :country_code_attribute, type: String
+#   field :symboled_phone, type: String
+#   include SharedModelMethods
+# end
 
-class MongoidDummy < MongoidModel
-end
+# class MongoidDummy < MongoidModel
+# end
 
 I18n.config.enforce_available_locales = true
 
