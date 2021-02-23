@@ -2,9 +2,8 @@
 
 require 'spec_helper'
 
+EXT_PREFIXES = %w[ext ex x xt # :].freeze
 describe PhonyRails do
-  EXT_PREFIXES = %w[ext ex x xt # :].freeze
-
   it 'should not pollute the global namespace with a Country class' do
     should_not be_const_defined 'Country'
   end
@@ -200,11 +199,14 @@ describe PhonyRails do
             end
           end
 
+          # rubocop:disable Lint/ConstantDefinitionInBlock
           class NormalHome < ActiveRecord::Base
             attr_accessor :phone_number
+
             phony_normalize :phone_number, default_country_code: 'US'
             validates :phone_number, phony_plausible: true
           end
+          # rubocop:enable Lint/ConstantDefinitionInBlock
 
           normal = NormalHome.new
           normal.phone_number = 'HAHA'
@@ -510,7 +512,7 @@ describe PhonyRails do
     after { PhonyRails.default_country_code = nil }
 
     it 'can set a global default country code' do
-      expect(PhonyRails.default_country_code). to eq 'US'
+      expect(PhonyRails.default_country_code).to eq 'US'
     end
 
     it 'can set a global default country code' do

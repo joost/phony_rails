@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.name          = 'phony_rails'
   gem.require_paths = ['lib']
   gem.version       = PhonyRails::VERSION
+  gem.required_ruby_version = '>= 2.4'
 
   gem.post_install_message = "PhonyRails v0.10.0 changes the way numbers are stored!\nIt now adds a ' + ' to the normalized number when it starts with a country number!"
 

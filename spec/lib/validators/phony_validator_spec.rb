@@ -69,66 +69,77 @@ end
 #--------------------
 class SimpleHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates :phone_number, phony_plausible: true
 end
 
 #--------------------
 class HelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number
 end
 
 #--------------------
 class RequiredHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, presence: true
 end
 
 #--------------------
 class OptionalHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, presence: false
 end
 
 #--------------------
 class FormattedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, with: /\A\+\d+/
 end
 
 #--------------------
 class NotFormattedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, without: /\A\+\d+/
 end
 
 #--------------------
 class NormalizableHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, normalized_country_code: 'US'
 end
 
 #--------------------
 class AustralianHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, country_number: '61'
 end
 
 #--------------------
 class PolishHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, country_code: 'PL'
 end
 
 #--------------------
 class BigHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, presence: true, with: /\A\+\d+/, country_number: '33'
 end
 
 #--------------------
 class MismatchedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number, :country_code
+
   validates :phone_number, phony_plausible: { ignore_record_country_code: true }
 end
 
@@ -136,6 +147,7 @@ end
 
 class InvalidCountryCodeHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number
 
   def country_code
@@ -146,33 +158,39 @@ end
 #--------------------
 class SymbolizableHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number, :phone_number_country_code
+
   validates_plausible_phone :phone_number, country_code: :phone_number_country_code
 end
 
 #--------------------
 class NoModelMethod < HelpfulHome
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, country_code: :nonexistent_method
 end
 
 #--------------------
 class MessageOptionUndefinedInModel < HelpfulHome
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, message: :email
 end
 
 #--------------------
 class MessageOptionSameAsModelMethod < HelpfulHome
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, message: :email
 
   def email
     'user@example.com'
   end
 end
+
 #--------------------
 class NormalizabledPhoneHome < ActiveRecord::Base
   attr_accessor :phone_number, :phone_number2, :country_code
+
   validates_plausible_phone :phone_number
   validates_plausible_phone :phone_number2
   phony_normalize :phone_number, country_code: 'PL', normalize_when_valid: true
