@@ -10,7 +10,7 @@ Find version information in the [CHANGELOG](CHANGELOG.md).
 Add this line to your application's Gemfile (requires Ruby > 2.3):
 
 ```ruby
-gem 'phony_rails' # Include phony_rails after mongoid (if you use mongoid, see issue #66 on github).
+gem 'phony_rails'
 ```
 
 And then execute:
@@ -66,18 +66,10 @@ class SomeModel
 end
 ```
 
-#### Mongoid
+#### Mongoid (DEPRECATED)
 
-For **Mongoid**, in keeping with Mongoid plug-in conventions you must include the `Mongoid::Phony` module:
+WARNING: From v0.15.0 Mongoid support has been removed!
 
-```ruby
-class SomeModel
-  include Mongoid::Document
-  include Mongoid::Phony
-
-  # methods are same as ActiveRecord usage
-end
-```
 #### General info
 
 The `:default_country_code` options is used to specify a country_code when normalizing.
@@ -114,6 +106,7 @@ In your model use the Phony.plausible method to validate an attribute:
 ```ruby
 validates :phone_number, phony_plausible: true
 ```
+
 or the helper method:
 
 ```ruby
@@ -121,8 +114,9 @@ validates_plausible_phone :phone_number
 ```
 
 this method use other validators under the hood to provide:
-* presence validation using `ActiveModel::Validations::PresenceValidator`
-* format validation using `ActiveModel::Validations::FormatValidator`
+
+- presence validation using `ActiveModel::Validations::PresenceValidator`
+- format validation using `ActiveModel::Validations::FormatValidator`
 
 so we can use:
 
@@ -174,11 +168,11 @@ When number is valid, it will save the normalized number (e.g. `+48 888 888 888`
 
 #### Allowing records country codes to not match phone number country codes
 
-You may have a record specifying one country (via a `country_code` attribute) but using a phone number from another country.  For example, your record may be from Japan but have a phone number from the Philippines. By default, `phony_rails` will consider your record's `country_code` as part of the validation.  If that country doesn't match the country code in the phone number, validation will fail.
+You may have a record specifying one country (via a `country_code` attribute) but using a phone number from another country. For example, your record may be from Japan but have a phone number from the Philippines. By default, `phony_rails` will consider your record's `country_code` as part of the validation. If that country doesn't match the country code in the phone number, validation will fail.
 
 Additionally, `phony_normalize` will always add the records country code as the country number (eg. the user enters '+81xxx' for Japan and the records `country_code` is 'DE' then `phony_normalize` will change the number to '+4981'). You can turn this off by adding `enforce_record_country: false` to the validation options. The country_code will then only be added if no country code is specified.
 
-If you want to allow records from one country to have phone numbers from a different one, there are a couple of options you can use: `ignore_record_country_number` and `ignore_record_country_code`.  Use them like so:
+If you want to allow records from one country to have phone numbers from a different one, there are a couple of options you can use: `ignore_record_country_number` and `ignore_record_country_code`. Use them like so:
 
 ```ruby
 validates :phone_number, phony_plausible: { ignore_record_country_code: true, ignore_record_country_number: true }
@@ -231,7 +225,6 @@ Extensions are supported (identified by "ext", "ex", "x", "xt", "#", or ":") and
 "+31 (0)30 1234 123 ext999".phony_normalized # => '31301234123 x999'
 "+31 (0)30 1234 123 #999".phony_normalized # => '31301234123 x999'
 ```
-
 
 ### Find by normalized number
 

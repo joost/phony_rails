@@ -23,7 +23,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'activesupport', '>= 3.0'
   gem.add_runtime_dependency 'phony', '>= 2.18.12'
   gem.add_development_dependency 'activerecord', '>= 3.0'
-  # gem.add_development_dependency 'mongoid', '7.1.4'
 
   # For testing
   gem.add_development_dependency 'sqlite3', '>= 1.4.0'
