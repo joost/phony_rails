@@ -9,7 +9,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'active_record'
-require 'mongoid'
+# require 'mongoid'
 require 'phony_rails'
 
 ActiveRecord::Base.establish_connection(
@@ -35,6 +35,7 @@ module SharedModelMethods
       :country_code, :country_code_attribute, :custom_country_code, :delivery_method,
       :home_country, :phone_method, :phone1_method, :recipient, :symboled_phone_method
     )
+
     phony_normalized_method :phone_attribute # adds normalized_phone_attribute method
     phony_normalized_method :phone_method # adds normalized_phone_method method
     phony_normalized_method :phone1_method, default_country_code: 'DE' # adds normalized_phone_method method
@@ -80,20 +81,20 @@ end
 class ActiveModelDummy < ActiveModelModel
 end
 
-class MongoidModel
-  include Mongoid::Document
-  include Mongoid::Phony
-  field :phone_attribute, type: String
-  field :phone_number,    type: String
-  field :phone_number_as_normalized, type: String
-  field :fax_number
-  field :country_code_attribute, type: String
-  field :symboled_phone, type: String
-  include SharedModelMethods
-end
+# class MongoidModel
+#   include Mongoid::Document
+#   include Mongoid::Phony
+#   field :phone_attribute, type: String
+#   field :phone_number,    type: String
+#   field :phone_number_as_normalized, type: String
+#   field :fax_number
+#   field :country_code_attribute, type: String
+#   field :symboled_phone, type: String
+#   include SharedModelMethods
+# end
 
-class MongoidDummy < MongoidModel
-end
+# class MongoidDummy < MongoidModel
+# end
 
 I18n.config.enforce_available_locales = true
 

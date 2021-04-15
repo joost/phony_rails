@@ -50,7 +50,7 @@ module PhonyRails
     original_number = number
     number = number.dup # Just to be sure, we don't want to change the original.
     number, ext = extract_extension(number)
-    number.gsub!(/[^\(\)\d\+]/, '') # Strips weird stuff from the number
+    number.gsub!(/[^()\d+]/, '') # Strips weird stuff from the number
     return if number.blank?
 
     if _country_number = options[:country_number] || country_number_for(options[:country_code])
@@ -67,8 +67,7 @@ module PhonyRails
     normalized_number = options[:add_plus] ? "+#{normalized_number}" : normalized_number
 
     options[:extension] = true if options[:extension].nil?
-    normalized_number = options[:extension] ? format_extension(normalized_number, ext) : normalized_number
-    normalized_number
+    options[:extension] ? format_extension(normalized_number, ext) : normalized_number
   rescue StandardError
     original_number # If all goes wrong .. we still return the original input.
   end
@@ -129,7 +128,7 @@ module PhonyRails
     false
   end
 
-  COMMON_EXTENSIONS = /[ ]*(ext|ex|x|xt|#|:)+[^0-9]*\(?([-0-9]{1,})\)?#?$/i.freeze
+  COMMON_EXTENSIONS = / *(ext|ex|x|xt|#|:)+[^0-9]*\(?([-0-9]{1,})\)?#?$/i.freeze
 
   def self.extract_extension(number_and_ext)
     return [nil, nil] if number_and_ext.nil?
@@ -203,9 +202,7 @@ module PhonyRails
       def phony_normalize(*attributes)
         options = attributes.last.is_a?(Hash) ? attributes.pop : {}
         options.assert_valid_keys(*PHONY_RAILS_COLLECTION_VALID_KEYS)
-        if options[:as].present?
-          raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if attributes.size > 1
-        end
+        raise ArgumentError, ':as option can not be used on phony_normalize with multiple attribute names! (PhonyRails)' if options[:as].present? && (attributes.size > 1)
 
         options[:enforce_record_country] = true if options[:enforce_record_country].nil?
 
@@ -278,12 +275,12 @@ end
 
 ActiveModel::Model.send :include, PhonyRails::Extension if defined?(ActiveModel::Model)
 
-if defined?(Mongoid)
-  module Mongoid::Phony
-    extend ActiveSupport::Concern
-    include PhonyRails::Extension
-  end
-end
+# if defined?(Mongoid)
+#   module Mongoid::Phony
+#     extend ActiveSupport::Concern
+#     include PhonyRails::Extension
+#   end
+# end
 
 Dir["#{File.dirname(__FILE__)}/phony_rails/locales/*.yml"].each do |file|
   I18n.load_path << file

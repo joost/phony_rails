@@ -69,66 +69,77 @@ end
 #--------------------
 class SimpleHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates :phone_number, phony_plausible: true
 end
 
 #--------------------
 class HelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number
 end
 
 #--------------------
 class RequiredHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, presence: true
 end
 
 #--------------------
 class OptionalHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, presence: false
 end
 
 #--------------------
 class FormattedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, with: /\A\+\d+/
 end
 
 #--------------------
 class NotFormattedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, without: /\A\+\d+/
 end
 
 #--------------------
 class NormalizableHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, normalized_country_code: 'US'
 end
 
 #--------------------
 class AustralianHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, country_number: '61'
 end
 
 #--------------------
 class PolishHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, country_code: 'PL'
 end
 
 #--------------------
 class BigHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, presence: true, with: /\A\+\d+/, country_number: '33'
 end
 
 #--------------------
 class MismatchedHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number, :country_code
+
   validates :phone_number, phony_plausible: { ignore_record_country_code: true }
 end
 
@@ -136,6 +147,7 @@ end
 
 class InvalidCountryCodeHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number
 
   def country_code
@@ -146,33 +158,39 @@ end
 #--------------------
 class SymbolizableHelpfulHome < ActiveRecord::Base
   attr_accessor :phone_number, :phone_number_country_code
+
   validates_plausible_phone :phone_number, country_code: :phone_number_country_code
 end
 
 #--------------------
 class NoModelMethod < HelpfulHome
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, country_code: :nonexistent_method
 end
 
 #--------------------
 class MessageOptionUndefinedInModel < HelpfulHome
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, message: :email
 end
 
 #--------------------
 class MessageOptionSameAsModelMethod < HelpfulHome
   attr_accessor :phone_number
+
   validates_plausible_phone :phone_number, message: :email
 
   def email
     'user@example.com'
   end
 end
+
 #--------------------
 class NormalizabledPhoneHome < ActiveRecord::Base
   attr_accessor :phone_number, :phone_number2, :country_code
+
   validates_plausible_phone :phone_number
   validates_plausible_phone :phone_number2
   phony_normalize :phone_number, country_code: 'PL', normalize_when_valid: true
@@ -223,26 +241,26 @@ describe PhonyPlausibleValidator do
     it 'should invalidate an invalid number' do
       @home.phone_number = INVALID_NUMBER
       expect(@home).to_not be_valid
-      expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+      expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
     end
 
     it 'should invalidate an valid number with invalid extension' do
       @home.phone_number = VALID_NUMBER_WITH_INVALID_EXTENSION
       expect(@home).to_not be_valid
-      expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+      expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
     end
 
     it 'should invalidate not a number' do
       @home.phone_number = NOT_A_NUMBER
       expect(@home).to_not be_valid
-      expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+      expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
     end
 
     it 'should translate the error message in Dutch' do
       I18n.with_locale(:nl) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['is geen geldig nummer'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is geen geldig nummer'])
       end
     end
 
@@ -250,7 +268,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:en) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
     end
 
@@ -258,7 +276,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:es) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['es un número inválido'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['es un número inválido'])
       end
     end
 
@@ -266,7 +284,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:fr) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['est un numéro invalide'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['est un numéro invalide'])
       end
     end
 
@@ -274,7 +292,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:ja) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['は正しい電話番号ではありません'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['は正しい電話番号ではありません'])
       end
     end
 
@@ -282,7 +300,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:km) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['គឺជាលេខមិនត្រឹមត្រូវ'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['គឺជាលេខមិនត្រឹមត្រូវ'])
       end
     end
 
@@ -290,7 +308,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:ko) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['는 올바른 전화번호가 아닙니다'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['는 올바른 전화번호가 아닙니다'])
       end
     end
 
@@ -298,7 +316,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:uk) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['є недійсним номером'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['є недійсним номером'])
       end
     end
 
@@ -306,7 +324,7 @@ describe PhonyPlausibleValidator do
       I18n.with_locale(:ru) do
         @home.phone_number = INVALID_NUMBER
         @home.valid?
-        expect(@home.errors.messages).to include(phone_number: ['является недействительным номером'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['является недействительным номером'])
       end
     end
   end
@@ -334,7 +352,7 @@ describe ActiveModel::Validations::HelperMethods do
       it 'should invalidate an invalid number' do
         @home.phone_number = INVALID_NUMBER
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
     end
 
@@ -346,7 +364,7 @@ describe ActiveModel::Validations::HelperMethods do
 
       it 'should invalidate an empty number' do
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ["can't be blank"])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ["can't be blank"])
       end
 
       it 'should validate a valid number' do
@@ -357,7 +375,7 @@ describe ActiveModel::Validations::HelperMethods do
       it 'should invalidate an invalid number' do
         @home.phone_number = INVALID_NUMBER
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
     end
 
@@ -385,7 +403,7 @@ describe ActiveModel::Validations::HelperMethods do
       it 'should invalidate an invalid number' do
         @home.phone_number = INVALID_NUMBER
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
     end
 
@@ -397,7 +415,7 @@ describe ActiveModel::Validations::HelperMethods do
 
       it 'should invalidate an empty number' do
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is invalid'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is invalid'])
       end
 
       it 'should validate a well formatted valid number' do
@@ -408,7 +426,7 @@ describe ActiveModel::Validations::HelperMethods do
       it 'should invalidate a bad formatted valid number' do
         @home.phone_number = VALID_NUMBER
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is invalid'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is invalid'])
       end
     end
 
@@ -430,7 +448,7 @@ describe ActiveModel::Validations::HelperMethods do
       it 'should invalidate a bad formatted valid number' do
         @home.phone_number =  "+#{VALID_NUMBER}"
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is invalid'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is invalid'])
       end
     end
 
@@ -452,13 +470,13 @@ describe ActiveModel::Validations::HelperMethods do
       it 'should invalidate a valid number with the wrong country code' do
         @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
 
       it 'should invalidate a valid number without a country code' do
         @home.phone_number = VALID_NUMBER
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
     end
 
@@ -485,7 +503,7 @@ describe ActiveModel::Validations::HelperMethods do
       it 'should invalidate an invalid number' do
         @home.phone_number = INVALID_NUMBER
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
     end
 
@@ -507,13 +525,13 @@ describe ActiveModel::Validations::HelperMethods do
       it 'should invalidate a valid number with the wrong country code' do
         @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
 
       it 'should invalidate a valid number without a country code' do
         @home.phone_number = VALID_NUMBER
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
     end
 
@@ -606,14 +624,14 @@ describe ActiveModel::Validations::HelperMethods do
         @home.phone_number = FRENCH_NUMBER_WITH_COUNTRY_CODE
         @home.phone_number_country_code = 'PL'
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
 
       it 'should invalidate a valid number without a country code' do
         @home.phone_number = VALID_NUMBER
         @home.phone_number_country_code = 'PL'
         expect(@home).to_not be_valid
-        expect(@home.errors.messages).to include(phone_number: ['is an invalid number'])
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['is an invalid number'])
       end
 
       it 'should pass Gitlab issue #165' do

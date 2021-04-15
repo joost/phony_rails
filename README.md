@@ -7,7 +7,7 @@ Find version information in the [CHANGELOG](CHANGELOG.md).
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your application's Gemfile (requires Ruby > 2.3):
 
 ```ruby
 gem 'phony_rails' # Include phony_rails after mongoid (if you use mongoid, see issue #66 on github).
