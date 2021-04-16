@@ -1,6 +1,22 @@
-# Change Log
+# Changelog
+
+## [v0.15.0](https://github.com/joost/phony_rails/tree/v0.15.0) (2021-04-15)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.13...v0.15.0)
+
+**Closed issues:**
+
+- normalized\_when\_valid: true seems broken if there are two phone attributes [\#195](https://github.com/joost/phony_rails/issues/195)
+
+**Merged pull requests:**
+
+- Test fixes - No mongoid [\#207](https://github.com/joost/phony_rails/pull/207) ([joost](https://github.com/joost))
+- Updated requirements \(had to remove mongodb compatibility\) [\#206](https://github.com/joost/phony_rails/pull/206) ([joost](https://github.com/joost))
+- Updated phony gem requirements to be Ruby 3 compatible [\#205](https://github.com/joost/phony_rails/pull/205) ([NikoRoberts](https://github.com/NikoRoberts))
+- Make CI Green Again [\#201](https://github.com/joost/phony_rails/pull/201) ([amatsuda](https://github.com/amatsuda))
 
 ## [v0.14.13](https://github.com/joost/phony_rails/tree/v0.14.13) (2019-07-03)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.12...v0.14.13)
 
 **Closed issues:**
@@ -12,6 +28,7 @@
 - Fixing \#195 - Original value should be cached in correct instance var [\#196](https://github.com/joost/phony_rails/pull/196) ([dlikhten](https://github.com/dlikhten))
 
 ## [v0.14.12](https://github.com/joost/phony_rails/tree/v0.14.12) (2019-06-21)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.11...v0.14.12)
 
 **Closed issues:**
@@ -22,9 +39,10 @@
 
 - Upgrade Ruby versions and Relax dependancies [\#192](https://github.com/joost/phony_rails/pull/192) ([berkos](https://github.com/berkos))
 - Add possibility to return original phone number when is not valid [\#190](https://github.com/joost/phony_rails/pull/190) ([synion](https://github.com/synion))
-- Add UK country\_code. [\#189](https://github.com/joost/phony_rails/pull/189) ([ayghor](https://github.com/ayghor))
+- Add UK country\_code. [\#189](https://github.com/joost/phony_rails/pull/189) ([pudiva](https://github.com/pudiva))
 
 ## [v0.14.11](https://github.com/joost/phony_rails/tree/v0.14.11) (2018-10-11)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.10...v0.14.11)
 
 **Closed issues:**
@@ -36,6 +54,7 @@
 - Add Korean translation\(including spec\) [\#186](https://github.com/joost/phony_rails/pull/186) ([freelyageha](https://github.com/freelyageha))
 
 ## [v0.14.10](https://github.com/joost/phony_rails/tree/v0.14.10) (2018-10-11)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.9...v0.14.10)
 
 **Closed issues:**
@@ -56,6 +75,7 @@
 - Allow numbers starting with 00 country codes. Closes \#175. [\#183](https://github.com/joost/phony_rails/pull/183) ([joost](https://github.com/joost))
 
 ## [v0.14.9](https://github.com/joost/phony_rails/tree/v0.14.9) (2018-09-05)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.7...v0.14.9)
 
 **Closed issues:**
@@ -70,6 +90,7 @@
 - Add Spanish translation for validation error [\#178](https://github.com/joost/phony_rails/pull/178) ([r-sierra](https://github.com/r-sierra))
 
 ## [v0.14.7](https://github.com/joost/phony_rails/tree/v0.14.7) (2018-05-25)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.6...v0.14.7)
 
 **Closed issues:**
@@ -84,6 +105,7 @@
 - Fix code example in README to match description [\#167](https://github.com/joost/phony_rails/pull/167) ([mattruzicka](https://github.com/mattruzicka))
 
 ## [v0.14.6](https://github.com/joost/phony_rails/tree/v0.14.6) (2017-06-20)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.5...v0.14.6)
 
 **Closed issues:**
@@ -99,6 +121,7 @@
 - `subbed` always return number [\#157](https://github.com/joost/phony_rails/pull/157) ([mrclmrvn](https://github.com/mrclmrvn))
 
 ## [v0.14.5](https://github.com/joost/phony_rails/tree/v0.14.5) (2017-02-08)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.4...v0.14.5)
 
 **Closed issues:**
@@ -112,6 +135,7 @@
 - Support of phone numbers with extension in validator [\#153](https://github.com/joost/phony_rails/pull/153) ([Kukunin](https://github.com/Kukunin))
 
 ## [v0.14.4](https://github.com/joost/phony_rails/tree/v0.14.4) (2016-10-10)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.2...v0.14.4)
 
 **Closed issues:**
@@ -124,6 +148,7 @@
 - Bundle updates and fixes Travis [\#151](https://github.com/joost/phony_rails/pull/151) ([joost](https://github.com/joost))
 
 ## [v0.14.2](https://github.com/joost/phony_rails/tree/v0.14.2) (2016-06-16)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.1...v0.14.2)
 
 **Merged pull requests:**
@@ -132,6 +157,7 @@
 - support for ActiveModel::Model alternative to database-backed models only [\#144](https://github.com/joost/phony_rails/pull/144) ([brandondees](https://github.com/brandondees))
 
 ## [v0.14.1](https://github.com/joost/phony_rails/tree/v0.14.1) (2016-05-08)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.14.0...v0.14.1)
 
 **Closed issues:**
@@ -144,6 +170,7 @@
 - Read message value directly from options [\#141](https://github.com/joost/phony_rails/pull/141) ([monfresh](https://github.com/monfresh))
 
 ## [v0.14.0](https://github.com/joost/phony_rails/tree/v0.14.0) (2016-04-21)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.13.0...v0.14.0)
 
 **Closed issues:**
@@ -161,6 +188,7 @@
 - Added first RuboCop stuff. [\#134](https://github.com/joost/phony_rails/pull/134) ([joost](https://github.com/joost))
 
 ## [v0.13.0](https://github.com/joost/phony_rails/tree/v0.13.0) (2016-03-12)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.11...v0.13.0)
 
 **Closed issues:**
@@ -174,11 +202,12 @@
 **Merged pull requests:**
 
 - Do not raise NoMethodError when an illegal country code is set [\#133](https://github.com/joost/phony_rails/pull/133) ([klaustopher](https://github.com/klaustopher))
-- only assigned normalize values if there is one [\#132](https://github.com/joost/phony_rails/pull/132) ([Smcchoi](https://github.com/Smcchoi))
+- only assigned normalize values if there is one [\#132](https://github.com/joost/phony_rails/pull/132) ([ekkyou](https://github.com/ekkyou))
 - Adding Kosovo phone code [\#131](https://github.com/joost/phony_rails/pull/131) ([Xanders](https://github.com/Xanders))
 - Add Dutch translation for invalid number [\#129](https://github.com/joost/phony_rails/pull/129) ([bdewater](https://github.com/bdewater))
 
 ## [v0.12.11](https://github.com/joost/phony_rails/tree/v0.12.11) (2015-11-12)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.9...v0.12.11)
 
 **Closed issues:**
@@ -202,6 +231,7 @@
 - Replace countries dependency with YAML file [\#109](https://github.com/joost/phony_rails/pull/109) ([monfresh](https://github.com/monfresh))
 
 ## [v0.12.9](https://github.com/joost/phony_rails/tree/v0.12.9) (2015-07-13)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.8...v0.12.9)
 
 **Closed issues:**
@@ -214,6 +244,7 @@
 - Replace Data with Setup.data [\#104](https://github.com/joost/phony_rails/pull/104) ([monfresh](https://github.com/monfresh))
 
 ## [v0.12.8](https://github.com/joost/phony_rails/tree/v0.12.8) (2015-06-22)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.7...v0.12.8)
 
 **Closed issues:**
@@ -230,6 +261,7 @@
 - Add enforce\_record\_country option to phony\_normalize method [\#98](https://github.com/joost/phony_rails/pull/98) ([phillipp](https://github.com/phillipp))
 
 ## [v0.12.7](https://github.com/joost/phony_rails/tree/v0.12.7) (2015-06-18)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.6...v0.12.7)
 
 **Closed issues:**
@@ -241,6 +273,7 @@
 - Adding default error translation for the Hebrew language [\#96](https://github.com/joost/phony_rails/pull/96) ([pazaricha](https://github.com/pazaricha))
 
 ## [v0.12.6](https://github.com/joost/phony_rails/tree/v0.12.6) (2015-05-11)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.5...v0.12.6)
 
 **Closed issues:**
@@ -252,6 +285,7 @@
 - pass all options from String\#phony\_normalized to PhonyRails.normalize\_number [\#94](https://github.com/joost/phony_rails/pull/94) ([krukgit](https://github.com/krukgit))
 
 ## [v0.12.5](https://github.com/joost/phony_rails/tree/v0.12.5) (2015-04-30)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.4...v0.12.5)
 
 **Closed issues:**
@@ -260,9 +294,11 @@
 - Does not normalize when validations are skipped [\#88](https://github.com/joost/phony_rails/issues/88)
 
 ## [v0.12.4](https://github.com/joost/phony_rails/tree/v0.12.4) (2015-04-05)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.2...v0.12.4)
 
 ## [v0.12.2](https://github.com/joost/phony_rails/tree/v0.12.2) (2015-04-05)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.1...v0.12.2)
 
 **Closed issues:**
@@ -271,6 +307,7 @@
 - Something wrong with normalization of NO phones [\#85](https://github.com/joost/phony_rails/issues/85)
 
 ## [v0.12.1](https://github.com/joost/phony_rails/tree/v0.12.1) (2015-04-01)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.12.0...v0.12.1)
 
 **Closed issues:**
@@ -279,6 +316,7 @@
 - Simple question about creating a record [\#83](https://github.com/joost/phony_rails/issues/83)
 
 ## [v0.12.0](https://github.com/joost/phony_rails/tree/v0.12.0) (2015-03-26)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.11.0...v0.12.0)
 
 **Closed issues:**
@@ -290,17 +328,19 @@
 - allow all valid options [\#82](https://github.com/joost/phony_rails/pull/82) ([zzma](https://github.com/zzma))
 
 ## [v0.11.0](https://github.com/joost/phony_rails/tree/v0.11.0) (2015-03-04)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.10.1...v0.11.0)
 
 **Closed issues:**
 
-- Method phony\_formatted return "undefined method `split' for 1:Fixnum" [\#79](https://github.com/joost/phony_rails/issues/79)
+- Method phony_formatted return "undefined method `split' for 1:Fixnum" [\#79](https://github.com/joost/phony_rails/issues/79)
 
 **Merged pull requests:**
 
 - Fix incorrect Japanese translation [\#80](https://github.com/joost/phony_rails/pull/80) ([ykzts](https://github.com/ykzts))
 
 ## [v0.10.1](https://github.com/joost/phony_rails/tree/v0.10.1) (2015-01-21)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.10.0...v0.10.1)
 
 **Closed issues:**
@@ -309,7 +349,12 @@
 - support for arrays in postgres [\#59](https://github.com/joost/phony_rails/issues/59)
 - Phone extension support [\#57](https://github.com/joost/phony_rails/issues/57)
 
+**Merged pull requests:**
+
+- Fixes \#55 - Validation fails if record country code does not match code ... [\#56](https://github.com/joost/phony_rails/pull/56) ([juanpaco](https://github.com/juanpaco))
+
 ## [v0.10.0](https://github.com/joost/phony_rails/tree/v0.10.0) (2015-01-21)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.9.0...v0.10.0)
 
 **Closed issues:**
@@ -317,6 +362,7 @@
 - Already normalized numbers have default country code prepended [\#76](https://github.com/joost/phony_rails/issues/76)
 
 ## [v0.9.0](https://github.com/joost/phony_rails/tree/v0.9.0) (2015-01-13)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.8.2...v0.9.0)
 
 **Merged pull requests:**
@@ -327,6 +373,7 @@
 - Add PhonyRails.plausible\_number? [\#72](https://github.com/joost/phony_rails/pull/72) ([marcantonio](https://github.com/marcantonio))
 
 ## [v0.8.2](https://github.com/joost/phony_rails/tree/v0.8.2) (2014-12-18)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.8.0...v0.8.2)
 
 **Closed issues:**
@@ -342,6 +389,7 @@
 - Update guard to handle change in listen dependency [\#70](https://github.com/joost/phony_rails/pull/70) ([JonMidhir](https://github.com/JonMidhir))
 
 ## [v0.8.0](https://github.com/joost/phony_rails/tree/v0.8.0) (2014-11-07)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.7.3...v0.8.0)
 
 **Closed issues:**
@@ -349,6 +397,7 @@
 - Update README [\#66](https://github.com/joost/phony_rails/issues/66)
 
 ## [v0.7.3](https://github.com/joost/phony_rails/tree/v0.7.3) (2014-10-23)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.7.2...v0.7.3)
 
 **Merged pull requests:**
@@ -356,6 +405,7 @@
 - Ability to validate against the normalized input [\#64](https://github.com/joost/phony_rails/pull/64) ([dimroc](https://github.com/dimroc))
 
 ## [v0.7.2](https://github.com/joost/phony_rails/tree/v0.7.2) (2014-10-15)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.7.1...v0.7.2)
 
 **Merged pull requests:**
@@ -363,9 +413,11 @@
 - Add italian translations [\#63](https://github.com/joost/phony_rails/pull/63) ([philipgiuliani](https://github.com/philipgiuliani))
 
 ## [v0.7.1](https://github.com/joost/phony_rails/tree/v0.7.1) (2014-10-01)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.7.0...v0.7.1)
 
 ## [v0.7.0](https://github.com/joost/phony_rails/tree/v0.7.0) (2014-09-30)
+
 [Full Changelog](https://github.com/joost/phony_rails/compare/v0.6.0...v0.7.0)
 
 **Closed issues:**
@@ -383,12 +435,14 @@
 **Merged pull requests:**
 
 - Raise runtime errors not argument errors when :as attr undefined [\#61](https://github.com/joost/phony_rails/pull/61) ([chelsea](https://github.com/chelsea))
-- Fixes \#55 - Validation fails if record country code does not match code ... [\#56](https://github.com/joost/phony_rails/pull/56) ([juanpaco](https://github.com/juanpaco))
 - Add turkish locale file. [\#54](https://github.com/joost/phony_rails/pull/54) ([onurozgurozkan](https://github.com/onurozgurozkan))
 - Translate german [\#53](https://github.com/joost/phony_rails/pull/53) ([toxix](https://github.com/toxix))
 - Fix country code being incorrectly passed to phony [\#49](https://github.com/joost/phony_rails/pull/49) ([pjg](https://github.com/pjg))
 
 ## [v0.6.0](https://github.com/joost/phony_rails/tree/v0.6.0) (2014-01-28)
+
+[Full Changelog](https://github.com/joost/phony_rails/compare/2065287d48f58f3940e8a618b7dd9473b52486f0...v0.6.0)
+
 **Closed issues:**
 
 - French normalized number isn't good [\#42](https://github.com/joost/phony_rails/issues/42)
@@ -414,7 +468,7 @@
 - Add support for phony version ~\> 2.1 [\#45](https://github.com/joost/phony_rails/pull/45) ([pjg](https://github.com/pjg))
 - In the validator: add country code & number handling  [\#44](https://github.com/joost/phony_rails/pull/44) ([robink](https://github.com/robink))
 - PhonyRails.country\_number\_for should accept case agnostic country code [\#39](https://github.com/joost/phony_rails/pull/39) ([ahegyi](https://github.com/ahegyi))
-- option for country code validation in helper [\#37](https://github.com/joost/phony_rails/pull/37) ([fareastside](https://github.com/fareastside))
+- option for country code validation in helper [\#37](https://github.com/joost/phony_rails/pull/37) ([JeffLtz](https://github.com/JeffLtz))
 - Fix phone number formatting method call in README [\#36](https://github.com/joost/phony_rails/pull/36) ([pjg](https://github.com/pjg))
 - Better attribute accessor pattern + Japanese translation [\#35](https://github.com/joost/phony_rails/pull/35) ([johnnyshields](https://github.com/johnnyshields))
 - Cleanup for better Mongoid support [\#32](https://github.com/joost/phony_rails/pull/32) ([johnnyshields](https://github.com/johnnyshields))
@@ -437,4 +491,4 @@
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
