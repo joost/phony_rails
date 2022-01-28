@@ -127,7 +127,7 @@ validates_plausible_phone :phone_number, without: /\A\+\d+/
 validates_plausible_phone :phone_number, presence: true, with: /\A\+\d+/
 ```
 
-the i18n key is `:improbable_phone`. Languages supported by default: de, en, es, fr, it, ja, kh, ko, nl, tr, ua and ru.
+the i18n key is `:improbable_phone`. Languages supported by default: de, en, es, fr, it, ja, kh, ko, nl, pt, tr, ua and ru.
 
 You can also validate if a number has the correct country number:
 
