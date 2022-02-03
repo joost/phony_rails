@@ -327,6 +327,14 @@ describe PhonyPlausibleValidator do
         expect(@home.errors.messages.to_hash).to include(phone_number: ['является недействительным номером'])
       end
     end
+    
+    it 'should translate the error message in Portuguese' do
+      I18n.with_locale(:pt) do
+        @home.phone_number = INVALID_NUMBER
+        @home.valid?
+        expect(@home.errors.messages.to_hash).to include(phone_number: ['é um número inválido'])
+      end
+    end
   end
 end
 
